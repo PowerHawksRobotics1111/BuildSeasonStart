@@ -22,28 +22,7 @@ public class Robot extends IterativeRobot {
     String profileSelected;
     SendableChooser chooser;
     
-    //***Start profile choices***
-    
-    final String DUFFY = "Duffy", KYLE = "Kyle", RICARDO = "Ricardo"; //Sets operator profile names
-    final String MARK = "Mark", SMASHY = "Smashy", HANNAH = "Hannah"; //Sets driver profile names
-    
-    //***Start CANTalon Motor Variables***
-    
-    
-    CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; //Drive motors
-    CANTalon motorArmFront, motorArmBack; //Arm manipulation motors
-    CANTalon motorArmIntakeFront, motorArmIntakeBack, motorChassisIntakeFront, motorChassisIntakeBack, motorShooter; //Arm/chassis intake and shooter motors
-    
-    
-    //***Start Joystick Variables***
-    
-    final int JD_PORT = 1, JO_PORT = 2; //Sets the ports of the joysticks. TODO Configure the ports of the joysticks.
-    final int X = 1, A = 2, B = 3, Y = 4, LEFT_BUMPER = 5, RIGHT_BUMPER = 6, LEFT_TRIGGER = 7, RIGHT_TRIGGER = 8; //Maps the buttons on the controller.
-    																											  //TODO verify/configure LT and RT
-    final int D_PAD_UP = 0, D_PAD_STRAFE_FORWARD_RIGHT = 45, D_PAD_RIGHT = 90, D_PAD_STRAFE_BACKWARD_RIGHT = 135, D_PAD_DOWN = 180, D_PAD_STRAFE_BACKWARD_LEFT = 225,
-    		  D_PAD_LEFT = 270, D_PAD_STRAFE_FORWARD_LEFT = 315, D_PAD_OFF = -1; //Maps the controller's D-Pad.
-    
-    Joystick joyDrive, joyOp; // Driver/operator joysticks
+   
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -72,43 +51,43 @@ public class Robot extends IterativeRobot {
      * Method that initializes the drive motors
      */
     private void driveMotorInit() {
-    	motorDriveFrontRight = new CANTalon(MDFR_PORT);
-    	motorDriveFrontLeft = new CANTalon(MDFL_PORT);
-    	motorDriveBackRight  = new CANTalon(MDBR_PORT);
-    	motorDriveBackLeft  = new CANTalon(MDBL_PORT);
+    	Variables.motorDriveFrontRight = new CANTalon(Variables.MDFR_PORT);
+    	Variables.motorDriveFrontLeft = new CANTalon(Variables.MDFL_PORT);
+    	Variables.motorDriveBackRight  = new CANTalon(Variables.MDBR_PORT);
+    	Variables.motorDriveBackLeft  = new CANTalon(Variables.MDBL_PORT);
     }
     
     /**
      * Method that initializes the arm manipulation motors
      */
     private void armMotorInit() {
-    	motorArmFront = new CANTalon(MAUDF_PORT);
-    	motorArmBack = new CANTalon(MAUDB_PORT);
+    	Variables.motorArmFront = new CANTalon(Variables.MAUDF_PORT);
+    	Variables.motorArmBack = new CANTalon(Variables.MAUDB_PORT);
     }
     
     /**
      * Method that initializes the shooter motor
      */
     private void shooterMotorInit() {
-    	motorShooter = new CANTalon(MS_PORT);
+    	Variables.motorShooter = new CANTalon(Variables.MS_PORT);
     }
     
     /**
      * Method that initializes the arm/chassis intake motors
      */
     private void intakeMotorInit() {
-    	motorArmIntakeFront = new CANTalon(MAIF_PORT);
-    	motorArmIntakeBack = new CANTalon(MAIB_PORT);
-    	motorChassisIntakeFront = new CANTalon(MCIF_PORT);
-    	motorChassisIntakeBack = new CANTalon(MCIB_PORT);
+    	Variables.motorArmIntakeFront = new CANTalon(Variables.MAIF_PORT);
+    	Variables.motorArmIntakeBack = new CANTalon(Variables.MAIB_PORT);
+    	Variables.motorChassisIntakeFront = new CANTalon(Variables.MCIF_PORT);
+    	Variables.motorChassisIntakeBack = new CANTalon(Variables.MCIB_PORT);
     }
     
     /**
      * Method that initializes the joysticks
      */
     private void joystickInit() {
-    	joyDrive = new Joystick(JD_PORT);
-    	joyOp = new Joystick(JO_PORT);
+    	Variables.joyDrive = new Joystick(Variables.JD_PORT);
+    	Variables.joyOp = new Joystick(Variables.JO_PORT);
     }
     
 	/**
@@ -146,8 +125,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         drive();
-        testArm();
-        testShooter();
+//        testArm();
+//        testShooter();
         chooseProfile();
     }
     
@@ -160,13 +139,13 @@ public class Robot extends IterativeRobot {
     	profileInit();
     	
     	switch(autoSelected) {
-    	case DUFFY:
+    	case Variables.DUFFY:
     		//Load Duffy's Op profile
     		break;
-    	case KYLE:
+    	case Variables.KYLE:
     		//Load Kyle's Op Profile
     		break;
-    	case RICARDO:
+    	case Variables.RICARDO:
     		//Load Ricardo's Op Profile
     		break;
     	}
@@ -178,10 +157,10 @@ public class Robot extends IterativeRobot {
     
     
     private void drive() {
-    	motorDriveFrontLeft.set(joyDrive.getRawAxis(1) * -1);
-    	motorDriveBackLeft.set(joyDrive.getRawAxis(1) * -1);
-    	motorDriveFrontRight.set(joyDrive.getRawAxis(3) * -1);
-    	motorDriveBackRight.set(joyDrive.getRawAxis(3) * -1);
+    	Variables.motorDriveFrontLeft.set(Variables.joyDrive.getRawAxis(1) * -1);
+    	Variables.motorDriveBackLeft.set(Variables.joyDrive.getRawAxis(1) * -1);
+    	Variables.motorDriveFrontRight.set(Variables.joyDrive.getRawAxis(3) * -1);
+    	Variables.motorDriveBackRight.set(Variables.joyDrive.getRawAxis(3) * -1);
     }
     
     /**

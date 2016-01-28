@@ -1,20 +1,31 @@
 package org.usfirst.frc.team1111.robot;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Joystick;
 
 public class Variables {
+	
+	
+	//*****START PROFILES*****
+	
+	
+	final static String DUFFY = "Duffy", KYLE = "Kyle", RICARDO = "Ricardo"; //Sets operator profile names
+    final static String MARK = "Mark", SMASHY = "Smashy", HANNAH = "Hannah"; //Sets driver profile names
+    
+    
+    //*****END PROFILES*****
 	
 	
 	//*****START MOTOR PORT VARIABLES*****
 	
 	
-	final int MAUDF_PORT = 1, MAUDB_PORT = 1; //Sets the port number of the arm manipulation motors. TODO Configure the arm manipulation motor ports.
-    final int MAIF_PORT = 1, MAIB_PORT = 1, MCIF_PORT = 1, MCIB_PORT = 1, MS_PORT = 1; //Sets the port number of the arm/chassis intake and shooter motors.
+	final static int MAUDF_PORT = 1, MAUDB_PORT = 1; //Sets the port number of the arm manipulation motors. TODO Configure the arm manipulation motor ports.
+    final static int MAIF_PORT = 1, MAIB_PORT = 1, MCIF_PORT = 1, MCIB_PORT = 1, MS_PORT = 1; //Sets the port number of the arm/chassis intake and shooter motors.
     																				   //TODO Configure the port numbers of the intake and shooter motors.
-    final int MDFR_PORT = 1, MDFL_PORT = 1, MDBR_PORT = 1, MDBL_PORT = 1; //Sets the port number of the drive motors. TODO Configure the drive motor ports.
-    final double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0; //Sets FORWARD motor powers
-    final double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25; //Sets REVERSE motor powers
-    final int FRONT = 1, BACK = 2;
+    final static int MDFR_PORT = 1, MDFL_PORT = 1, MDBR_PORT = 1, MDBL_PORT = 1; //Sets the port number of the drive motors. TODO Configure the drive motor ports.
+    final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0; //Sets FORWARD motor powers
+    final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25; //Sets REVERSE motor powers
+    final static int FRONT = 1, BACK = 2;
     
     
     //*****END MOTOR PORT VARIABLES*****
@@ -23,6 +34,23 @@ public class Variables {
     //*****START MOTOR VARIABLES*****
     
     
-  
+    static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; //Drive motors
+    static CANTalon motorArmFront, motorArmBack; //Arm manipulation motors
+    static CANTalon motorArmIntakeFront, motorArmIntakeBack, motorChassisIntakeFront, motorChassisIntakeBack, motorShooter; //Arm/chassis intake and shooter motors
+    
+    
+    //*****END MOTOR VARIABLES*****
+    
+    
+    //*****START JOYSTICK VARIABLES*****
+    
+    
+    final static int JD_PORT = 1, JO_PORT = 2; //Sets the ports of the joysticks. TODO Configure the ports of the joysticks.
+    final static int X = 1, A = 2, B = 3, Y = 4, LEFT_BUMPER = 5, RIGHT_BUMPER = 6, LEFT_TRIGGER = 7, RIGHT_TRIGGER = 8; //Maps the buttons on the controller.
+    																											  //TODO verify/configure LT and RT
+    final static int D_PAD_UP = 0, D_PAD_STRAFE_FORWARD_RIGHT = 45, D_PAD_RIGHT = 90, D_PAD_STRAFE_BACKWARD_RIGHT = 135, D_PAD_DOWN = 180, D_PAD_STRAFE_BACKWARD_LEFT = 225,
+    		  D_PAD_LEFT = 270, D_PAD_STRAFE_FORWARD_LEFT = 315, D_PAD_OFF = -1; //Maps the controller's D-Pad.
+    
+    static Joystick joyDrive, joyOp; // Driver/operator joysticks
     
 }
