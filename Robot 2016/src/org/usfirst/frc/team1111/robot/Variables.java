@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Variables {
 	
+	public boolean forwardIntake = true;
 	
 	//*****START PROFILES*****
 	
