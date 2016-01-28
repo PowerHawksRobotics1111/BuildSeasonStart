@@ -119,7 +119,34 @@ public class Robot extends IterativeRobot {
             break;
     	}
     }
-
+    
+    public void autoDrive(double direction) {
+    	Variables.motorDriveFrontRight.set(direction);
+    	Variables.motorDriveFrontLeft.set(direction);
+    	
+    	Variables.motorDriveBackRight.set(direction);
+    	Variables.motorDriveBackLeft.set(direction);
+    }
+    
+    public void autoArmLift() {
+    	Variables.motorArmFront.set(Variables.REVERSE_QUARTER_POWER);
+    	Variables.motorArmBack.set(Variables.REVERSE_QUARTER_POWER);
+    	// TODO Wait time or encoder
+    	Variables.motorArmFront.set(0);       // stop front arm movement
+    	Variables.motorArmBack.set(0);        // stop back arm movement
+    	autoDrive(Variables.QUARTER_POWER);   // move forward
+    	// TODO implement locations stuffs with encoders
+    	Variables.motorArmFront.set(Variables.QUARTER_POWER); // lift front arm
+    	// TODO implement wait or encoder
+    	autoDrive(Variables.QUARTER_POWER);  //move forward
+    	// TODO implement encoder
+    	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward after clearing defense
+    	// TODO implement encoder
+    	Variables.motorArmFront.set(Variables.REVERSE_QUARTER_POWER);  //lower front arm
+    	Variables.motorArmBack.set(Variables.QUARTER_POWER);		   //lift back arm
+    	// TODO Wait time or encoder
+    	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward back under defense
+    }
     /**
      * This function is called periodically during operator control
      */
@@ -171,3 +198,4 @@ public class Robot extends IterativeRobot {
     }
     
 }
+	
