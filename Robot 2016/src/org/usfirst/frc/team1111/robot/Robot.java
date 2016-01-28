@@ -1,9 +1,12 @@
 
 package org.usfirst.frc.team1111.robot;
 
+import profile_switch.driver_profiles.DriverProfile;
+import profile_switch.operator_profiles.OperatorProfile;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +26,8 @@ public class Robot extends IterativeRobot {
     String profileSelected;
     SendableChooser chooser;
     
+    OperatorProfile operator;
+    SendableChooser operatorChooser;
    
 	
     /**
@@ -40,6 +45,14 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Break Portcullis", PORTCULLIS);
         chooser.addObject("Break 2 Defenses", CHANGE_DEFENSES);
         SmartDashboard.putData("Auto choices", chooser);
+        
+        //Operator
+        operatorChooser = new SendableChooser();
+        operatorChooser.addDefault("Pesswagno", Variables.KYLE);
+        operatorChooser.addObject("Duffy", Variables.DUFFY);
+        operatorChooser.addObject("Ricky", Variables.RICARDO);
+        SmartDashboard.putData("Operator", operatorChooser);
+        
         
         motorInit(); //Initializes motors
     }
