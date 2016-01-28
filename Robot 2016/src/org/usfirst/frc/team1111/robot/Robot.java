@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
+    final String PORTCULLIS = "Portcullis", CHANGE_DEFENSES = "Change Defenses";
+    
     String autoSelected;
     String profileSelected;
     SendableChooser chooser;
@@ -31,11 +32,16 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", customAuto);
+        chooser.addObject("Break Portcullis", PORTCULLIS);
+        chooser.addObject("Break 2 Defenses", CHANGE_DEFENSES);
+        SmartDashboard.putData("Auto choices", chooser);
+        
+        chooser.addDefault("Default Profile", defaultAuto);
+        chooser.addObject("Break Portcullis", PORTCULLIS);
+        chooser.addObject("Break 2 Defenses", CHANGE_DEFENSES);
         SmartDashboard.putData("Auto choices", chooser);
         
         motorInit(); //Initializes motors
-        joystickInit(); //Initializes joysticks
     }
     
     /**
@@ -82,14 +88,6 @@ public class Robot extends IterativeRobot {
     	Variables.motorChassisIntakeBack = new CANTalon(Variables.MCIB_PORT);
     }
     
-    /**
-     * Method that initializes the joysticks
-     */
-    private void joystickInit() {
-    	Variables.joyDrive = new Joystick(Variables.JD_PORT);
-    	Variables.joyOp = new Joystick(Variables.JO_PORT);
-    }
-    
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
 	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
@@ -120,32 +118,42 @@ public class Robot extends IterativeRobot {
     	}
     }
     
-    public void autoDrive(double direction) {
-    	Variables.motorDriveFrontRight.set(direction);
-    	Variables.motorDriveFrontLeft.set(direction);
+    public void autoDrive(double d) {
+    	Variables.motorDriveFrontRight.set(d);
+    	Variables.motorDriveFrontLeft.set(d);
     	
-    	Variables.motorDriveBackRight.set(direction);
-    	Variables.motorDriveBackLeft.set(direction);
+    	Variables.motorDriveBackRight.set(d);
+    	Variables.motorDriveBackLeft.set(d);
     }
     
-    public void autoArmLift() {
-    	Variables.motorArmFront.set(Variables.REVERSE_QUARTER_POWER);
-    	Variables.motorArmBack.set(Variables.REVERSE_QUARTER_POWER);
+    public void autoBreakPortcullis() {
+    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER); //Lowers front arm
+    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER); //Lowers back arm
     	// TODO Wait time or encoder
-    	Variables.motorArmFront.set(0);       // stop front arm movement
-    	Variables.motorArmBack.set(0);        // stop back arm movement
+    	
+    	autoMoveArm(Variables.motorArmFront, Variables.NO_POWER);     // stop front arm movement
+    	autoMoveArm(Variables.motorArmBack, Variables.NO_POWER);       // stop back arm movement
     	autoDrive(Variables.QUARTER_POWER);   // move forward
     	// TODO implement locations stuffs with encoders
-    	Variables.motorArmFront.set(Variables.QUARTER_POWER); // lift front arm
+    	
+    	autoMoveArm(Variables.motorArmFront, Variables.QUARTER_POWER); // lift front arm
     	// TODO implement wait or encoder
+    	
     	autoDrive(Variables.QUARTER_POWER);  //move forward
     	// TODO implement encoder
+    	
     	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward after clearing defense
     	// TODO implement encoder
-    	Variables.motorArmFront.set(Variables.REVERSE_QUARTER_POWER);  //lower front arm
-    	Variables.motorArmBack.set(Variables.QUARTER_POWER);		   //lift back arm
+    	
+    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER);  //lower front arm
+    	autoMoveArm(Variables.motorArmBack, Variables.QUARTER_POWER);		   //lift back arm
     	// TODO Wait time or encoder
+    	
     	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward back under defense
+    }
+    
+    public void autoMoveArm(CANTalon a, double d) {
+    	a.set(d);
     }
     /**
      * This function is called periodically during operator control
