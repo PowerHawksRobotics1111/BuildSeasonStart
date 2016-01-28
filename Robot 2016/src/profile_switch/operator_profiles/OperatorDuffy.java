@@ -1,4 +1,4 @@
-package operator_profiles;
+package profile_switch.operator_profiles;
 
 import edu.wpi.first.wpilibj.CANTalon;
 
