@@ -2,7 +2,7 @@ package profile_switch.operator_profiles;
 
 import edu.wpi.first.wpilibj.CANTalon;
 
-public class OperatorDuffy {
+public class OperatorDuffy extends OperatorProfile {
 	//*****START OPERATOR SHOOTER METHODS*****
     
     
