@@ -25,20 +25,15 @@ public class Robot extends IterativeRobot {
     //***Start profile choices***
     
     final String DUFFY = "Duffy", KYLE = "Kyle", RICARDO = "Ricardo"; //Sets operator profile names
+    final String MARK = "Mark", SMASHY = "Smashy", HANNAH = "Hannah"; //Sets driver profile names
     
     //***Start CANTalon Motor Variables***
     
-    final int MDFR_PORT = 1, MDFL_PORT = 1, MDBR_PORT = 1, MDBL_PORT = 1; //Sets the port number of the drive motors. TODO Configure the drive motor ports.
-    final int MAUDF_PORT = 1, MAUDB_PORT = 1; //Sets the port number of the arm manipulation motors. TODO Configure the arm manipulation motor ports.
-    final int MAIF_PORT = 1, MAIB_PORT = 1, MCIF_PORT = 1, MCIB_PORT = 1, MS_PORT = 1; //Sets the port number of the arm/chassis intake and shooter motors.
-    																				   //TODO Configure the port numbers of the intake and shooter motors.
-    final double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0; //Sets FORWARD motor powers
-    final double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25; //Sets REVERSE motor powers
-    final int FRONT = 1, BACK = 2;
     
     CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; //Drive motors
     CANTalon motorArmFront, motorArmBack; //Arm manipulation motors
     CANTalon motorArmIntakeFront, motorArmIntakeBack, motorChassisIntakeFront, motorChassisIntakeBack, motorShooter; //Arm/chassis intake and shooter motors
+    
     
     //***Start Joystick Variables***
     
@@ -187,93 +182,6 @@ public class Robot extends IterativeRobot {
     	motorDriveBackLeft.set(joyDrive.getRawAxis(1) * -1);
     	motorDriveFrontRight.set(joyDrive.getRawAxis(3) * -1);
     	motorDriveBackRight.set(joyDrive.getRawAxis(3) * -1);
-    }
-    
-    
-    //*****START OPERATOR SHOOTER METHODS*****
-    
-    
-    private void testShooter() {
-    	if (joyOp.getRawButton(A)) {
-    		shoot();
-    	}
-    }
-    
-    private void shoot() {
-    	if (joyOp.getRawButton(RIGHT_TRIGGER)) {
-    		motorShooter.set(FULL_POWER);
-    	}
-    	
-    	else {
-    		motorShooter.set(NO_POWER);
-    	}
-    }
-    
-    
-    //*****START OPERATOR ARM METHODS*****
-    
-    
-    private void testArm() {
-    	if (joyOp.getRawButton(X)) {
-        	if (joyOp.getRawButton(X)) {
-        		moveArm(FRONT);
-        		testIntake(FRONT);
-        	}
-        	
-        	else if (joyOp.getRawButton(B)) {
-        		moveArm(BACK);
-        		testIntake(BACK);
-        	}
-        }
-    }
-    
-    private void testIntake(int side) {
-    	CANTalon motorArm;
-    	CANTalon motorChassis;
-    	
-    	if (side == FRONT) {
-    		motorArm = motorChassisIntakeFront;
-    		motorChassis = motorArmIntakeFront;
-    	}
-    	
-    	else {
-    		motorArm = motorArmIntakeBack;
-    		motorChassis = motorChassisIntakeBack;
-    	}
-    	
-    	if (joyOp.getRawButton(Y)) {
-    		motorArm.set(FULL_POWER);
-    		motorChassis.set(FULL_POWER);
-    	}
-    	
-    	else {
-    		motorArm.set(NO_POWER);
-    		motorChassis.set(NO_POWER);
-    	}
-    }
-    
-    private void moveArm(int side) {
-    	CANTalon motor;
-    	
-    	if (side == FRONT) { //Tests which arm is being controlled
-    		motor = motorArmFront;
-    	}
-    	
-    	else {
-    		motor = motorArmBack;
-    	}
-    	
-    	if (joyOp.getPOV() == D_PAD_UP) { //Moves arm based on D-Pad input
-    		motor.set(FULL_POWER);
-    	}
-    	
-    	else if (joyOp.getPOV() == D_PAD_DOWN) {
-    		motor.set(REVERSE_FULL_POWER);
-    	}
-    	
-    	else {
-    		motor.set(NO_POWER);
-    	}
     }
     
     /**
