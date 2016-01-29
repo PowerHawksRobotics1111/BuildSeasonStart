@@ -186,7 +186,7 @@ public class Robot extends IterativeRobot {
     private void chooseProfile() {
     	profileInit();
     	
-    	switch(autoSelected) {
+    	switch(profileSelected) {
     	case Variables.DUFFY:
     		//Load Duffy's Op profile
     		break;

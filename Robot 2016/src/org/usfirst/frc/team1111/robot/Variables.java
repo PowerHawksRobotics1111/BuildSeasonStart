@@ -1,7 +1,11 @@
 package org.usfirst.frc.team1111.robot;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
+import profile_switch.operator_profiles.OperatorDuffy;
+import profile_switch.operator_profiles.OperatorProfile;
 
 public class Variables {
 	
@@ -10,8 +14,8 @@ public class Variables {
 	//*****START PROFILES*****
 	
 	
-	public final static String DUFFY = "Duffy", KYLE = "Kyle", RICARDO = "Ricardo"; //Sets operator profile names
-    public final static String MARK = "Mark", SMASHY = "Smashy", HANNAH = "Hannah"; //Sets driver profile names
+	public final static OperatorProfile DUFFY = new OperatorDuffy(), KYLE = new OperatorKyle(), RICARDO = new OperatorRicardo(); //Sets operator profile names
+    public final static Driver DRIVER = new Driver();
     
     
     //*****END PROFILES*****
