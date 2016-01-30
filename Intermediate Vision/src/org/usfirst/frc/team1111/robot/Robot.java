@@ -3,6 +3,8 @@ package org.usfirst.frc.team1111.robot;
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
+import com.ni.vision.NIVision.Point;
+import com.ni.vision.NIVision.RGBValue;
 import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -37,12 +39,16 @@ public class Robot extends SampleRobot {
          * which will in turn send it to the dashboard.
          */
         NIVision.Rect rect = new NIVision.Rect(10, 10, 100, 100);
-
+       // NIVision.ThresholdData threshhold = new NIVision.ThresholdData(60, 120, 70, 90);
+       // NIVision.imaqThreshold(frame, frame, 60, 120, 70, 90);
+        //NIVision.ThresholdData thresh = new NIVision.ThresholdData(60, 120, 70, 90);
+        //NIVision.imaqOverlayPoints(frame, new Point[]{, new RGBValue[]{NIVision.RGB_BLUE, NIVision.RGB_GREEN}, symbol, userSymbol, group);
+        
         while (isOperatorControl() && isEnabled()) {
 
             NIVision.IMAQdxGrab(session, frame, 1);
             NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-                    DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+                    DrawMode.PAINT_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
             
             CameraServer.getInstance().setImage(frame);
 
