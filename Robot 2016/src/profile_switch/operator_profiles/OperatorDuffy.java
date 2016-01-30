@@ -1,5 +1,7 @@
 package profile_switch.operator_profiles;
 
+import org.usfirst.frc.team1111.robot.Variables;
+
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class OperatorDuffy extends OperatorProfile {
@@ -7,18 +9,18 @@ public class OperatorDuffy extends OperatorProfile {
     
     
     public void testShooter() {
-    	if (joyOp.getRawButton(A)) {
+    	if (Variables.joyOp.getRawButton(Variables.A)) {
     		shoot();
     	}
     }
     
     public void shoot() {
-    	if (joyOp.getRawButton(RIGHT_TRIGGER)) {
-    		motorShooter.set(FULL_POWER);
+    	if (Variables.joyOp.getRawButton(Variables.RIGHT_TRIGGER)) {
+    		Variables.motorShooter.set(Variables.FULL_POWER);
     	}
     	
     	else {
-    		motorShooter.set(NO_POWER);
+    		Variables.motorShooter.set(Variables.NO_POWER);
     	}
     }
     
@@ -27,15 +29,15 @@ public class OperatorDuffy extends OperatorProfile {
     
     
     public void testArm() {
-    	if (joyOp.getRawButton(X)) {
-        	if (joyOp.getRawButton(X)) {
-        		moveArm(FRONT);
-        		testIntake(FRONT);
+    	if (Variables.joyOp.getRawButton(Variables.X)) {
+        	if (Variables.joyOp.getRawButton(Variables.X)) {
+        		moveArm(Variables.FRONT);
+        		testIntake(Variables.FRONT);
         	}
         	
-        	else if (joyOp.getRawButton(B)) {
-        		moveArm(BACK);
-        		testIntake(BACK);
+        	else if (Variables.joyOp.getRawButton(Variables.B)) {
+        		moveArm(Variables.BACK);
+        		testIntake(Variables.BACK);
         	}
         }
     }
@@ -44,48 +46,48 @@ public class OperatorDuffy extends OperatorProfile {
     	CANTalon motorArm;
     	CANTalon motorChassis;
     	
-    	if (side == FRONT) {
-    		motorArm = motorChassisIntakeFront;
-    		motorChassis = motorArmIntakeFront;
+    	if (side == Variables.FRONT) {
+    		motorArm = Variables.motorChassisIntakeFront;
+    		motorChassis = Variables.motorArmIntakeFront;
     	}
     	
     	else {
-    		motorArm = motorArmIntakeBack;
-    		motorChassis = motorChassisIntakeBack;
+    		motorArm = Variables.motorArmIntakeBack;
+    		motorChassis = Variables.motorChassisIntakeBack;
     	}
     	
-    	if (joyOp.getRawButton(Y)) {
-    		motorArm.set(FULL_POWER);
-    		motorChassis.set(FULL_POWER);
+    	if (Variables.joyOp.getRawButton(Variables.Y)) {
+    		motorArm.set(Variables.FULL_POWER);
+    		motorChassis.set(Variables.FULL_POWER);
     	}
     	
     	else {
-    		motorArm.set(NO_POWER);
-    		motorChassis.set(NO_POWER);
+    		motorArm.set(Variables.NO_POWER);
+    		motorChassis.set(Variables.NO_POWER);
     	}
     }
     
     public void moveArm(int side) {
     	CANTalon motor;
     	
-    	if (side == FRONT) { //Tests which arm is being controlled
-    		motor = motorArmFront;
+    	if (side == Variables.FRONT) { //Tests which arm is being controlled
+    		motor = Variables.motorArmFront;
     	}
     	
     	else {
-    		motor = motorArmBack;
+    		motor = Variables.motorArmBack;
     	}
     	
-    	if (joyOp.getPOV() == D_PAD_UP) { //Moves arm based on D-Pad input
-    		motor.set(FULL_POWER);
+    	if (Variables.joyOp.getPOV() == Variables.D_PAD_UP) { //Moves arm based on D-Pad input
+    		motor.set(Variables.FULL_POWER);
     	}
     	
-    	else if (joyOp.getPOV() == D_PAD_DOWN) {
-    		motor.set(REVERSE_FULL_POWER);
+    	else if (Variables.joyOp.getPOV() == Variables.D_PAD_DOWN) {
+    		motor.set(Variables.REVERSE_FULL_POWER);
     	}
     	
     	else {
-    		motor.set(NO_POWER);
+    		motor.set(Variables.NO_POWER);
     	}
     }
 }

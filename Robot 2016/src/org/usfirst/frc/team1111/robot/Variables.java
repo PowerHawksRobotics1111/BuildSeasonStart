@@ -14,9 +14,9 @@ public class Variables {
 	//*****START PROFILES*****
 	
 	
-	public final static OperatorProfile DUFFY = new OperatorDuffy(), KYLE = new OperatorKyle(), RICARDO = new OperatorRicardo(); //Sets operator profile names
-    public final static Driver DRIVER = new Driver();
-    
+//	public final static OperatorProfile DUFFY = new OperatorDuffy(), KYLE = new OperatorKyle(), RICARDO = new OperatorRicardo(); //Sets operator profile names
+//    public final static Driver DRIVER = new Driver();
+//    
     
     //*****END PROFILES*****
 	
