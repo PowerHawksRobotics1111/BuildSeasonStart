@@ -19,7 +19,46 @@ public class OperatorProfile {
 	
 	public int overrideKillModifier;
 	
-	
+	public void opCheck() {
+		if (Joysticks.joyOp.getRawButton(shootButton)) {
+			//shoot
+		}
+		if (Joysticks.joyOp.getRawButton(intakeButton)) {
+			//run intake motor to pull ball in
+		}
+		else if (Joysticks.joyOp.getRawButton(outtakeButton)) {
+			//run intake motor to push ball out
+		}
+		if (Joysticks.joyOp.getRawButton(armUpButton)) {
+			//rotate intake arm up
+		}
+		else if (Joysticks.joyOp.getRawButton(armDownButton)) {
+			//rotate intake arm down
+		}
+		if (Joysticks.joyOp.getRawButton(tapeArmExtend)) {
+			//extend tape measure arm
+		}
+		else if (Joysticks.joyOp.getRawButton(tapeArmRetract)) {
+			//retract tape measure arm
+		}
+		if (Joysticks.joyOp.getRawButton(tapeArmRotUp)) {
+			//rotate tape arm up
+		}
+		else if (Joysticks.joyOp.getRawButton(tapeArmRotDown)) {
+			//rotate tape arm down
+		}
+		if (Joysticks.joyOp.getRawButton(overrideKillModifier)) {
+			if (Joysticks.joyOp.getRawButton(shootButton)) {
+				//stops the shoot motor
+			}
+			if (Joysticks.joyOp.getRawButton(intakeButton)) {
+				//stops intake
+			}
+			if (Joysticks.joyOp.getRawButton(outtakeButton)) {
+				//stops the outtake
+			}
+		}
+	}
 	
 	//Act Methods
 	public void shoot()
