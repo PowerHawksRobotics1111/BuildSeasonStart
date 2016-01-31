@@ -75,8 +75,9 @@ public class Auto
 	    public void autoMoveArm(double d, double dist) 
 	    {
 	    	calcEncoderRatio(dist);
+	    	encoder.
 	    	
-	    	while()
+	    	while(armEncoder)
 	    	Motors.motorArm.set(d);
 	    }
 	    
