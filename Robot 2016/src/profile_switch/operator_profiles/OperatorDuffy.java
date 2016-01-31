@@ -66,7 +66,7 @@ public class OperatorDuffy extends OperatorProfile {
     }
     
     public void moveArm() {    	
-    	int[] dPadUpRange = {Joysticks.D_PAD_UP, Joysticks.D_PAD_STRAFE_FORWARD_LEFT, Joysticks.
+    	int[] dPadUpRange = {Joysticks.D_PAD_UP, Joysticks.D_PAD_STRAFE_FORWARD_LEFT, Joysticks.D_PAD_STRAFE_FORWARD_LEFT};
     	if (Joysticks.joyOp.getPOV() == Joysticks.D_PAD_UP) { //Moves arm up
     		Motors.motorArm.set(Motors.FULL_POWER);
     	}
