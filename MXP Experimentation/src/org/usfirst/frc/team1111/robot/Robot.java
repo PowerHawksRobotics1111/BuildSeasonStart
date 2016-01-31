@@ -4,8 +4,8 @@ package org.usfirst.frc.team1111.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,22 +17,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
-    String autoSelected;
-    SendableChooser chooser;
+//    final String defaultAuto = "Default";
+//    final String customAuto = "My Auto";
+//    String autoSelected;
+//    SendableChooser chooser;
     AHRS mxp;
+    SendableChooser sc;
 	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", customAuto);
-        SmartDashboard.putData("Auto choices", chooser);
+//        chooser = new SendableChooser();
+//        chooser.addDefault("Default Auto", defaultAuto);
+//        chooser.addObject("My Auto", customAuto);
+//        SmartDashboard.putData("Auto choices", chooser);
         mxp = new AHRS(SerialPort.Port.kMXP);
+        sc = new SendableChooser();
+        sc.addDefault("none", "none");
+    	sc.addObject("reset", "reset");
+    	SmartDashboard.putData("stuff", sc);
     }
     
 	/**
@@ -45,30 +50,37 @@ public class Robot extends IterativeRobot {
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
     public void autonomousInit() {
-    	autoSelected = (String) chooser.getSelected();
-//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
+//    	autoSelected = (String) chooser.getSelected();
+////		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
+//		System.out.println("Auto selected: " + autoSelected);
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
-            break;
-    	case defaultAuto:
-    	default:
-    	//Put default auto code here
-            break;
-    	}
+//    	switch(autoSelected) {
+//    	case customAuto:
+//        //Put custom auto code here   
+//            break;
+//    	case defaultAuto:
+//    	default:
+//    	//Put default auto code here
+//            break;
+//    	}
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	if(sc.getSelected().equals("reset"))
+    	{
+    		mxp.reset();
+    		mxp.resetDisplacement();
+    		mxp.zeroYaw();
+    	}
+    	
         SmartDashboard.putNumber("Raw X Accel", mxp.getRawAccelX());
         SmartDashboard.putNumber("Raw Y Accel", mxp.getRawAccelY());
         SmartDashboard.putNumber("Raw Z Accel", mxp.getRawAccelZ());
