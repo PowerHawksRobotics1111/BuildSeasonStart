@@ -1,6 +1,8 @@
 package profile_switch.operator_profiles;
 
-import org.usfirst.frc.team1111.robot.Variables;
+import Variables.Joysticks;
+import Variables.Motors;
+import edu.wpi.first.wpilibj.CANTalon;
 
 public class OperatorProfile {
 
@@ -8,44 +10,68 @@ public class OperatorProfile {
 	public void shoot()
 	{
 		//Normal shoot (buttons x and b)
-		if(Variables.joyOp.getRawButton(Variables.X) || Variables.joyOp.getRawButton(Variables.B))
+		if(Joysticks.joyOp.getRawButton(Joysticks.X) || Joysticks.joyOp.getRawButton(Joysticks.B))
 				System.out.print("");//code to shoot
 	}
 	
 	public void arm()
 	{
 		//Up arm (button y)
-		if(Variables.joyOp.getRawButton(Variables.Y))
+		if(Joysticks.joyOp.getRawButton(Joysticks.Y))
 				System.out.print("");//code to arm
 		//Down arm (button a)
-		if(Variables.joyOp.getRawButton(Variables.A))
+		if(Joysticks.joyOp.getRawButton(Joysticks.A))
 				System.out.print("");//code to reverse arm
 	}
 	
 	public void intake()
 	{
 		//intake (button lb)
-		if(Variables.joyOp.getRawButton(Variables.LEFT_BUMPER))
-				System.out.print("");//code to intake
+		//Starts intake on left bumper
+		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER)) {
+			startMotor(Motors.motorArmIntake, Motors.FULL_POWER);
+			startMotor(Motors.motorChassisIntake, Motors.FULL_POWER);
+		}
+		
+		//Stops intake on left/right bumper
+		if (Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER) && Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER)) {
+			stopMotor(Motors.motorArmIntake);
+			stopMotor(Motors.motorChassisIntake);
+		}
+		
+		//Stops motor if intake switch is it
+		else if (Motors.limitSwitch.get()) {
+			stopMotor(Motors.motorArmIntake);
+			stopMotor(Motors.motorChassisIntake);
+		}
+				
 		//outtake (button rb)
-		if(Variables.joyOp.getRawButton(Variables.RIGHT_BUMPER))
+		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER))
 				System.out.print("");//code to reverse intake
 	}
 	
 	public void intakeArm()
 	{
 		//Forward intakeArm (button lt)
-		if(Variables.joyOp.getRawButton(Variables.LEFT_TRIGGER))
+		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_TRIGGER))
 				System.out.print("");//code to intakeArm
 		//Reverse intakeArm (button rt)
-		if(Variables.joyOp.getRawButton(Variables.RIGHT_TRIGGER))
+		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_TRIGGER))
 				System.out.print("");//code to reverse intakeArm
 	}
 	
 	public void intakeSwitcher()
 	{
 		//switches to forward or backwards intake based on which button on the dpad is pressed (up or down)
-		if((Variables.forwardIntake && Variables.joyOp.getPOV() == 4) || (!Variables.forwardIntake && Variables.joyOp.getPOV() == 0))
+		if((Variables.forwardIntake && Joysticks.joyOp.getPOV() == 4) || (!Variables.forwardIntake && Joysticks.joyOp.getPOV() == 0))
 			Variables.forwardIntake = !Variables.forwardIntake;
+	}
+	
+	private void startMotor(CANTalon m, double speed) {
+		m.set(speed);
+	}
+	
+	private void stopMotor(CANTalon m) {
+		m.set(Motors.NO_POWER);
 	}
 }
