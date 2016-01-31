@@ -1,26 +1,24 @@
 package profile_switch.operator_profiles;
 
-import org.usfirst.frc.team1111.robot.Variables;
-
+import Variables.Joysticks;
+import Variables.Motors;
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class OperatorDuffy extends OperatorProfile {
 	//*****START OPERATOR SHOOTER METHODS*****
     
     
-    public void testShooter() {
-    	if (Variables.joyOp.getRawButton(Variables.A)) {
-    		shoot();
-    	}
-    }
-    
     public void shoot() {
-    	if (Variables.joyOp.getRawButton(Variables.RIGHT_TRIGGER)) {
-    		Variables.motorShooter.set(Variables.FULL_POWER);
+    	if (Joysticks.joyOp.getRawButton(Joysticks.LEFT_TRIGGER)) {
+    		Motors.motorShooter.set(Motors.FULL_POWER);
+    		
+    		if (Joysticks.joyOp.getRawButton(Joysticks.RIGHT_TRIGGER)) {
+    			Motors.motorChassisIntake.set(Motors.FULL_POWER);
+    		}
     	}
     	
     	else {
-    		Variables.motorShooter.set(Variables.NO_POWER);
+    		Motors.motorShooter.set(Motors.NO_POWER);
     	}
     }
     
@@ -29,8 +27,8 @@ public class OperatorDuffy extends OperatorProfile {
     
     
     public void testArm() {
-    	if (Variables.joyOp.getRawButton(Variables.X)) {
-        	if (Variables.joyOp.getRawButton(Variables.X)) {
+    	if (Joysticks.joyOp.getRawButton(Joysticks.X)) {
+        	if (Joysticks.joyOp.getRawButton(Joysticks.X)) {
         		moveArm(Variables.FRONT);
         		testIntake(Variables.FRONT);
         	}
@@ -67,27 +65,18 @@ public class OperatorDuffy extends OperatorProfile {
     	}
     }
     
-    public void moveArm(int side) {
-    	CANTalon motor;
-    	
-    	if (side == Variables.FRONT) { //Tests which arm is being controlled
-    		motor = Variables.motorArmFront;
+    public void moveArm() {    	
+    	int[] dPadUpRange = {Joysticks.D_PAD_UP, Joysticks.D_PAD_STRAFE_FORWARD_LEFT, Joysticks.D_PAD_STRAFE_FORWARD_LEFT};
+    	if (Joysticks.joyOp.getPOV() == Joysticks.D_PAD_UP) { //Moves arm up
+    		Motors.motorArm.set(Motors.FULL_POWER);
     	}
     	
-    	else {
-    		motor = Variables.motorArmBack;
+    	else if (Joysticks.joyOp.getPOV() == Joysticks.D_PAD_DOWN) { //Moves arm down
+    		Motors.motorArm.set(Motors.REVERSE_FULL_POWER);
     	}
     	
-    	if (Variables.joyOp.getPOV() == Variables.D_PAD_UP) { //Moves arm based on D-Pad input
-    		motor.set(Variables.FULL_POWER);
-    	}
-    	
-    	else if (Variables.joyOp.getPOV() == Variables.D_PAD_DOWN) {
-    		motor.set(Variables.REVERSE_FULL_POWER);
-    	}
-    	
-    	else {
-    		motor.set(Variables.NO_POWER);
+    	else { //Stops arm movement
+    		Motors.motorArm.set(Motors.NO_POWER);
     	}
     }
 }

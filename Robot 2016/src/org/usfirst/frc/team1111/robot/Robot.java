@@ -2,6 +2,9 @@
 package org.usfirst.frc.team1111.robot;
 
 import profile_switch.operator_profiles.OperatorProfile;
+import profile_switch.profile_switch.driver_profiles.Driver;
+import Variables.Joysticks;
+import Variables.Motors;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -66,35 +69,33 @@ public class Robot extends IterativeRobot {
      * Method that initializes the drive motors
      */
     private void driveMotorInit() {
-    	Variables.motorDriveFrontRight = new CANTalon(Variables.MDFR_PORT);
-    	Variables.motorDriveFrontLeft = new CANTalon(Variables.MDFL_PORT);
-    	Variables.motorDriveBackRight  = new CANTalon(Variables.MDBR_PORT);
-    	Variables.motorDriveBackLeft  = new CANTalon(Variables.MDBL_PORT);
+    	Motors.motorDriveFrontRight = new CANTalon(Motors.MDFR_PORT);
+    	Motors.motorDriveFrontLeft = new CANTalon(Motors.MDFL_PORT);
+    	Motors.motorDriveBackRight  = new CANTalon(Motors.MDBR_PORT);
+    	Motors.motorDriveBackLeft  = new CANTalon(Motors.MDBL_PORT);
     }
     
     /**
      * Method that initializes the arm manipulation motors
      */
     private void armMotorInit() {
-    	Variables.motorArmFront = new CANTalon(Variables.MAUDF_PORT);
-    	Variables.motorArmBack = new CANTalon(Variables.MAUDB_PORT);
+    	Motors.motorArmFront = new CANTalon(Motors.MAUDF_PORT);
+    	Motors.motorArmBack = new CANTalon(Motors.MAUDB_PORT);
     }
     
     /**
      * Method that initializes the shooter motor
      */
     private void shooterMotorInit() {
-    	Variables.motorShooter = new CANTalon(Variables.MS_PORT);
+    	Motors.motorShooter = new CANTalon(Motors.MS_PORT);
     }
     
     /**
      * Method that initializes the arm/chassis intake motors
      */
     private void intakeMotorInit() {
-    	Variables.motorArmIntakeFront = new CANTalon(Variables.MAIF_PORT);
-    	Variables.motorArmIntakeBack = new CANTalon(Variables.MAIB_PORT);
-    	Variables.motorChassisIntakeFront = new CANTalon(Variables.MCIF_PORT);
-    	Variables.motorChassisIntakeBack = new CANTalon(Variables.MCIB_PORT);
+    	Motors.motorArmIntake = new CANTalon(Motors.MAI_PORT);
+    	Motors.motorChassisIntake = new CANTalon(Motors.MCI_PORT);
     }
     
 	/**
@@ -128,37 +129,37 @@ public class Robot extends IterativeRobot {
     }
     
     public void autoDrive(double d) {
-    	Variables.motorDriveFrontRight.set(d);
-    	Variables.motorDriveFrontLeft.set(d);
+    	Motors.motorDriveFrontRight.set(d);
+    	Motors.motorDriveFrontLeft.set(d);
     	
-    	Variables.motorDriveBackRight.set(d);
-    	Variables.motorDriveBackLeft.set(d);
+    	Motors.motorDriveBackRight.set(d);
+    	Motors.motorDriveBackLeft.set(d);
     }
     
     public void autoBreakPortcullis() {
-    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER); //Lowers front arm
-    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER); //Lowers back arm
+    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER); //Lowers front arm
+    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER); //Lowers back arm
     	// TODO Wait time or encoder
     	
-    	autoMoveArm(Variables.motorArmFront, Variables.NO_POWER);     // stop front arm movement
-    	autoMoveArm(Variables.motorArmBack, Variables.NO_POWER);       // stop back arm movement
-    	autoDrive(Variables.QUARTER_POWER);   // move forward
+    	autoMoveArm(Motors.motorArmFront, Motors.NO_POWER);     // stop front arm movement
+    	autoMoveArm(Motors.motorArmBack, Motors.NO_POWER);       // stop back arm movement
+    	autoDrive(Motors.QUARTER_POWER);   // move forward
     	// TODO implement locations stuffs with encoders
     	
-    	autoMoveArm(Variables.motorArmFront, Variables.QUARTER_POWER); // lift front arm
+    	autoMoveArm(Motors.motorArmFront, Motors.QUARTER_POWER); // lift front arm
     	// TODO implement wait or encoder
     	
-    	autoDrive(Variables.QUARTER_POWER);  //move forward
+    	autoDrive(Motors.QUARTER_POWER);  //move forward
     	// TODO implement encoder
     	
-    	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward after clearing defense
+    	autoDrive(Motors.REVERSE_QUARTER_POWER);  //move backward after clearing defense
     	// TODO implement encoder
     	
-    	autoMoveArm(Variables.motorArmFront, Variables.REVERSE_QUARTER_POWER);  //lower front arm
-    	autoMoveArm(Variables.motorArmBack, Variables.QUARTER_POWER);		   //lift back arm
+    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER);  //lower front arm
+    	autoMoveArm(Motors.motorArmBack, Motors.QUARTER_POWER);		   //lift back arm
     	// TODO Wait time or encoder
     	
-    	autoDrive(Variables.REVERSE_QUARTER_POWER);  //move backward back under defense
+    	autoDrive(Motors.REVERSE_QUARTER_POWER);  //move backward back under defense
     }
     
     public void autoMoveArm(CANTalon a, double d) {
@@ -201,10 +202,10 @@ public class Robot extends IterativeRobot {
     
     
     private void drive() {
-    	Variables.motorDriveFrontLeft.set(Variables.joyDrive.getRawAxis(1) * -1);
-    	Variables.motorDriveBackLeft.set(Variables.joyDrive.getRawAxis(1) * -1);
-    	Variables.motorDriveFrontRight.set(Variables.joyDrive.getRawAxis(3) * -1);
-    	Variables.motorDriveBackRight.set(Variables.joyDrive.getRawAxis(3) * -1);
+    	Motors.motorDriveFrontLeft.set(Joysticks.joyDrive.getRawAxis(1) * -1);
+    	Motors.motorDriveBackLeft.set(Joysticks.joyDrive.getRawAxis(1) * -1);
+    	Motors.motorDriveFrontRight.set(Joysticks.joyDrive.getRawAxis(3) * -1);
+    	Motors.motorDriveBackRight.set(Joysticks.joyDrive.getRawAxis(3) * -1);
     }
     
     /**
