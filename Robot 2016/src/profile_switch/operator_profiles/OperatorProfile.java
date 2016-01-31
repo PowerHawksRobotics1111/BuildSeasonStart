@@ -60,13 +60,6 @@ public class OperatorProfile {
 				System.out.print("");//code to reverse intakeArm
 	}
 	
-	public void intakeSwitcher()
-	{
-		//switches to forward or backwards intake based on which button on the dpad is pressed (up or down)
-		if((Variables.forwardIntake && Joysticks.joyOp.getPOV() == 4) || (!Variables.forwardIntake && Joysticks.joyOp.getPOV() == 0))
-			Variables.forwardIntake = !Variables.forwardIntake;
-	}
-	
 	private void startMotor(CANTalon m, double speed) {
 		m.set(speed);
 	}
