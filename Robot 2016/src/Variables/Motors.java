@@ -2,6 +2,7 @@ package Variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class Motors {
 	public static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; //Drive motors
@@ -19,4 +20,6 @@ public class Motors {
     public final static int LS_PORT = 1; //Sets port for the limit switch TODO Set port for the limit switch
     
     public final static DigitalInput limitSwitch = new DigitalInput(LS_PORT);
+    
+    public final static Encoder encoderArm = new Encoder();
 }
