@@ -5,7 +5,22 @@ import Variables.Motors;
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class OperatorProfile {
-
+	
+	//Control Variables (Buttons)
+	public int shootButton = Joysticks.X;
+	public int intakeButton;
+	public int outtakeButton;
+	public int armUpButton = Joysticks.Y;
+	public int armDownButton = Joysticks.A;
+	public int tapeArmExtend;
+	public int tapeArmRetract;
+	public int tapeArmRotUp;
+	public int tapeArmRotDown;
+	
+	public int overrideKillModifier;
+	
+	
+	
 	//Act Methods
 	public void shoot()
 	{
