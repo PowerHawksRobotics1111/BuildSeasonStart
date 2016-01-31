@@ -19,7 +19,9 @@ public class OperatorProfile {
 	
 	public int overrideKillModifier;
 	
-	public void opCheck() {
+	
+	//TODO Fill in then code and add checks for limit switches.
+	public void buttonCheck() {
 		if (Joysticks.joyOp.getRawButton(shootButton)) {
 			//shoot
 		}
@@ -60,65 +62,73 @@ public class OperatorProfile {
 		}
 	}
 	
-	//Act Methods
-	public void shoot()
-	{
-		//Normal shoot (buttons x and b)
-		if(Joysticks.joyOp.getRawButton(Joysticks.X) || Joysticks.joyOp.getRawButton(Joysticks.B))
-				System.out.print("");//code to shoot
-	}
-	
-	public void arm()
-	{
-		//Up arm (button y)
-		if(Joysticks.joyOp.getRawButton(Joysticks.Y))
-				System.out.print("");//code to arm
-		//Down arm (button a)
-		if(Joysticks.joyOp.getRawButton(Joysticks.A))
-				System.out.print("");//code to reverse arm
-	}
-	
 	public void intake()
 	{
-		//intake (button lb)
-		//Starts intake on left bumper
-		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER)) {
-			startMotor(Motors.motorArmIntake, Motors.FULL_POWER);
-			startMotor(Motors.motorChassisIntake, Motors.FULL_POWER);
+		if(false/*TODO the limit switch*/)
+		{
+			
 		}
-		
-		//Stops intake on left/right bumper
-		if (Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER) && Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER)) {
-			stopMotor(Motors.motorArmIntake);
-			stopMotor(Motors.motorChassisIntake);
-		}
-		
-		//Stops motor if intake switch is it
-		else if (Motors.limitSwitch.get()) {
-			stopMotor(Motors.motorArmIntake);
-			stopMotor(Motors.motorChassisIntake);
-		}
-				
-		//outtake (button rb)
-		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER))
-				System.out.print("");//code to reverse intake
 	}
 	
-	public void intakeArm()
-	{
-		//Forward intakeArm (button lt)
-		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_TRIGGER))
-				System.out.print("");//code to intakeArm
-		//Reverse intakeArm (button rt)
-		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_TRIGGER))
-				System.out.print("");//code to reverse intakeArm
-	}
-	
-	private void startMotor(CANTalon m, double speed) {
-		m.set(speed);
-	}
-	
-	private void stopMotor(CANTalon m) {
-		m.set(Motors.NO_POWER);
-	}
+	//Act Methods TODO Rewrite these to fit the new system and robot.
+//	public void shoot()
+//	{
+//		//Normal shoot (buttons x and b)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.X) || Joysticks.joyOp.getRawButton(Joysticks.B))
+//				System.out.print("");//code to shoot
+//	}
+//	
+//	public void arm()
+//	{
+//		//Up arm (button y)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.Y))
+//				System.out.print("");//code to arm
+//		//Down arm (button a)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.A))
+//				System.out.print("");//code to reverse arm
+//	}
+//	
+//	public void intake()
+//	{
+//		//intake (button lb)
+//		//Starts intake on left bumper
+//		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER)) {
+//			startMotor(Motors.motorArmIntake, Motors.FULL_POWER);
+//			startMotor(Motors.motorChassisIntake, Motors.FULL_POWER);
+//		}
+//		
+//		//Stops intake on left/right bumper
+//		if (Joysticks.joyOp.getRawButton(Joysticks.LEFT_BUMPER) && Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER)) {
+//			stopMotor(Motors.motorArmIntake);
+//			stopMotor(Motors.motorChassisIntake);
+//		}
+//		
+//		//Stops motor if intake switch is it
+//		else if (Motors.limitSwitch.get()) {
+//			stopMotor(Motors.motorArmIntake);
+//			stopMotor(Motors.motorChassisIntake);
+//		}
+//				
+//		//outtake (button rb)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_BUMPER))
+//				System.out.print("");//code to reverse intake
+//	}
+//	
+//	public void intakeArm()
+//	{
+//		//Forward intakeArm (button lt)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.LEFT_TRIGGER))
+//				System.out.print("");//code to intakeArm
+//		//Reverse intakeArm (button rt)
+//		if(Joysticks.joyOp.getRawButton(Joysticks.RIGHT_TRIGGER))
+//				System.out.print("");//code to reverse intakeArm
+//	}
+//	
+//	private void startMotor(CANTalon m, double speed) {
+//		m.set(speed);
+//	}
+//	
+//	private void stopMotor(CANTalon m) {
+//		m.set(Motors.NO_POWER);
+//	}
 }
