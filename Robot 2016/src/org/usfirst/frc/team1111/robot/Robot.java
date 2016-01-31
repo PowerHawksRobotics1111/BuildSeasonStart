@@ -79,8 +79,7 @@ public class Robot extends IterativeRobot {
      * Method that initializes the arm manipulation motors
      */
     private void armMotorInit() {
-    	Motors.motorArmFront = new CANTalon(Motors.MAUDF_PORT);
-    	Motors.motorArmBack = new CANTalon(Motors.MAUDB_PORT);
+    	Motors.motorArm = new CANTalon(Motors.MAF_PORT);
     }
     
     /**
@@ -94,7 +93,6 @@ public class Robot extends IterativeRobot {
      * Method that initializes the arm/chassis intake motors
      */
     private void intakeMotorInit() {
-    	Motors.motorArmIntake = new CANTalon(Motors.MAI_PORT);
     	Motors.motorChassisIntake = new CANTalon(Motors.MCI_PORT);
     }
     
@@ -107,7 +105,8 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
-    public void autonomousInit() {
+    public void autonomousInit() 
+    {
     	autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
@@ -116,7 +115,8 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during autonomous
      */
-    public void autonomousPeriodic() {
+    public void autonomousPeriodic() 
+    {
     	switch(autoSelected) {
 //    	case customAuto:
 //        //Put custom auto code here   
@@ -128,7 +128,8 @@ public class Robot extends IterativeRobot {
     	}
     }
     
-    public void autoDrive(double d) {
+    public void autoDrive(double d) 
+    {
     	Motors.motorDriveFrontRight.set(d);
     	Motors.motorDriveFrontLeft.set(d);
     	
@@ -137,16 +138,14 @@ public class Robot extends IterativeRobot {
     }
     
     public void autoBreakPortcullis() {
-    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER); //Lowers front arm
-    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER); //Lowers back arm
+    	autoMoveArm(Motors.motorArm, Motors.REVERSE_QUARTER_POWER); //Lowers front arm
     	// TODO Wait time or encoder
     	
-    	autoMoveArm(Motors.motorArmFront, Motors.NO_POWER);     // stop front arm movement
-    	autoMoveArm(Motors.motorArmBack, Motors.NO_POWER);       // stop back arm movement
+    	autoMoveArm(Motors.motorArm, Motors.NO_POWER);     // stop front arm movement
     	autoDrive(Motors.QUARTER_POWER);   // move forward
     	// TODO implement locations stuffs with encoders
     	
-    	autoMoveArm(Motors.motorArmFront, Motors.QUARTER_POWER); // lift front arm
+    	autoMoveArm(Motors.motorArm, Motors.QUARTER_POWER); // lift front arm
     	// TODO implement wait or encoder
     	
     	autoDrive(Motors.QUARTER_POWER);  //move forward
@@ -155,8 +154,8 @@ public class Robot extends IterativeRobot {
     	autoDrive(Motors.REVERSE_QUARTER_POWER);  //move backward after clearing defense
     	// TODO implement encoder
     	
-    	autoMoveArm(Motors.motorArmFront, Motors.REVERSE_QUARTER_POWER);  //lower front arm
-    	autoMoveArm(Motors.motorArmBack, Motors.QUARTER_POWER);		   //lift back arm
+    	autoMoveArm(Motors.motorArm, Motors.REVERSE_QUARTER_POWER);  //lower front arm
+    	autoMoveArm(Motors.motorArm, Motors.QUARTER_POWER);		   //lift back arm
     	// TODO Wait time or encoder
     	
     	autoDrive(Motors.REVERSE_QUARTER_POWER);  //move backward back under defense
