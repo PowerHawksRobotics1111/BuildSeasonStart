@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team1111.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +21,7 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
+    AHRS mxp;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -28,6 +32,7 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
+        mxp = new AHRS(SerialPort.Port.kMXP);
     }
     
 	/**
@@ -64,7 +69,30 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("Raw X Accel", mxp.getRawAccelX());
+        SmartDashboard.putNumber("Raw Y Accel", mxp.getRawAccelY());
+        SmartDashboard.putNumber("Raw Z Accel", mxp.getRawAccelZ());
         
+        SmartDashboard.putNumber("Linear X Accel", mxp.getWorldLinearAccelX());
+        SmartDashboard.putNumber("Linear Y Accel", mxp.getWorldLinearAccelY());
+        SmartDashboard.putNumber("Linear Z Accel", mxp.getWorldLinearAccelZ());
+        
+        SmartDashboard.putNumber("Angle", mxp.getAngle());
+        
+        SmartDashboard.putNumber("X Velocity", mxp.getVelocityX());
+        SmartDashboard.putNumber("Y Velocity", mxp.getVelocityY());
+        SmartDashboard.putNumber("Z Velocity", mxp.getVelocityZ());
+        
+        SmartDashboard.putNumber("X Displacement", mxp.getDisplacementX());
+        SmartDashboard.putNumber("Y Displacement", mxp.getDisplacementY());
+        SmartDashboard.putNumber("Z Displacement", mxp.getDisplacementZ());
+        
+        SmartDashboard.putNumber("X Magnetic", mxp.getRawMagX());
+        SmartDashboard.putNumber("Y Magnetic", mxp.getRawMagY());
+        SmartDashboard.putNumber("Z Magnetic", mxp.getRawMagZ());
+        
+        SmartDashboard.putNumber("Horizontal Displcement", Math.sqrt(Math.pow((double)mxp.getDisplacementX(), 2) + Math.pow((double)mxp.getDisplacementZ(), 2)));
+        SmartDashboard.putNumber("Horizantal Angle Radians", Math.tan((double)(mxp.getDisplacementZ())/(double)(mxp.getDisplacementX())));
     }
     
     /**
