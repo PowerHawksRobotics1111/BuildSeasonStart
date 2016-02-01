@@ -16,106 +16,133 @@ public class Auto
 	//Catergories B & D Rock Wall, Rough Terrarin, Moat, Ramparts, Lowbar
 	    public void autoBreakDefault()
 	    {
-	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER);
-	    	autoDrive(Motors.QUARTER_POWER);
-	    	//TODO encoder stuff to end of obstacle
-	    	autoDrive(Motors.REVERSE_QUARTER_POWER);
-	    	//TODO encoder stuff to neutral zone
+	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER); //Moves arm down. TODO add distance to travel parameter
+	    	autoDrive(Motors.QUARTER_POWER); //Drives forward across defense. //TODO add distance to travel parameter
+	    	autoDrive(Motors.REVERSE_QUARTER_POWER); //Drives backward to neutral zone. TODO add distance to travel parameter
 	    }
 	    
 	    public void autoBreakPortcullis() 
 	    {
-	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER); //Lowers front arm
-	    	
-	    	
-	    	autoMoveArm(Motors.NO_POWER);     // stop front arm movement
-	    	autoDrive(Motors.QUARTER_POWER);   // move forward
-	    	// TODO implement locations stuffs with encoders
-	    	
-	    	autoMoveArm(Motors.QUARTER_POWER); // lift front arm
-	    	// TODO implement wait or encoder
-	    	
-	    	autoDrive(Motors.QUARTER_POWER);  //move forward
-	    	// TODO implement encoder
+	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER); //Lowers arm. TODO add distance to travel argument
+	    	autoDrive(Motors.QUARTER_POWER); //move forward to portcullis. TODO add distance to travel argument	    	
+	    	autoMoveArm(Motors.QUARTER_POWER); //Moves arm up to raise portcullis. TODO add distance to travel argument	    	
+	    	autoDrive(Motors.QUARTER_POWER);  //move forward under and across portcullis. TODO add distance to travel argument	 
 	    	
 	    	//TODO  implement way to get back to neutral zone
 	    }
 	    
 	    public void autoBreakSeesaws()
 	    {
-	    	autoDrive(Motors.QUARTER_POWER);
-	    	//TODO encoder stuff to stop at obstacle
+	    	autoDrive(Motors.QUARTER_POWER); //TODO add distance to travel argument
 	    	
-	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER);
-	    	autoDrive(Motors.QUARTER_POWER);
-	    	//TODO encoder stuff to kinda on the obstacle
+	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER); //TODO add distance to travel argument
+	    	autoDrive(Motors.QUARTER_POWER); //TODO add distance to travel argument
 	    	
-	    	autoMoveArm(Motors.QUARTER_POWER);
-	    	autoDrive(Motors.QUARTER_POWER);
-	    	//TODO encoder stuff to end of obstacle
+	    	autoMoveArm(Motors.QUARTER_POWER); //TODO add distance to travel argument
+	    	autoDrive(Motors.QUARTER_POWER); //TODO add distance to travel argument
 	    }
 	    
 	    
 	    
 	    public void autoDrive(double d) 
 	    {
+	    	double yaw = mxp.getYaw();
 	    	mxp.reset();
-			  	
-	    	orientStraight(0);
 	    	
-		    if (mxp.getYaw() < 1 && mxp.getYaw() > -1)
+		    if (yaw < 5 && yaw > -5)
 		    {
-		    	Motors.motorDriveFrontRight.set(d);
-		    	Motors.motorDriveFrontLeft.set(d);
-		    	Motors.motorDriveBackRight.set(d);
-		    	Motors.motorDriveBackLeft.set(d);
+		    	autoActivateDriveMotors(d);
+		    }
+		    
+		    else if (yaw >= 5 || yaw <= -5) {
+		    	orientStraight(0);
+		    }
+		    
+		    else {
+		    	autoActivateDriveMotors(Motors.NO_POWER);
 		    }
 		}
 	    
+	    public void autoDrive(double d, double dist) {
+	    	double encRatio = calcEncoderRatio(dist), encDist = encRatio * dist, yaw = mxp.getYaw();
+	    	
+	    	mxp.reset();
+	    	
+		    if (yaw < 5 && yaw > -5 && Motors.motorDriveFrontLeft.getEncPosition() < encDist)
+		    {
+		    	autoActivateDriveMotors(d);
+		    }
+		    
+		    else if (yaw >= 5 || yaw <= -5) {
+		    	orientStraight(0);
+		    }
+		    
+		    else {
+		    	autoActivateDriveMotors(Motors.NO_POWER);
+		    }
+	    	
+	    }
+	    
+	    private void autoActivateDriveMotors(double d) {
+	    	Motors.motorDriveFrontRight.set(d);
+	    	Motors.motorDriveFrontLeft.set(d);
+	    	Motors.motorDriveBackRight.set(d);
+	    	Motors.motorDriveBackLeft.set(d);
+	    }
+	    
+	    private void autoDeactivateDriveMotors() {
+	    	Motors.motorDriveFrontRight.set(Motors.NO_POWER);
+	    	Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
+	    	Motors.motorDriveBackRight.set(Motors.NO_POWER);
+	    	Motors.motorDriveBackLeft.set(Motors.NO_POWER);
+	    }
+	    
 	    public void autoMoveArm(double d, double dist) 
 	    {
-	    	calcEncoderRatio(dist);
+	    	double encRatio = calcEncoderRatio(dist);
+	    	double distTicks = encRatio * dist;
 	    	
+	    	if (Motors.motorArm.getEncPosition() < distTicks) {
+	    		Motors.motorArm.set(d);
+	    	}
 	    	
-	    	while(armEncoder)
+	    	else {
+	    		Motors.motorArm.set(Motors.NO_POWER);
+	    	}
+	    }
+	    
+	    public void autoMoveArm(double d) {
 	    	Motors.motorArm.set(d);
 	    }
 	    
 	    public void autoRotate180()
 	    {
 	    	mxp.reset();
-	    	
-	    	while (mxp.getYaw() != 180 || mxp.getYaw() != -180) {
-	    		Motors.motorDriveFrontRight.set(Motors.QUARTER_POWER);
-	    		Motors.motorDriveBackRight.set(Motors.QUARTER_POWER);
-	    	}
-	    	
 	    	orientStraight(180);
 	    }
 	    
 	    public void orientStraight(int z) {
-	    	if (mxp.getYaw() > z) {
-	    		while (mxp.getYaw() > z) {
-	    			Motors.motorDriveFrontLeft.set(Motors.QUARTER_POWER);
-	    			Motors.motorDriveBackLeft.set(Motors.QUARTER_POWER);
-	    		}
+	    	double yaw = mxp.getYaw();
+	    	
+	    	if (yaw > z - 5) {
+	    		Motors.motorDriveFrontLeft.set(Motors.QUARTER_POWER);
+	    		Motors.motorDriveBackLeft.set(Motors.QUARTER_POWER);
+	    	}
+	    	
+	    	else if (yaw < z + 5){
+	    		Motors.motorDriveFrontRight.set(Motors.QUARTER_POWER);
+	    		Motors.motorDriveBackRight.set(Motors.QUARTER_POWER);
 	    	}
 	    	
 	    	else {
-	    		while (mxp.getYaw() < z) {
-	    			Motors.motorDriveFrontRight.set(Motors.QUARTER_POWER);
-	    			Motors.motorDriveBackRight.set(Motors.QUARTER_POWER);
-	    		}
+	    		autoDeactivateDriveMotors();
 	    	}
 	    }
 	    
 	    
 	    
-	    public void calcEncoderRatio(double dist) {
+	    public double calcEncoderRatio(double dist) {
 	    	double circumference = Math.PI * DIAMETER;
-	    	encoderTickRatio = (360 / circumference) * dist;
+	    	return (360 / circumference) * dist;
 	    }
-	    
-	    
-
 }

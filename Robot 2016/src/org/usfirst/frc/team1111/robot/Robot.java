@@ -2,7 +2,6 @@
 package org.usfirst.frc.team1111.robot;
 
 import profile_switch.operator_profiles.OperatorProfile;
-import profile_switch.profile_switch.driver_profiles.Driver;
 import Variables.Joysticks;
 import Variables.Motors;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -53,47 +52,7 @@ public class Robot extends IterativeRobot {
 //        SmartDashboard.putData("Operator", operatorChooser);
         
         
-        motorInit(); //Initializes motors
-    }
-    
-    /**
-     * Method that initializes the motors on the robot
-     */
-    private void motorInit() {
-    	driveMotorInit();
-    	armMotorInit();
-    	intakeMotorInit();
-    	shooterMotorInit();
-    }
-    /**
-     * Method that initializes the drive motors
-     */
-    private void driveMotorInit() {
-    	Motors.motorDriveFrontRight = new CANTalon(Motors.MDFR_PORT);
-    	Motors.motorDriveFrontLeft = new CANTalon(Motors.MDFL_PORT);
-    	Motors.motorDriveBackRight  = new CANTalon(Motors.MDBR_PORT);
-    	Motors.motorDriveBackLeft  = new CANTalon(Motors.MDBL_PORT);
-    }
-    
-    /**
-     * Method that initializes the arm manipulation motors
-     */
-    private void armMotorInit() {
-    	Motors.motorArm = new CANTalon(Motors.MAF_PORT);
-    }
-    
-    /**
-     * Method that initializes the shooter motor
-     */
-    private void shooterMotorInit() {
-    	Motors.motorShooter = new CANTalon(Motors.MS_PORT);
-    }
-    
-    /**
-     * Method that initializes the arm/chassis intake motors
-     */
-    private void intakeMotorInit() {
-    	Motors.motorChassisIntake = new CANTalon(Motors.MCI_PORT);
+        Motors.motorInit(); //Initializes motors
     }
     
 	/**

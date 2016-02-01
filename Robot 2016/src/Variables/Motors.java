@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Encoder;
 public class Motors {
 	public static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; //Drive motors
     public static CANTalon motorArm; //Arm manipulation motors
-    public static CANTalon motorArmIntake, motorChassisIntake, motorShooter; //Arm/chassis intake and shooter motors
+    public static CANTalon motorIntake, motorShooter; //Arm/chassis intake and shooter motors
     
     public final static int MAF_PORT = 1; //Sets the port number of the arm manipulation motors. TODO Configure the arm manipulation motor ports.
     public final static int MCI_PORT = 1, MS_PORT = 1; //Sets the port number of the arm/chassis intake and shooter motors.
@@ -21,5 +21,43 @@ public class Motors {
     
     public final static DigitalInput limitSwitch = new DigitalInput(LS_PORT);
     
+    /**
+     * Method that initializes the motors on the robot
+     */
+    public static void motorInit() {
+    	driveMotorInit();
+    	armMotorInit();
+    	intakeMotorInit();
+    	shooterMotorInit();
+    }
+    /**
+     * Method that initializes the drive motors
+     */
+    private static void driveMotorInit() {
+    	motorDriveFrontRight = new CANTalon(MDFR_PORT);
+    	motorDriveFrontLeft = new CANTalon(MDFL_PORT);
+    	motorDriveBackRight  = new CANTalon(MDBR_PORT);
+    	motorDriveBackLeft  = new CANTalon(MDBL_PORT);
+    }
     
+    /**
+     * Method that initializes the arm manipulation motors
+     */
+    private static void armMotorInit() {
+    	motorArm = new CANTalon(MAF_PORT);
+    }
+    
+    /**
+     * Method that initializes the shooter motor
+     */
+    private static void shooterMotorInit() {
+    	motorShooter = new CANTalon(MS_PORT);
+    }
+    
+    /**
+     * Method that initializes the arm/chassis intake motors
+     */
+    private static void intakeMotorInit() {
+    	motorIntake = new CANTalon(MCI_PORT);
+    }
 }
