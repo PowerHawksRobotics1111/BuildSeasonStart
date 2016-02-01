@@ -21,5 +21,5 @@ public class Motors {
     
     public final static DigitalInput limitSwitch = new DigitalInput(LS_PORT);
     
-    public final static Encoder encoderArm = new Encoder();
+    
 }
