@@ -27,7 +27,8 @@ public class Robot extends IterativeRobot {
     OperatorProfile operator;
     SendableChooser operatorChooser;
    
-	
+	final int START = 10;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.

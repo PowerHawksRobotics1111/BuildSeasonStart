@@ -8,6 +8,8 @@ public class Joysticks {
 	    																											  //TODO verify/configure LT and RT
 	 public final static int D_PAD_UP = 0, D_PAD_STRAFE_FORWARD_RIGHT = 45, D_PAD_RIGHT = 90, D_PAD_STRAFE_BACKWARD_RIGHT = 135, D_PAD_DOWN = 180, D_PAD_STRAFE_BACKWARD_LEFT = 225,
 	    		  D_PAD_LEFT = 270, D_PAD_STRAFE_FORWARD_LEFT = 315, D_PAD_OFF = -1; //Maps the controller's D-Pad.
+	 
+	 public final static int START = 10;
 	    
 	 public final static Joystick joyDrive = new Joystick (0), joyOp = new Joystick(1); // Driver/operator joysticks
 }
