@@ -124,12 +124,12 @@ public class Auto
 	    public void orientStraight(int z) {
 	    	double yaw = mxp.getYaw();
 	    	
-	    	if (yaw > z - 5) {
+	    	if (yaw > z) {
 	    		Motors.motorDriveFrontLeft.set(Motors.QUARTER_POWER);
 	    		Motors.motorDriveBackLeft.set(Motors.QUARTER_POWER);
 	    	}
 	    	
-	    	else if (yaw < z + 5){
+	    	else if (yaw < z){
 	    		Motors.motorDriveFrontRight.set(Motors.QUARTER_POWER);
 	    		Motors.motorDriveBackRight.set(Motors.QUARTER_POWER);
 	    	}
