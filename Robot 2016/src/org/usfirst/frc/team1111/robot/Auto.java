@@ -7,13 +7,13 @@ import com.kauailabs.navx.frc.*;
 
 public class Auto 
 {
-//Put contrustor and init in robot class
+	//Put contrustor and init in robot class
 	AHRS mxp = new AHRS(SerialPort.Port.kMXP);
 	double encoderTickRatio;
 	final double DIAMETER = 8;
 	
 
-	//Catergories B & D Rock Wall, Rough Terrarin, Moat, Ramparts, Lowbar
+	//Catergories B & D Rock Wall, Rough Terrarin, Ramparts, Lowbar
 	    public void autoBreakDefault()
 	    {
 	    	autoMoveArm(Motors.REVERSE_QUARTER_POWER); //Moves arm down. TODO add distance to travel parameter
@@ -83,14 +83,14 @@ public class Auto
 	    	
 	    }
 	    
-	    private void autoActivateDriveMotors(double d) {
+	    protected void autoActivateDriveMotors(double d) {
 	    	Motors.motorDriveFrontRight.set(d);
 	    	Motors.motorDriveFrontLeft.set(d);
 	    	Motors.motorDriveBackRight.set(d);
 	    	Motors.motorDriveBackLeft.set(d);
 	    }
 	    
-	    private void autoDeactivateDriveMotors() {
+	    protected void autoDeactivateDriveMotors() {
 	    	Motors.motorDriveFrontRight.set(Motors.NO_POWER);
 	    	Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
 	    	Motors.motorDriveBackRight.set(Motors.NO_POWER);
@@ -124,12 +124,12 @@ public class Auto
 	    public void orientStraight(int z) {
 	    	double yaw = mxp.getYaw();
 	    	
-	    	if (yaw > z) {
+	    	if (yaw > z + 5) {
 	    		Motors.motorDriveFrontLeft.set(Motors.QUARTER_POWER);
 	    		Motors.motorDriveBackLeft.set(Motors.QUARTER_POWER);
 	    	}
 	    	
-	    	else if (yaw < z){
+	    	else if (yaw < z - 5){
 	    		Motors.motorDriveFrontRight.set(Motors.QUARTER_POWER);
 	    		Motors.motorDriveBackRight.set(Motors.QUARTER_POWER);
 	    	}
