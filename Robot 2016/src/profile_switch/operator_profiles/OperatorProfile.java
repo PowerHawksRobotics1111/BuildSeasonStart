@@ -2,6 +2,7 @@ package profile_switch.operator_profiles;
 
 import Variables.Joysticks;
 import Variables.Motors;
+import Variables.Sensors;
 import edu.wpi.first.wpilibj.CANTalon;
 
 public class OperatorProfile {
@@ -10,7 +11,9 @@ public class OperatorProfile {
 	public int shootButton = Joysticks.X;
 	public int intakeButton = Joysticks.Y;
 	public int outtakeButton = Joysticks.A;
-	public int armUpButton; //TODO arm up and down are on the D-Pad
+	/** @deprecated*/
+	public int armUpButton;
+	/** @deprecated*/
 	public int armDownButton;
 	public int tapeArmExtend = Joysticks.RIGHT_BUMPER;
 	public int tapeArmRetract = Joysticks.LEFT_BUMPER;
@@ -36,10 +39,10 @@ public class OperatorProfile {
 		else if (Joysticks.joyOp.getRawButton(outtakeButton)) {
 			//run intake motor to push ball out
 		}
-		if (Joysticks.joyOp.getRawButton(armUpButton)) {
+		if (Joysticks.joyOp.getPOV() == 0) {
 			//rotate intake arm up
 		}
-		else if (Joysticks.joyOp.getRawButton(armDownButton)) {
+		else if (Joysticks.joyOp.getPOV() == 4) {
 			//rotate intake arm down
 		}
 		if (Joysticks.joyOp.getRawButton(tapeArmExtend)) {
@@ -69,7 +72,7 @@ public class OperatorProfile {
 	
 	public void intake()
 	{
-		if(false/*TODO the limit switch*/)
+		if(!Sensors.limitSwitch.get())
 		{
 			
 		}
