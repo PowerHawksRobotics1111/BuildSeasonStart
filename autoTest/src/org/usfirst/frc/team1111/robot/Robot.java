@@ -24,8 +24,8 @@ public class Robot extends IterativeRobot {
     String autoSelected;
     SendableChooser chooser;
     
-    final double TEST_DIST = 36, DIAMETER = 8;
-    final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25;
+    final double TEST_DIST = 36, DIAMETER = 8, TEST_ORIENTATION = 180;
+    final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25, NO_POWER = 0;
 	double encoderRatio, encoderTickRate, encoderDist;
 	double orientation;
 	CANTalon testMotor = new CANTalon(42);
@@ -68,8 +68,9 @@ public class Robot extends IterativeRobot {
     		break;
     		
     	case NAVX_TEST:
-    		testNavX();
+    		testNavX(180);
     		break;
+    		
     	default:
     		generalTest();
     		break;
@@ -81,36 +82,42 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void generalTest() {
-		testEncoder(); testNavX();
+		testEncoder(); testNavX(TEST_ORIENTATION);
 		double yaw = mxp.getYaw();
 		double neededEncoderTicks = encoderRatio * TEST_DIST;
 		double encoderTicks = testMotor.getEncPosition();
 		
-		if (yaw != 0) {
+		if (yaw != TEST_ORIENTATION) {
 			orientStraight(0);
 		}
 		
-		else if (encoderTicks < neededEncoder){
+		else if (encoderTicks < neededEncoderTicks){
 			testMotor.set(QUARTER_POWER);
+		}
+		
+		else {
+			testMotor.set(NO_POWER);
 		}
 	}
 	
 	public void testEncoder() {
 		calcEncoderRatio(TEST_DIST);
 		printVariable("Ticks", testMotor.getEncPosition());
+		
 	}
 	
-	public void testNavX() {
+	public void testNavX(double nO) {
 		printVariable("Orientation", mxp.getYaw());
+		printVariable("Needed orientation", nO);
 	}
     
     public void autoRotate180()
     {
     	mxp.reset();
-    	orientStraight(180);
+    	orientStraight(TEST_ORIENTATION);
     }
     
-    public void orientStraight(int z) {
+    public void orientStraight(double z) {
     	double yaw = mxp.getYaw();
     	
     	if (yaw > z + 5) {
@@ -122,7 +129,7 @@ public class Robot extends IterativeRobot {
     	}
     	
     	else {
-    		testMotor.set(0);
+    		testMotor.set(NO_POWER);
     	}
     }
     
