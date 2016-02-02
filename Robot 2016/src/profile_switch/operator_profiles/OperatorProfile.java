@@ -8,16 +8,21 @@ public class OperatorProfile {
 	
 	//Control Variables (Buttons)
 	public int shootButton = Joysticks.X;
-	public int intakeButton;
-	public int outtakeButton;
-	public int armUpButton = Joysticks.Y;
-	public int armDownButton = Joysticks.A;
-	public int tapeArmExtend;
-	public int tapeArmRetract;
-	public int tapeArmRotUp;
-	public int tapeArmRotDown;
+	public int intakeButton = Joysticks.Y;
+	public int outtakeButton = Joysticks.A;
+	public int armUpButton; //TODO arm up and down are on the D-Pad
+	public int armDownButton;
+	public int tapeArmExtend = Joysticks.RIGHT_BUMPER;
+	public int tapeArmRetract = Joysticks.LEFT_BUMPER;
+	public int tapeArmRotUp = Joysticks.RIGHT_TRIGGER;
+	public int tapeArmRotDown = Joysticks.LEFT_TRIGGER;
 	
-	public int overrideKillModifier;
+	public int overrideKillModifier = Joysticks.START;
+	
+	public OperatorProfile()
+	{
+		
+	}
 	
 	
 	//TODO Fill in then code and add checks for limit switches.
