@@ -24,9 +24,10 @@ public class Robot extends IterativeRobot {
     String autoSelected;
     SendableChooser chooser;
     
-    final double TEST_DIST = 36, DIAMETER = 8, TEST_ORIENTATION = 180;
+    final double TEST_DIST = 36, DIAMETER = 8;
+    final int TEST_ORIENTATION = 180;
     final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25, NO_POWER = 0;
-	double encoderRatio, encoderTickRate, encoderDist;
+	double encoderRatio = calcEncoderRatio(TEST_DIST), encoderDist = encoderRatio * TEST_DIST;
 	double orientation;
 	CANTalon testMotor = new CANTalon(42);
 	AHRS mxp = new AHRS(SerialPort.Port.kMXP);
@@ -101,9 +102,17 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void testEncoder() {
-		calcEncoderRatio(TEST_DIST);
-		printVariable("Ticks", testMotor.getEncPosition());
+		int encoderPos = testMotor.getEncPosition();
 		
+		printVariable("Ticks", encoderPos);
+		
+		if (encoderPos < encoderDist) {
+			testMotor.set(QUARTER_POWER);
+		}
+		
+		else {
+			testMotor.set(NO_POWER);
+		}
 	}
 	
 	public void testNavX(double nO) {
@@ -117,7 +126,7 @@ public class Robot extends IterativeRobot {
     	orientStraight(TEST_ORIENTATION);
     }
     
-    public void orientStraight(double z) {
+    public void orientStraight(int z) {
     	double yaw = mxp.getYaw();
     	
     	if (yaw > z + 5) {
