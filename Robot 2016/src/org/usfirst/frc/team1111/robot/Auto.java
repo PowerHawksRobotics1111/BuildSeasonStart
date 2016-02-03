@@ -1,13 +1,13 @@
 package org.usfirst.frc.team1111.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import Variables.Motors;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SerialPort;
-import com.kauailabs.navx.frc.*;
 
 public class Auto 
 {
-	//Put contrustor and init in robot class
+	//TODO make final reference for navx in Variables.Sensors. Do we need to Init in Robot?
 	AHRS mxp = new AHRS(SerialPort.Port.kMXP);
 	double encoderTickRatio;
 	final double DIAMETER = 8;

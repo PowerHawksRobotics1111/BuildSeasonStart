@@ -5,6 +5,9 @@ import Variables.Motors;
 import Variables.Sensors;
 import edu.wpi.first.wpilibj.CANTalon;
 
+/**
+ *@deprecated
+ */
 public class OperatorProfile {
 	
 	//Control Variables (Buttons)

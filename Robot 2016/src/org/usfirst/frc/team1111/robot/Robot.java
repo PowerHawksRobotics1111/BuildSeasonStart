@@ -25,7 +25,6 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     
     OperatorProfile operator;
-    SendableChooser operatorChooser;
    
 	final int START = 10;
     
@@ -44,14 +43,6 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Break Portcullis", PORTCULLIS);
         chooser.addObject("Break 2 Defenses", CHANGE_DEFENSES);
         SmartDashboard.putData("Auto choices", chooser);
-        
-        //Operator
-//        operatorChooser = new SendableChooser();
-//        operatorChooser.addDefault("Pesswagno", Variables.KYLE);
-//        operatorChooser.addObject("Duffy", Variables.DUFFY);
-//        operatorChooser.addObject("Ricky", Variables.RICARDO);
-//        SmartDashboard.putData("Operator", operatorChooser);
-        
         
         Motors.motorInit(); //Initializes motors
     }
@@ -124,6 +115,7 @@ public class Robot extends IterativeRobot {
     public void autoMoveArm(CANTalon a, double d) {
     	a.set(d);
     }
+    
     /**
      * This function is called periodically during operator control
      */
@@ -134,11 +126,17 @@ public class Robot extends IterativeRobot {
         chooseProfile();
     }
     
+    /**
+     * @deprecated
+     */
     private void profileInit() {
     	profileSelected = (String) chooser.getSelected();
 //		profileSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Profile selected: " + profileSelected);    }
     
+    /**
+     * @deprecated
+     */
     private void chooseProfile() {
     	profileInit();
     	

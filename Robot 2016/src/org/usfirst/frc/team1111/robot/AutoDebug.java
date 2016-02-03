@@ -6,8 +6,6 @@ public class AutoDebug extends Auto {
 	final double DIAMETER = 8;
 	double encoderRatio, encoderTickRate, encoderDist;
 	double orientation;
-	CANTalon
-	
 	
 	
 	public void printVariables() {
