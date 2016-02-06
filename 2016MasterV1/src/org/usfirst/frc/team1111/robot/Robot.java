@@ -19,6 +19,8 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
+	
+	Operator op = new Operator();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,6 +32,8 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
+		
+		Motors.motorInit();
 	}
 
 	/**
@@ -72,6 +76,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic()
 	{
 		drive();
+		op.operate();
 	}
 
 	/**
@@ -79,19 +84,19 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic()
 	{
-
+		
 	}
 	
-	void drive()
+	public void drive()
 	{
 		double right = variables.Joysticks.joyDrive.getRawAxis(3);
 		double left = variables.Joysticks.joyDrive.getRawAxis(1);
 		
-		Motors.motorDriveFrontLeft.set(left);
-		Motors.motorDriveBackLeft.set(left);
+		Motors.motorDriveFrontLeft.set(-left);
+		Motors.motorDriveBackLeft.set(-left);
 		
-		Motors.motorDriveFrontRight.set(right);
-		Motors.motorDriveBackRight.set(right);
+		Motors.motorDriveFrontRight.set(-right);
+		Motors.motorDriveBackRight.set(-right);
 	}
 
 }
