@@ -26,16 +26,9 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 
-	final double TEST_DIST = 36, DIAMETER = 6;
-	final int TEST_ORIENTATION = -45;
-	final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25, NO_POWER = 0;
-	double encoderRatio = calcEncoderRatio(TEST_DIST), encoderDist = encoderRatio * TEST_DIST;
-	double orientation;
-	CANTalon testMotorFrontLeft = new  CANTalon(47), testMotorFrontRight = new CANTalon(46), testMotorBackLeft = new CANTalon(57),
-			 testMotorBackRight = new CANTalon(51);
-	AHRS mxp = new AHRS(SerialPort.Port.kMXP);
-	boolean resetEncoder = true;
-	Encoder encoderL = new Encoder(4, 3), encoderR = new Encoder(2, 1);
+
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
