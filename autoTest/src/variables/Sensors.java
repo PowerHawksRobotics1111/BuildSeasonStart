@@ -4,6 +4,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
+import util.SDPrinter;
 
 /**
  * Variables class that contains sensor variables necessary for function and declaration of necessary sensors
@@ -15,6 +16,12 @@ public class Sensors {
 	
 	//*****START GENERAL VARIABLES*****
 	
+	
+	/**
+	 * Wanted orientation for testing.
+	 * @Precondtion orientation must be >= -180 and <= 180;
+	 */
+	public static int orientation = 45;
 	
 	/**
 	 * Diameter of the wheels on the test chassis
@@ -34,13 +41,15 @@ public class Sensors {
 	/**
 	 * Encoders created based on DIO ports they're plugged into
 	 */
-	public Encoder encoderL = new Encoder(4, 3), encoderR = new Encoder(2, 1); 
+	public static Encoder encoderL = new Encoder(4, 3);
+
+	public Encoder encoderR = new Encoder(2, 1); 
 	
 	/**
 	 * Boolean for reseting encoders 
 	 * @TODO determine if this is necessary here
 	 */
-	public boolean resetEncoder = true; 
+	public static boolean resetEncoder = true; 
 	
 	/**
 	 * The number of ticks the encoder makes in one rotation (resolution) 

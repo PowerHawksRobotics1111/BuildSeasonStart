@@ -16,27 +16,27 @@ public class Motors {
 	/**
 	 * Sets motor to full power in respective direction
 	 */
-	public final int FULL_POWER = 1, REVERSE_FULL_POWER = -1;
+	public final static int FULL_POWER = 1, REVERSE_FULL_POWER = -1;
 	
 	/**
 	 * Sets motor speed to three quarters power in respective direction
 	 */
-	public final double THREE_Q_POWER = .75, REVERSE_THREE_Q_POWER = -.75;
+	public final static double THREE_Q_POWER = .75, REVERSE_THREE_Q_POWER = -.75;
 	
 	/**
 	 * Sets motor speed to half power in respective direction
 	 */
-	public final double HALF_POWER = .5, REVERSE_HALF_POWER = -.5;
+	public final static double HALF_POWER = .5, REVERSE_HALF_POWER = -.5;
 	
 	/**
 	 * Sets motor speed to quarter power in respective direction
 	 */
-	public final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25; 
+	public final static double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25; 
 	
 	/**
 	 * Sets motor to no power
 	 */
-	public final int NO_POWER = 0;
+	public final static int NO_POWER = 0;
 	
 	
 	//*****END MOTOR POWER VARIABLES*****
@@ -47,22 +47,22 @@ public class Motors {
 	/**
 	 * Front left drive motor
 	 */
-	public CANTalon driveMotorFrontLeft = new  CANTalon(47); 
+	public static CANTalon driveMotorFrontLeft = new  CANTalon(47); 
 	
 	/**
 	 * Front right drive motor
 	 */
-	public CANTalon driveMotorFrontRight = new CANTalon(46);
+	public static CANTalon driveMotorFrontRight = new CANTalon(46);
 	
 	/**
 	 * Back left drive motor
 	 */
-	public CANTalon driveMotorBackLeft = new CANTalon(57);
+	public static CANTalon driveMotorBackLeft = new CANTalon(57);
 	
 	/**
 	 * Back right drive motor
 	 */
-	public CANTalon driveMotorBackRight = new CANTalon(51);
+	public static CANTalon driveMotorBackRight = new CANTalon(51);
 	
 	
 	//*****END DRIVE MOTORS*****

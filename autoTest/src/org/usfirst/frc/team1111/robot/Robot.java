@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import modes.NavXTester;
+import variables.Sensors;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -70,7 +72,7 @@ public class Robot extends IterativeRobot {
 			break;
 
 		case NAVX_TEST:
-			testNavX(TEST_ORIENTATION);
+			NavXTester.run(NAVX_TEST);
 			break;
 			
 		case DISP_TEST:
@@ -89,27 +91,7 @@ public class Robot extends IterativeRobot {
 
 	
 
-	public void generalTest() {
-		testNavX(TEST_ORIENTATION);
-		double yaw = mxp.getYaw();
-		boolean tooHigh = yaw > TEST_ORIENTATION + 1, tooLow = yaw < TEST_ORIENTATION - 1;
-		
-		if (TEST_ORIENTATION < 0) {
-			orient(TEST_ORIENTATION);
-
-			if (!(tooHigh || tooLow)) {
-				driveDistance();
-			}
-		}
-
-		else if (TEST_ORIENTATION > 0) {
-			orient(TEST_ORIENTATION);
-
-			if (!(tooHigh || tooLow)) {
-				driveDistance();
-			}
-		}
-	}
+	
 
 	public void testEncoder() {
 		int encoderPosLeft = encoderL.get();
@@ -131,42 +113,11 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	
-	public void getEncoderRatio() {
-		if (resetEncoder) {
-			encoderL.reset(); encoderR.reset();
-			resetEncoder = false;
-		}
-		
-		double encoderLeft = encoderL.get();
-		double encoderRight = encoderR.get();
-		
-		printVariable("EncoderL Value", encoderLeft);
-		printVariable("EncoderR Value", encoderRight);
-	}
+	
 
 	
 
-	public void autoRotate180()
-	{
-		mxp.reset();
-		orient(180);
-	}
-
-	public void orient(int z) {
-		double yaw = mxp.getYaw();
-
-		if (yaw > z) {
-			turnInPlace("right");
-		}
-
-		else if (yaw < z){
-			turnInPlace("left");
-		}
-
-		else {
-			stopDriveMotors();
-		}
-	}
+	
 
 	public double calcEncoderRatio(double dist) {
 		double circumference = Math.PI * DIAMETER;
@@ -186,49 +137,5 @@ public class Robot extends IterativeRobot {
 		}
 	}
 	
-	public void activateDriveMotors(double speed) {
-		testMotorFrontLeft.set(speed); testMotorFrontRight.set(speed); 
-		testMotorBackLeft.set(speed); testMotorBackRight.set(speed);
-	}
 	
-	public void stopDriveMotors()
-	{
-		testMotorFrontRight.set(NO_POWER);
-		testMotorBackRight.set(NO_POWER);
-		testMotorFrontLeft.set(NO_POWER);
-		testMotorBackLeft.set(NO_POWER);
-	}
-	
-	public void driveDistance() {
-		double encoderTicks = encoderL.get();
-		
-		if (resetEncoder) {
-			encoderL.reset();
-			resetEncoder = false;
-		}
-		
-		if (encoderTicks < encoderDist) {
-			activateDriveMotors(QUARTER_POWER);
-		}
-		else{
-			stopDriveMotors();
-			resetEncoder = true;
-		}
-	}
-	
-	public void turnInPlace(String direction) {
-		if (direction.equals("left")) {
-			testMotorFrontRight.set(QUARTER_POWER);
-			testMotorBackRight.set(QUARTER_POWER);
-			testMotorBackRight.set(REVERSE_QUARTER_POWER);
-			testMotorBackLeft.set(REVERSE_QUARTER_POWER);
-		}
-		
-		else {
-			testMotorFrontRight.set(REVERSE_QUARTER_POWER);
-			testMotorBackRight.set(REVERSE_QUARTER_POWER);
-			testMotorBackRight.set(QUARTER_POWER);
-			testMotorBackLeft.set(QUARTER_POWER);
-		}
-	}
 }
