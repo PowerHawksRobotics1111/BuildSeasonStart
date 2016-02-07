@@ -8,7 +8,7 @@ import variables.Sensors;
  * @author Duffy
  *
  */
-public class Movements {
+public class Movement {
 	
 	
 	//*****START MOVEMENT CLASS FIELDS*****
@@ -29,7 +29,7 @@ public class Movements {
 	 * 
 	 * @param d the direction the robot is supposed to turn to
 	 */
-	public void orient(int d) {
+	public static void orient(int d) {
 		double yaw = Sensors.mxp.getYaw();
 		
 		/**
@@ -55,12 +55,12 @@ public class Movements {
 		orient(180);
 	}
 	
-	public void activateDriveMotors(double speed) {
+	public static void activateDriveMotors(double speed) {
 		Motors.driveMotorFrontLeft.set(speed); Motors.driveMotorFrontRight.set(speed); 
 		Motors.driveMotorBackLeft.set(speed); Motors.driveMotorBackRight.set(speed);
 	}
 	
-	public void stopDriveMotors()
+	public static void stopDriveMotors()
 	{
 		Motors.driveMotorFrontRight.set(Motors.NO_POWER);
 		Motors.driveMotorBackRight.set(Motors.NO_POWER);
@@ -68,7 +68,7 @@ public class Movements {
 		Motors.driveMotorBackLeft.set(Motors.NO_POWER);
 	}
 	
-	public void driveDistance() {
+	public static void driveDistance() {
 		double encoderTicks = Sensors.encoderL.get();
 		
 		if (Sensors.resetEncoder) {
@@ -85,7 +85,7 @@ public class Movements {
 		}
 	}
 	
-	public void turnInPlace(String direction) {
+	public static void turnInPlace(String direction) {
 		if (direction.equals("left")) {
 			Motors.driveMotorFrontRight.set(Motors.QUARTER_POWER);
 			Motors.driveMotorBackRight.set(Motors.QUARTER_POWER);

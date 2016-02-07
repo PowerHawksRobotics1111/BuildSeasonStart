@@ -27,7 +27,7 @@ public class SDPrinter {
 	 * @param str name of the variable
 	 * @param val that value of the variable
 	 */
-	public void printVariable(String key, boolean val) {
+	public static void printVariable(String key, boolean val) {
 		SmartDashboard.putBoolean(key, val);
 	}
 	

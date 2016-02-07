@@ -9,7 +9,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import modes.EncoderTester;
+import modes.GeneralTester;
 import modes.NavXTester;
+import util.SDPrinter;
+import variables.Motors;
 import variables.Sensors;
 
 /**
@@ -21,16 +25,12 @@ import variables.Sensors;
  */
 public class Robot extends IterativeRobot {
 	final String DEFAULT = "General Tester";
-	final String ENCODER_TEST = "Encoder Tester";
+	public final static String ENCODER_TEST = "Encoder Tester";
 	final String NAVX_TEST = "NavX Tester";
 	final String DISP_TEST = "Displacement Tester";
 	final String ENC_RATIO_TEST = "Encoder Ratio Test";
 	String autoSelected;
 	SendableChooser chooser;
-
-
-	
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -59,7 +59,6 @@ public class Robot extends IterativeRobot {
 		autoSelected = (String) chooser.getSelected();
 		//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
-		mxp.reset(); testMotorFrontRight.setEncPosition(0);
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch(autoSelected) {
 		case ENCODER_TEST:
-			testEncoder();
+			EncoderTester.run(ENCODER_TEST);
 			break;
 
 		case NAVX_TEST:
@@ -80,60 +79,30 @@ public class Robot extends IterativeRobot {
 			break;
 			
 		case ENC_RATIO_TEST:
-			getEncoderRatio();
+			EncoderTester.run(ENC_RATIO_TEST);
 			break;
 
-		default:
-			generalTest();
+		case DEFAULT:
+			GeneralTester.run("General Test");
 			break;
 		}
 	}
-
 	
-
-	
-
-	public void testEncoder() {
-		int encoderPosLeft = encoderL.get();
-		int encoderPosRight = encoderR.get();
-		
-		boolean encoderLStopped = encoderL.getStopped(), encoderRStopped = encoderR.getStopped();
-
-		printVariable("Ticks Traveled Left", encoderPosLeft);
-		printVariable("Ticks Traveled Right", encoderPosRight);
-		printVariable("Left Encoder Stopped", encoderLStopped);
-		printVariable("Right Encoder Stopped", encoderRStopped);
-
-		if (encoderPosLeft < encoderDist) {
-			activateDriveMotors(QUARTER_POWER);
-		}
-
-		else {
-			stopDriveMotors();
-		}
-	}
-	
-	
-
-	
-
-	
-
-	public double calcEncoderRatio(double dist) {
-		double circumference = Math.PI * DIAMETER;
-		return (360 / circumference) * dist;
-	}
-	
+	/**
+	 * Method that tests the displacement on the navX board
+	 * 
+	 * @deprecated
+	 */
 	public void testDisp() {
-		double disp = mxp.getDisplacementX();
-		printVariable("Displacement", disp);
+		double disp = Sensors.mxp.getDisplacementX();
+		SDPrinter.printVariable("Displacement", disp);
 		
-		if (disp <= TEST_DIST) {
-			testMotorFrontLeft.set(QUARTER_POWER);
+		if (disp <= EncoderTester.TEST_DIST) {
+			Motors.driveMotorFrontLeft.set(Motors.QUARTER_POWER);
 		}
 		
-		if (disp >= TEST_DIST) {
-			testMotorFrontLeft.set(NO_POWER);
+		if (disp >= EncoderTester.TEST_DIST) {
+			Motors.driveMotorFrontLeft.set(Motors.NO_POWER);
 		}
 	}
 	

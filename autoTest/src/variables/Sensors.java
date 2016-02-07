@@ -26,13 +26,13 @@ public class Sensors {
 	/**
 	 * Diameter of the wheels on the test chassis
 	 */
-	public final double DIAMETER = 6; 
+	public final static double DIAMETER = 6; 
 	
 	/**
-	 * Orientation  goal of the robot test
+	 * Orientation goal of the robot test
 	 */
 	public final int TEST_ORIENTATION = -45;
-	
+		
 	
 	//*****END GENERAL VARIABLES
 	
@@ -43,7 +43,7 @@ public class Sensors {
 	 */
 	public static Encoder encoderL = new Encoder(4, 3);
 
-	public Encoder encoderR = new Encoder(2, 1); 
+	public static Encoder encoderR = new Encoder(2, 1); 
 	
 	/**
 	 * Boolean for reseting encoders 
@@ -55,12 +55,12 @@ public class Sensors {
 	 * The number of ticks the encoder makes in one rotation (resolution) 
 	 * @TODO set encoder resolution
 	 */
-	public int encoderResolution = 1; 
+	public static int encoderResolution = 1; 
 	
 	/**
 	 * The distance the wheel travels per tick of the encoder
 	 */
-	public double encoderDistPerPulse = calcDistancePerPulse(); 
+	public static double encoderDistPerPulse = calcDistancePerPulse(); 
 	
 	
 	//*****END ENCODER VARIABLES*****
@@ -101,7 +101,7 @@ public class Sensors {
 	 * Method that calculates the wheels distance of travel per encoder tick/pulse (encoder ratio)
 	 * @return the encoder ratio
 	 */
-	private double calcDistancePerPulse() {
+	private static double calcDistancePerPulse() {
 		double circumference = Math.PI * DIAMETER;
 		return circumference / encoderResolution;
 	}
