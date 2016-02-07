@@ -2,6 +2,11 @@ package variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
 
+/**
+ * Variables class with motor variables necessary for function and declaration of the drive and auxiliary motors
+ * @author Duffy
+ *
+ */
 public class Motors {
 	
 	

@@ -87,13 +87,7 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	public void printVariable(String str, double var) {
-		SmartDashboard.putNumber(str, var);
-	}
 	
-	public void printVariable(String key, boolean val) {
-		SmartDashboard.putBoolean(key, val);
-	}
 
 	public void generalTest() {
 		testNavX(TEST_ORIENTATION);
@@ -150,11 +144,7 @@ public class Robot extends IterativeRobot {
 		printVariable("EncoderR Value", encoderRight);
 	}
 
-	public void testNavX(double nO) {
-		double yaw = mxp.getYaw();
-		printVariable("Orientation", yaw);
-		printVariable("Target orientation", nO);
-	}
+	
 
 	public void autoRotate180()
 	{

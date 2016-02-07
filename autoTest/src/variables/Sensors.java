@@ -5,6 +5,11 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 
+/**
+ * Variables class that contains sensor variables necessary for function and declaration of necessary sensors
+ * @author Duffy
+ *
+ */
 public class Sensors {
 	
 	
@@ -58,7 +63,7 @@ public class Sensors {
 	/**
 	 * navX board for autonomous function/testing
 	 */
-	public AHRS mxp = new AHRS(SerialPort.Port.kMXP); 
+	public static AHRS mxp = new AHRS(SerialPort.Port.kMXP); 
 	
 	
 	//*****END NAVX VARIABLES*****
