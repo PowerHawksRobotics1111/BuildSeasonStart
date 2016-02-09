@@ -2,7 +2,6 @@ package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +19,7 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	
-	Operator op = new Operator();
+	//Operator op = new Operator();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -76,7 +75,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic()
 	{
 		drive();
-		op.operate();
+		Operator.operate();
 	}
 
 	/**
