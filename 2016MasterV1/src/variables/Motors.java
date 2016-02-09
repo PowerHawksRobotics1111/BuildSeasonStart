@@ -51,6 +51,8 @@ public class Motors {
 	 */
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5,
 							   REVERSE_QUARTER_POWER = -.25; // Sets REVERSE motor powers
+	
+	public static final double INTAKE_POWER = 0.0, ARM_POWER = 0.0, SHOOTER_POWER = 0.0, TAPE_EXT_POWER = 0.0, TAPE_ROT_POWER = 0.0;
 
 	/**
 	 * Sets the limit switch port
