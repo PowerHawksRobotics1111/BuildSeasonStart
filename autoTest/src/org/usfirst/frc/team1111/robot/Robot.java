@@ -4,10 +4,17 @@ package org.usfirst.frc.team1111.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import modes.EncoderTester;
+import modes.GeneralTester;
+import modes.NavXTester;
+import util.SDPrinter;
+import variables.Motors;
+import variables.Sensors;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,32 +24,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    final String DEFAULT = "General Tester";
-    final String ENCODER_TEST = "Encoder Tester";
-    final String NAVX_TEST = "NavX Tester";
-    String autoSelected;
-    SendableChooser chooser;
-    
-    final double TEST_DIST = 36, DIAMETER = 8;
-    final int TEST_ORIENTATION = 180;
-    final double QUARTER_POWER = .25, REVERSE_QUARTER_POWER = -.25, NO_POWER = 0;
-	double encoderRatio = calcEncoderRatio(TEST_DIST), encoderDist = encoderRatio * TEST_DIST;
-	double orientation;
-	CANTalon testMotor = new CANTalon(42);
-	AHRS mxp = new AHRS(SerialPort.Port.kMXP);
-	
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-        chooser = new SendableChooser();
-        chooser.addDefault("General Tester", DEFAULT);
-        chooser.addObject("Encoder Tester", ENCODER_TEST);
-        chooser.addObject("NavX Tester", NAVX_TEST);
-        SmartDashboard.putData("Auto choices", chooser);
-    }
-    
+	final String DEFAULT = "General Tester";
+	public final static String ENCODER_TEST = "Encoder Tester";
+	final String NAVX_TEST = "NavX Tester";
+	final String DISP_TEST = "Displacement Tester";
+	final String ENC_RATIO_TEST = "Encoder Ratio Test";
+	String autoSelected;
+	SendableChooser chooser;
+
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	public void robotInit() {
+		chooser = new SendableChooser();
+		chooser.addDefault("General Tester", DEFAULT);
+		chooser.addObject("Encoder Tester", ENCODER_TEST);
+		chooser.addObject("NavX Tester", NAVX_TEST);
+		chooser.addObject("Displacement Tester", DISP_TEST);
+		chooser.addObject("Encoder Ratio Test", ENC_RATIO_TEST);
+		SmartDashboard.putData("Auto choices", chooser);
+	}
+
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
 	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
@@ -52,98 +55,56 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
-    public void autonomousInit() {
-    	autoSelected = (String) chooser.getSelected();
-//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
+	public void autonomousInit() {
+		autoSelected = (String) chooser.getSelected();
+		//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
-    }
+	}
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-    	switch(autoSelected) {
-    	case ENCODER_TEST:
-    		testEncoder();
-    		break;
-    		
-    	case NAVX_TEST:
-    		testNavX(180);
-    		break;
-    		
-    	default:
-    		generalTest();
-    		break;
-    	}
-    }
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		switch(autoSelected) {
+		case ENCODER_TEST:
+			EncoderTester.run(ENCODER_TEST);
+			break;
 
-    public void printVariable(String str, double var) {
-		SmartDashboard.putNumber(str, var);
-	}
-	
-	public void generalTest() {
-		testEncoder(); testNavX(TEST_ORIENTATION);
-		double yaw = mxp.getYaw();
-		double neededEncoderTicks = encoderRatio * TEST_DIST;
-		double encoderTicks = testMotor.getEncPosition();
-		
-		if (yaw != TEST_ORIENTATION) {
-			orientStraight(0);
-		}
-		
-		else if (encoderTicks < neededEncoderTicks){
-			testMotor.set(QUARTER_POWER);
-		}
-		
-		else {
-			testMotor.set(NO_POWER);
+		case NAVX_TEST:
+			NavXTester.run(NAVX_TEST);
+			break;
+			
+		case DISP_TEST:
+			testDisp();
+			break;
+			
+		case ENC_RATIO_TEST:
+			EncoderTester.run(ENC_RATIO_TEST);
+			break;
+
+		case DEFAULT:
+			GeneralTester.run("General Test");
+			break;
 		}
 	}
 	
-	public void testEncoder() {
-		int encoderPos = testMotor.getEncPosition();
+	/**
+	 * Method that tests the displacement on the navX board
+	 * 
+	 * @deprecated
+	 */
+	public void testDisp() {
+		double disp = Sensors.mxp.getDisplacementX();
+		SDPrinter.printVariable("Displacement", disp);
 		
-		printVariable("Ticks", encoderPos);
-		
-		if (encoderPos < encoderDist) {
-			testMotor.set(QUARTER_POWER);
+		if (disp <= EncoderTester.TEST_DIST) {
+			Motors.driveMotorFrontLeft.set(Motors.QUARTER_POWER);
 		}
 		
-		else {
-			testMotor.set(NO_POWER);
+		if (disp >= EncoderTester.TEST_DIST) {
+			Motors.driveMotorFrontLeft.set(Motors.NO_POWER);
 		}
 	}
 	
-	public void testNavX(double nO) {
-		printVariable("Orientation", mxp.getYaw());
-		printVariable("Needed orientation", nO);
-	}
-    
-    public void autoRotate180()
-    {
-    	mxp.reset();
-    	orientStraight(TEST_ORIENTATION);
-    }
-    
-    public void orientStraight(int z) {
-    	double yaw = mxp.getYaw();
-    	
-    	if (yaw > z + 5) {
-    		testMotor.set(QUARTER_POWER);
-    	}
-    	
-    	else if (yaw < z - 5){
-    		testMotor.set(REVERSE_QUARTER_POWER);
-    	}
-    	
-    	else {
-    		testMotor.set(NO_POWER);
-    	}
-    }
-    
-    public double calcEncoderRatio(double dist) {
-    	double circumference = Math.PI * DIAMETER;
-    	return (360 / circumference) * dist;
-    }
-    
+	
 }
