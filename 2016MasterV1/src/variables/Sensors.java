@@ -4,6 +4,13 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Sensors {
 
-	public static final DigitalInput intakeLimitSwitch = new DigitalInput(
-			Motors.LS_PORT);
+	/**
+	 * Sets the limit switch port
+	 */
+	public final static int LS_PORT = 1;
+
+	/**
+	 * intake Limit Switch init
+	 */
+	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 }
