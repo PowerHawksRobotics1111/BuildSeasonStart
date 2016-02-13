@@ -11,6 +11,8 @@ public class Operator {
 	 * 
 	 * bool intake determines if the intake is set to run, as to wait for a
 	 * ball.
+	 * int armPos holds arm state.
+	 * String armState translate state to the dashboard
 	 */
 	static boolean intake = false;
 	static int armPos = 0;
@@ -136,24 +138,20 @@ public class Operator {
 	/**
 	 * Function override implementation
 	 */
-	static void functionStopOverride()// TODO :Either make these not ELSE or
-										// inform OP that they have to only
-										// press one button in conjunction with
-										// the override.
+	static void functionStopOverride()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
 		{
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
 				Motors.motorOuterIntake.set(Motors.NO_POWER);
-			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton)
-					|| Joysticks.joyOp.getRawButton(Joysticks.Buttons.innerIntakeButton))
+			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.innerIntakeButton))
 				Motors.motorIntake.set(Motors.NO_POWER);
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
 				Motors.motorShooter.set(Motors.NO_POWER);
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
 				Motors.motorTapeArmExt.set(Motors.NO_POWER);
-			if (Joysticks.joyOp.getPOV() != Joysticks.D_PAD_OFF)
-				Motors.motorArm.set(Motors.NO_POWER);
+//			if (Joysticks.joyOp.getPOV() != Joysticks.D_PAD_OFF)TODO Can we do this if it's set to PID?
+//				Motors.motorArm.set(Motors.NO_POWER);
 		}
 	}
 
