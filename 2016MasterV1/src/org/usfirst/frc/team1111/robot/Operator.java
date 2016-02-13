@@ -96,42 +96,12 @@ public class Operator {
 	 */
 	static void armControl()
 	{
-		if (armPos <= 99 && Joysticks.joyOp.getRawButton(Joysticks.Buttons.ArmUp))//TODO set the proper max val
-			armPos++;
-		else if (armPos > 0 && Joysticks.joyOp.getRawButton(Joysticks.Buttons.ArmDown))
-			armPos--;
-		
-
-		switch (armPos) {
-		case 0:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.UNDER_PORT);
-			armState = "Under gate";
-			break;
-		case 1:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.SEESAW_DOWN);
-			armState = "Seesaw down";
-			break;
-		case 2:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.INTAKE_LEVEL);
-			armState = "Intake level";
-			break;
-		case 3:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.SEESAW);
-			armState = "Seesaw level";
-			break;
-		case 4:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.PORT_RAISE);
-			armState = "Raised gate";
-			break;
-		case 5:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.UP);
-			armState = "Up";
-			break;
-		default:
-			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.UP);
-			armState = "Up (Default)";
-			break;
-		}
+		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp))
+			Motors.motorArm.set(Motors.ARM_POWER);
+		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
+			Motors.motorArm.set(Motors.ARM_POWER * -1);
+		else
+			Motors.motorArm.set(Motors.NO_POWER);
 	}
 
 	/**
@@ -149,8 +119,8 @@ public class Operator {
 				Motors.motorShooter.set(Motors.NO_POWER);
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
 				Motors.motorTapeArmExt.set(Motors.NO_POWER);
-//			if (Joysticks.joyOp.getPOV() != Joysticks.D_PAD_OFF)TODO Can we do this if it's set to PID?
-//				Motors.motorArm.set(Motors.NO_POWER);TODO not on the d-pad right now.
+			if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
+				Motors.motorArm.set(Motors.NO_POWER);
 		}
 	}
 

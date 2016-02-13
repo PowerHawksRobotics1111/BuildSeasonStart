@@ -40,8 +40,8 @@ public class Joysticks {
 		public static final int intakeButton = X;
 		public static final int tapeArmExtend = LEFT_TRIGGER;
 		public static final int tapeArmRetract = LEFT_BUMPER;
-		public static final int ArmUp = LEFT_BUMPER;
-		public static final int ArmDown = LEFT_TRIGGER;
+		public static final int armUp = LEFT_BUMPER;
+		public static final int armDown = LEFT_TRIGGER;
 		public static final int overrideKillModifier = START;
 		public static final int overrideKillModifier2 = BACK;
 	}
