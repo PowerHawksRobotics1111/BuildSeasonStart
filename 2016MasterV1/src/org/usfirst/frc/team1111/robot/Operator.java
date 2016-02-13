@@ -18,6 +18,7 @@ public class Operator {
 	static int armPos = 0;
 	static String armState = "";
 
+	
 	/**
 	 * Runs through test methods to determine what operation is requested
 	 */
@@ -31,8 +32,8 @@ public class Operator {
 		SmartDashboard.putString("Arm State:", armState);
 	}
 
-	// Check and Command methods.
 
+	
 	/**
 	 * Method, checks the intake and outtake command buttons and runs the
 	 * intake/outake motor, else stops the motor.
@@ -97,7 +98,7 @@ public class Operator {
 	 */
 	static void armControl()
 	{
-		if (armPos <= 99 && Joysticks.joyOp.getRawButton(Joysticks.Buttons.ArmUp))
+		if (armPos <= 99 && Joysticks.joyOp.getRawButton(Joysticks.Buttons.ArmUp))//TODO set the proper max val
 			armPos++;
 		else if (armPos > 0 && Joysticks.joyOp.getRawButton(Joysticks.Buttons.ArmDown))
 			armPos--;
@@ -130,7 +131,7 @@ public class Operator {
 			break;
 		default:
 			Motors.motorArm.setPosition(Sensors.MOTOR_ARM_STATES.UP);
-			armState = "Up";
+			armState = "Up (Default)";
 			break;
 		}
 	}
@@ -151,7 +152,7 @@ public class Operator {
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
 				Motors.motorTapeArmExt.set(Motors.NO_POWER);
 //			if (Joysticks.joyOp.getPOV() != Joysticks.D_PAD_OFF)TODO Can we do this if it's set to PID?
-//				Motors.motorArm.set(Motors.NO_POWER);
+//				Motors.motorArm.set(Motors.NO_POWER);TODO not on the d-pad right now.
 		}
 	}
 
