@@ -1,6 +1,8 @@
 package variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
 public class Motors {
 
@@ -16,9 +18,9 @@ public class Motors {
 	public static CANTalon motorArm; 
 
 	/**
-	 * Intake, shooter, and tape extender and rotator motors
+	 * Intake, outer intake, shooter, and tape extender and rotator motors
 	 */
-	public static CANTalon motorIntake, motorShooter, motorTapeArmExt, motorTapeArmRot; 
+	public static CANTalon motorIntake, motorOuterIntake, motorShooter, motorTapeArmExt, motorTapeArmRot;
 
 	/**
 	 * Sets the port for the arm motor
@@ -26,9 +28,9 @@ public class Motors {
 	final static int MA_PORT = 1; 
 
 	/**
-	 * Ports for the intake, shooter, and tape extender/rotator motors
+	 * Ports for the intake, outer intake, shooter, and tape extender/rotator motors
 	 */
-	final static int MI_PORT = 1, MS_PORT = 1, MTAE_PORT = 1, 
+	final static int MI_PORT = 1, MOI_PORT=1, MS_PORT = 1, MTAE_PORT = 1, 
 			MTAR_PORT = 1; 	
 
 	/**
@@ -49,7 +51,13 @@ public class Motors {
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5,
 			REVERSE_QUARTER_POWER = -.25; 
 
-	public static final double INTAKE_POWER = 0.0, ARM_POWER = 0.0, SHOOTER_POWER = 0.0, TAPE_EXT_POWER = 0.0, TAPE_ROT_POWER = 0.0;
+	public static final double INTAKE_POWER = 0.0, OUTER_INTAKE_POWER = 0.0, ARM_POWER = 0.0, SHOOTER_POWER = 0.0, TAPE_EXT_POWER = 0.0, TAPE_ROT_POWER = 0.0;
+
+	/**
+	 * The PID constants for the Arm PID
+	 */
+	private static final double ARM_P = 0, ARM_I = 0, ARM_D = 0;
+	
 
 	/**
 	 * Method that initializes the motors on the robot
@@ -79,6 +87,11 @@ public class Motors {
 	private static void armMotorInit()
 	{
 		motorArm = new CANTalon(MA_PORT);
+		
+		motorArm.changeControlMode(TalonControlMode.Position);
+		motorArm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		motorArm.setPID(ARM_P, ARM_I, ARM_D);
+		
 		motorTapeArmExt = new CANTalon(MTAE_PORT);
 		motorTapeArmRot = new CANTalon(MTAR_PORT);
 	}
@@ -97,5 +110,7 @@ public class Motors {
 	private static void intakeMotorInit()
 	{
 		motorIntake = new CANTalon(MI_PORT);
+		
+		motorOuterIntake = new CANTalon(MOI_PORT);
 	}
 }
