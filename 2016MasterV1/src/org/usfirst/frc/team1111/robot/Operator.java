@@ -29,7 +29,9 @@ public class Operator {
 		tapeArmExtension();
 		functionStopOverride();
 		armControl();
+		
 		SmartDashboard.putString("Arm State:", armState);
+		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
 	}
 
 
@@ -38,7 +40,6 @@ public class Operator {
 	 * Method, checks the intake and outtake command buttons and runs the
 	 * intake/outake motor, else stops the motor.
 	 */
-	// TODO Rewrite for new intake system.
 	static void intakeOutake()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
@@ -72,12 +73,9 @@ public class Operator {
 	static void shoot()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
-		{
 			Motors.motorShooter.set(Motors.SHOOTER_POWER);
-		} else
-		{
+		else
 			Motors.motorIntake.set(Motors.NO_POWER);
-		}
 	}
 
 	/**
