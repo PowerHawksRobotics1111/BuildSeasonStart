@@ -1,8 +1,8 @@
-package autoModes;
+package auto.modes;
 
 import org.usfirst.frc.team1111.robot.Robot;
 
-import autoUtil.Movement;
+import auto.util.Movement;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import variables.Sensors;
 

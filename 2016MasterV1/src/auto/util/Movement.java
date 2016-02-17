@@ -1,4 +1,4 @@
-package autoUtil;
+package auto.util;
 
 import org.usfirst.frc.team1111.robot.Robot;
 
