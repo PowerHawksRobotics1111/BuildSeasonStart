@@ -1,7 +1,9 @@
 package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
+import variables.Sensors;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,8 +21,10 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser chooser;
 	
-	public static String state;
+	public static String state;//TODO are we using this?
 	public static String subState;
+	
+	Double startTime = 0.0;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -34,6 +38,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
+		
+		initDashboard();
+	}
+
+	/**
+	 * Yes. This is for initializing the Dashboard. Put stuff in here.
+	 */
+	private void initDashboard()
+	{
+		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		SmartDashboard.putBoolean("Spun Up?", false);
 	}
 
 	/**
@@ -50,8 +65,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit()
 	{
 		autoSelected = (String) chooser.getSelected();
-		//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
 	}
 
 	/**
@@ -69,7 +82,7 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 	}
-
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
@@ -77,6 +90,18 @@ public class Robot extends IterativeRobot {
 	{
 		drive();
 		Operator.operate();
+		
+		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		
+		if(Motors.motorShooter.get() > .5)
+			if(startTime == 0.0)
+				startTime = Timer.getMatchTime();
+			else if(Timer.getMatchTime()-startTime <= Motors.SHOOTER_SPIN_TIME)
+				SmartDashboard.putBoolean("Spun Up?", false);
+			else
+				SmartDashboard.putBoolean("Spun Up?", true);
+		else
+			startTime = 0.0;
 	}
 
 	/**

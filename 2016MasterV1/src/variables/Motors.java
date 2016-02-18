@@ -42,6 +42,8 @@ public class Motors {
 
 	public static final double INTAKE_POWER = 0.0, OUTER_INTAKE_POWER = 0.0, ARM_POWER = 0.0, SHOOTER_POWER = 0.0, TAPE_EXT_POWER = 0.0, TAPE_ROT_POWER = 0.0;
 
+	public static final double SHOOTER_SPIN_TIME = 0;//TODO
+
 	
 	
 	/**
