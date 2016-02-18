@@ -11,14 +11,12 @@ public class Auto {
 
 		public static final double TEMP_DEFAULT_AUTO_SPEED = Motors.HALF_POWER;
 
-		public static void orient(double targetAngle)
+		public static void driveDriveMotors(double power)
 		{
-			if (Sensors.navX.getYaw() > targetAngle + 5.0)
-				turnInPlace("left", TEMP_DEFAULT_AUTO_SPEED);
-			else if (Sensors.navX.getYaw() < targetAngle - 5.0)
-				turnInPlace("right", TEMP_DEFAULT_AUTO_SPEED);
-			else
-				stopDriveMotors();
+			Motors.motorDriveBackLeft.set(power);
+			Motors.motorDriveBackRight.set(power);
+			Motors.motorDriveFrontLeft.set(power);
+			Motors.motorDriveFrontRight.set(power);
 		}
 
 		public static void driveToDistance(double distance)
@@ -33,6 +31,24 @@ public class Auto {
 				driveDriveMotors(TEMP_DEFAULT_AUTO_SPEED);
 			else
 				stopDriveMotors();
+		}
+
+		public static void orient(double targetAngle)
+		{
+			if (Sensors.navX.getYaw() > targetAngle + 5.0)
+				turnInPlace("left", TEMP_DEFAULT_AUTO_SPEED);
+			else if (Sensors.navX.getYaw() < targetAngle - 5.0)
+				turnInPlace("right", TEMP_DEFAULT_AUTO_SPEED);
+			else
+				stopDriveMotors();
+		}
+
+		public static void stopDriveMotors()
+		{
+			Motors.motorDriveBackLeft.set(Motors.NO_POWER);
+			Motors.motorDriveBackRight.set(Motors.NO_POWER);
+			Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
+			Motors.motorDriveFrontRight.set(Motors.NO_POWER);
 		}
 
 		public static void turnInPlace(String direction, double speed)
@@ -56,62 +72,15 @@ public class Auto {
 			}
 		}
 
-		public static void driveDriveMotors(double power)
-		{
-			Motors.motorDriveBackLeft.set(power);
-			Motors.motorDriveBackRight.set(power);
-			Motors.motorDriveFrontLeft.set(power);
-			Motors.motorDriveFrontRight.set(power);
-		}
-
-		public static void stopDriveMotors()
-		{
-			Motors.motorDriveBackLeft.set(Motors.NO_POWER);
-			Motors.motorDriveBackRight.set(Motors.NO_POWER);
-			Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
-			Motors.motorDriveFrontRight.set(Motors.NO_POWER);
-		}
-
 	}
 
-	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
-	private static final double ANGLE_TO_SHOOTING_SPOT = 0;
-	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
 	private static final double ANGLE_TO_GOAL = 0;
-
-	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
-
-	public static void moat()
-	{
-		if(Timer.getMatchTime() <= 10.0)//TODO Better timings.
-			Movement.driveDriveMotors(Motors.FULL_POWER);
-		else 
-			Movement.stopDriveMotors();
-	}
-
-	public static void roughTerrain()//TODO Better timings.
-	{
-		if(Timer.getMatchTime() <= 10.0)
-			Movement.driveDriveMotors(Motors.FULL_POWER);
-		else 
-			Movement.stopDriveMotors();
-	}
-
-	public static void ramparts()//TODO Better timings.
-	{
-		if(Timer.getMatchTime() <= 10.0)
-			Movement.driveDriveMotors(Motors.FULL_POWER);
-		else 
-			Movement.stopDriveMotors();
-	}
-
-	static boolean acrossLowBar = false;
-	boolean turnedToShootingSpot = false;
-	boolean atShootingSpot = false;
-	boolean angledTowardsGoal = false;
+	private static final double ANGLE_TO_SHOOTING_SPOT = 0;
+	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
+	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
 
 	static int progress = 0;
-
+	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
 	public static void lowBar()//Includes shooting
 	{
 
@@ -125,7 +94,7 @@ public class Auto {
 			Sensors.navX.reset();
 			progress++;
 		}else if(progress == 2)
-			if(Sensors.navX.getYaw() < ANGLE_TO_SHOOTING_SPOT)//TODO make range
+			if(Sensors.navX.getYaw() < ANGLE_TO_SHOOTING_SPOT - 5 || Sensors.navX.getYaw() > ANGLE_TO_SHOOTING_SPOT + 5)
 				Movement.orient(ANGLE_TO_SHOOTING_SPOT);
 			else
 				progress++;
@@ -143,20 +112,50 @@ public class Auto {
 			Sensors.navX.reset();
 			progress++;
 		}else if(progress == 6)
-			if(Sensors.navX.getYaw() < ANGLE_TO_GOAL)//TODO make range
+			if(Sensors.navX.getYaw() < ANGLE_TO_GOAL - 5.0 || Sensors.navX.getYaw() > ANGLE_TO_GOAL + 5.0)
 				Movement.orient(ANGLE_TO_GOAL);
 			else
 				progress++;
 		else if(progress == 7)
-		{
 			shoot();
+	}
+
+	public static void moat()
+	{
+		if(Timer.getMatchTime() <= 10.0)//TODO Better timings.
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
+	}
+	
+	public static void ramparts()//TODO Better timings.
+	{
+		if(Timer.getMatchTime() <= 10.0)
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
+	}
+	
+	public static void roughTerrain()//TODO Better timings.
+	{
+		if(Timer.getMatchTime() <= 10.0)
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
+	}
+	
+	static Double startTime = 0.0;
+	
+	private static void shoot()
+	{
+		if(startTime == 0.0)
+				startTime = Timer.getMatchTime();
+		if(Timer.getMatchTime() - startTime < 3.5)//TODO better spinup time
+			Motors.motorShooter.set(Motors.SHOOTER_POWER);
+		else
+		{
+			Motors.motorIntake.set(Motors.INTAKE_POWER);
 			progress++;
 		}
 	}
-
-	private static void shoot()
-	{
-		// TODO Shooting code!!!
-	}
-
 }
