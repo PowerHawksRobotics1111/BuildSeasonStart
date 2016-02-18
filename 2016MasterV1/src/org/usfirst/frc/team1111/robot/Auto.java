@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1111.robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import variables.Motors;
 import variables.Sensors;
 import variables.Sensors.Encoders;
@@ -20,7 +21,7 @@ public class Auto {
 				stopDriveMotors();
 		}
 
-		public static void driveForDistance(double distance)
+		public static void driveToDistance(double distance)
 		{
 			if (Sensors.Encoders.resetEncoders)
 			{
@@ -72,46 +73,90 @@ public class Auto {
 		}
 
 	}
-	
-	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same?
-	public static void rockWall()
-	{
-		
-	}
-	
+
+	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
+	private static final double ANGLE_TO_SHOOTING_SPOT = 0;
+	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
+	private static final double ANGLE_TO_GOAL = 0;
+
+	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
+
 	public static void moat()
 	{
-		
+		if(Timer.getMatchTime() <= 10.0)//TODO Better timings.
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
 	}
-	
-	public static void portcullis()
+
+	public static void roughTerrain()//TODO Better timings.
 	{
-		
+		if(Timer.getMatchTime() <= 10.0)
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
 	}
-	
-	public static void seesaws()
+
+	public static void ramparts()//TODO Better timings.
 	{
-		
+		if(Timer.getMatchTime() <= 10.0)
+			Movement.driveDriveMotors(Motors.FULL_POWER);
+		else 
+			Movement.stopDriveMotors();
 	}
-	
-	public static void drawbridge()
+
+	static boolean acrossLowBar = false;
+	boolean turnedToShootingSpot = false;
+	boolean atShootingSpot = false;
+	boolean angledTowardsGoal = false;
+
+	static int progress = 0;
+
+	public static void lowBar()//Includes shooting
 	{
-		
+
+		if(progress == 0)
+			if(Sensors.Encoders.encoderDriveLeft.get() < DISTANCE_ACROSS_LOW_BAR)
+				Movement.driveToDistance(DISTANCE_ACROSS_LOW_BAR);
+			else
+				progress++;
+		else if(progress == 1)
+		{
+			Sensors.navX.reset();
+			progress++;
+		}else if(progress == 2)
+			if(Sensors.navX.getYaw() < ANGLE_TO_SHOOTING_SPOT)//TODO make range
+				Movement.orient(ANGLE_TO_SHOOTING_SPOT);
+			else
+				progress++;
+		else if(progress == 3)
+		{
+			Sensors.Encoders.resetEncoders();
+			progress++;
+		}else if(progress == 4)
+			if(Sensors.Encoders.encoderDriveLeft.get() < DISTANCE_TO_SHOOTING_SPOT)
+				Movement.driveToDistance(DISTANCE_TO_SHOOTING_SPOT);
+			else
+				progress++;
+		else if(progress == 5)
+		{
+			Sensors.navX.reset();
+			progress++;
+		}else if(progress == 6)
+			if(Sensors.navX.getYaw() < ANGLE_TO_GOAL)//TODO make range
+				Movement.orient(ANGLE_TO_GOAL);
+			else
+				progress++;
+		else if(progress == 7)
+		{
+			shoot();
+			progress++;
+		}
 	}
-	
-	public static void roughTerrain()
+
+	private static void shoot()
 	{
-		
-	}
-	
-	public static void ramparts()
-	{
-		
-	}
-	
-	public static void lowBar()
-	{
-		
+		// TODO Shooting code!!!
 	}
 
 }
