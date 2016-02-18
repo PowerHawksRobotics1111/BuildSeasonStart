@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String lowbar = "Low", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	
 	String autoSelected;
 	SendableChooser chooser;
 	
@@ -33,8 +33,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit()
 	{
 		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser.addDefault("Low Bar Auto", lowbar);
+		chooser.addObject("Moat Auto", moat);
+		chooser.addObject("Ramparts Auto", ramparts);
+		chooser.addObject("Rough Terrain Auto", roughTerrain);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
@@ -73,14 +75,21 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic()
 	{
 		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
+		case moat:
+			Auto.moat();
 			break;
-		case defaultAuto:
+		case ramparts:
+			Auto.ramparts();
+			break;
+		case roughTerrain:
+			Auto.roughTerrain();
+			break;
+		case lowbar:
 		default:
-			// Put default auto code here
+			Auto.lowBar();
 			break;
 		}
+		
 	}
 	
 	/**
