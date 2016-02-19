@@ -8,14 +8,9 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 public class Sensors {
 
-	/**
-	 * Limit switch ports
-	 */
+	//Limit switch ports
 	final static int LS_PORT = 1, LS2_PORT = 2;
 
-	/**
-	 * intake Limit Switch inits
-	 */
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
 
@@ -23,46 +18,25 @@ public class Sensors {
 
 	public static class Encoders {
 
-		/**
-		 * Encoders on the drive motors
-		 */
 		public static Encoder encoderDriveLeft = new Encoder(1, 2);
 		public static Encoder encoderDriveRight = new Encoder(3, 4);
-
 		
-		/**
-		 * Boolean to determine if encoders need to be reset
-		 */
+		/** Boolean to determine if encoders need to be reset */
 		public static boolean resetEncoders = true;
 
-		/**
-		 * The distance the wheel travels per encoder tick
-		 */
 		static double distanceTraveledPerTick;
-
-		/**
-		 * The diameter of the drive wheels
-		 */
-		static int DIAMETER = 6;
-
-		/**
-		 * The number of ticks per encoder revolution
-		 */
-		static final int ENCODER_RESOLUTION = 48;
-
+		static int DRIVE_WHEEL_DIAMETER = 6;
+		static final int TICKS_PER_ENCODER_REVOLUTION = 48;
 		
-		/**
-		 * Method that resets the encoders
-		 */
+		/**	encoder revolutions per wheel revolution */
+		static final double GEARING_RATIO = 2.84;
+
 		public static void resetEncoders()
 		{
 			encoderDriveLeft.reset();
 			encoderDriveRight.reset();
 		}
 
-		/**
-		 * Method that initializes aspects of the encoders
-		 */
 		public static void initEncoders()
 		{
 			resetEncoders();
@@ -72,15 +46,13 @@ public class Sensors {
 
 		/**
 		 * Method that calculates the distance the wheel travels per encoder
-		 * tick
+		 * tick using the circumference, gear ratio, and ticks per revolution
 		 * 
-		 * @return the distance the wheel travels per encoder tick
+		 * @return the distance the wheel travels per encoder tick in inches
 		 */
 		static double calcDistTraveledPerTick()
 		{
-			double circumference = Math.PI * DIAMETER;
-			return circumference / ENCODER_RESOLUTION;
-			//TODO Incorporate gear ratio (TBD)
+			return (Math.PI * (double) DRIVE_WHEEL_DIAMETER) / ((double) TICKS_PER_ENCODER_REVOLUTION * GEARING_RATIO);
 		}
 	}
 }
