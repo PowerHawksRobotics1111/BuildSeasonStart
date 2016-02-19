@@ -80,6 +80,7 @@ public class Sensors {
 		{
 			double circumference = Math.PI * DIAMETER;
 			return circumference / ENCODER_RESOLUTION;
+			//TODO Incorporate gear ratio (TBD)
 		}
 	}
 }
