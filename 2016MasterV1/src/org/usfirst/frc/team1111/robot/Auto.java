@@ -78,7 +78,7 @@ public class Auto {
 	private static final double ANGLE_TO_SHOOTING_SPOT = 0;
 	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
 	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
-
+ 
 	static int progress = 0;
 	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
 	public static void lowBar()//Includes shooting
