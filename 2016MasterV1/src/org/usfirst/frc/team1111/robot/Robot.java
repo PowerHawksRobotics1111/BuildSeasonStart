@@ -51,6 +51,8 @@ public class Robot extends IterativeRobot {
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		SmartDashboard.putBoolean("Spun Up?", false);
+		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
+		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 	}
 
 	/**
@@ -101,6 +103,8 @@ public class Robot extends IterativeRobot {
 		Operator.operate();
 		
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
+		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 		
 		if(Motors.motorShooter.get() > .5)
 			if(startTime == 0.0)
