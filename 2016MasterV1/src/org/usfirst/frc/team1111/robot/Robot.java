@@ -136,5 +136,14 @@ public class Robot extends IterativeRobot {
 		Motors.motorDriveFrontRight.set(-right);
 		Motors.motorDriveBackRight.set(-right);
 	}
+	
+	public void disabledPeriodic()
+	{
+		Auto.Movement.stopDriveMotors();
+		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
+		Motors.motorIntake.set(0.0);
+		Motors.motorOuterIntake.set(0.0);
+		Motors.motorShooter.set(0.0);
+	}
 
 }

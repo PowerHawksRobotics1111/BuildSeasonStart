@@ -1,10 +1,13 @@
 package org.usfirst.frc.team1111.robot;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import variables.*;
+import variables.Joysticks;
+import variables.Motors;
+import variables.Sensors;
 
 public class Operator {
 
+	static final int TAPE_ARM_LOWER_LIMIT = 0;
+	static final int TAPE_ARM_UPPER_LIMIT = 0;
 	/*
 	 * The following are booleans to carry states through iterations of the
 	 * code.
@@ -26,12 +29,12 @@ public class Operator {
 	{
 		intakeOutake();
 		shoot();
-		tapeArmExtension();
+		tapeArm();
 		functionStopOverride();
 		armControl();
 		
-		SmartDashboard.putString("Arm State:", armState);
-		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
+//		SmartDashboard.putString("Arm State:", armState);
+//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
 	}
 
 
@@ -81,14 +84,15 @@ public class Operator {
 	/**
 	 * Method, controls the tape arm extension motor.
 	 */
-	static void tapeArmExtension()
+	static void tapeArm()
 	{
-		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
-			Motors.motorTapeArmExt.set(Motors.TAPE_EXT_POWER);
-		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-			Motors.motorTapeArmExt.set(Motors.TAPE_EXT_POWER * -1);
-		else
-			Motors.motorTapeArmExt.set(Motors.NO_POWER);
+		//if(!(Motors.motorTapeArm.getEncPosition() <= TAPE_ARM_LOWER_LIMIT) && !(Motors.motorTapeArm.getEncPosition() >= TAPE_ARM_UPPER_LIMIT)) TODO Enable after limits are calibrated.
+			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
+				Motors.motorTapeArm.set(Motors.TAPE_EXT_POWER);
+			else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
+				Motors.motorTapeArm.set(Motors.TAPE_EXT_POWER * -1);
+			else
+				Motors.motorTapeArm.set(Motors.NO_POWER);
 	}
 
 	/**
@@ -118,7 +122,7 @@ public class Operator {
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
 				Motors.motorShooter.set(Motors.NO_POWER);
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-				Motors.motorTapeArmExt.set(Motors.NO_POWER);
+				Motors.motorTapeArm.set(Motors.NO_POWER);
 			if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
 				Motors.motorArm.set(Motors.NO_POWER);
 		}
