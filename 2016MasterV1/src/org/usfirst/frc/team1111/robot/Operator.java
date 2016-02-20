@@ -88,11 +88,13 @@ public class Operator {
 	{
 		//if(!(Motors.motorTapeArm.getEncPosition() <= TAPE_ARM_LOWER_LIMIT) && !(Motors.motorTapeArm.getEncPosition() >= TAPE_ARM_UPPER_LIMIT)) TODO Enable after limits are calibrated.
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
-				Motors.motorTapeArm.set(Motors.TAPE_EXT_POWER);
+				Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
 			else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-				Motors.motorTapeArm.set(Motors.TAPE_EXT_POWER * -1);
+				Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER * -1);
 			else
 				Motors.motorTapeArm.set(Motors.NO_POWER);
+			
+			
 	}
 
 	/**
