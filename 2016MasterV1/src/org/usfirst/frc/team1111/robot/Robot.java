@@ -53,6 +53,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Spun Up?", false);
 		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
 		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
+		SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
 	}
 
 	/**
@@ -140,10 +141,12 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic()
 	{
 		Auto.Movement.stopDriveMotors();
+		Motors.brake.setAngle(Motors.BRAKE_ANGLE);
 		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
 		Motors.motorIntake.set(0.0);
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
+		
 	}
 
 }
