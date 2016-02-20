@@ -57,7 +57,7 @@ public class Operator {
 			intake = true;
 		} else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
 		{
-			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
+			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * 1);
 			Motors.motorIntake.set(Motors.INTAKE_POWER * -1);
 		} else if (intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
 		{
@@ -93,8 +93,6 @@ public class Operator {
 				Motors.motorTapeArm.set(-Motors.TAPE_ARM_POWER);
 			else
 				Motors.motorTapeArm.set(Motors.NO_POWER);
-			
-			
 	}
 
 	/**

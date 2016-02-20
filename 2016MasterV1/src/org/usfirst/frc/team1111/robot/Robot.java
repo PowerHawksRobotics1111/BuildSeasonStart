@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		SmartDashboard.putBoolean("Spun Up?", false);
 		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
+//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 		SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
 	}
 
@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
+//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 		
 		if(Motors.motorShooter.get() > .5)
 			if(startTime == 0.0)
@@ -118,24 +118,35 @@ public class Robot extends IterativeRobot {
 			startTime = 0.0;
 	}
 
-	/**
-	 * This function is called periodically during test mode
-	 */
-	public void testPeriodic()
-	{
-
-	}
-
 	void drive()
 	{
 		double right = variables.Joysticks.joyDrive.getRawAxis(3);
 		double left = variables.Joysticks.joyDrive.getRawAxis(1);
 
-		Motors.motorDriveFrontLeft.set(-left);
-		Motors.motorDriveBackLeft.set(-left);
+		Motors.motorDriveFrontLeft.set(left);
+		Motors.motorDriveBackLeft.set(left);
 
 		Motors.motorDriveFrontRight.set(-right);
 		Motors.motorDriveBackRight.set(-right);
+		
+		SmartDashboard.putNumber("Left Joy Val", left);
+		SmartDashboard.putNumber("Right Joy Val", right);
+		
+		SmartDashboard.putNumber("Back Right Battery Voltage", Motors.motorDriveBackRight.getBusVoltage());
+		SmartDashboard.putNumber("Back Left Battery Voltage", Motors.motorDriveBackLeft.getBusVoltage());
+		SmartDashboard.putNumber("Front Right Battery Voltage", Motors.motorDriveFrontRight.getBusVoltage());
+		SmartDashboard.putNumber("Front Left Battery Voltage", Motors.motorDriveFrontLeft.getBusVoltage());
+		
+		SmartDashboard.putNumber("Back Right Output Voltage", Motors.motorDriveBackRight.getOutputVoltage());
+		SmartDashboard.putNumber("Back Left Output Voltage", Motors.motorDriveBackLeft.getOutputVoltage());
+		SmartDashboard.putNumber("Front Right Output Voltage", Motors.motorDriveFrontRight.getOutputVoltage());
+		SmartDashboard.putNumber("Front Left Output Voltage", Motors.motorDriveFrontLeft.getOutputVoltage());
+		
+		SmartDashboard.putNumber("Back Right Output Current", Motors.motorDriveBackRight.getOutputCurrent());
+		SmartDashboard.putNumber("Back Left Output Current", Motors.motorDriveBackLeft.getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Output Current", Motors.motorDriveFrontRight.getOutputCurrent());
+		SmartDashboard.putNumber("Front Left Output Current", Motors.motorDriveFrontLeft.getOutputCurrent());
+		
 	}
 	
 	public void disabledPeriodic()
