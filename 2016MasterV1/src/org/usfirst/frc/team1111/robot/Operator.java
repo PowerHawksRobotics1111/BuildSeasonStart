@@ -21,7 +21,7 @@ public class Operator {
 	static int armPos = 0;
 	static String armState = "";
 
-	
+
 	/**
 	 * Runs through test methods to determine what operation is requested
 	 */
@@ -32,13 +32,13 @@ public class Operator {
 		tapeArm();
 		functionStopOverride();
 		armControl();
-		
-//		SmartDashboard.putString("Arm State:", armState);
-//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
+
+		//		SmartDashboard.putString("Arm State:", armState);
+		//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
 	}
 
 
-	
+
 	/**
 	 * Method, checks the intake and outtake command buttons and runs the
 	 * intake/outake motor, else stops the motor.
@@ -63,7 +63,7 @@ public class Operator {
 		{
 			Motors.motorOuterIntake.set(Motors.NO_POWER);
 			Motors.motorIntake.set(Motors.NO_POWER);
-		} else
+		} else if(!intake)
 		{
 			Motors.motorOuterIntake.set(Motors.NO_POWER);
 			Motors.motorIntake.set(Motors.NO_POWER);
@@ -87,14 +87,14 @@ public class Operator {
 	static void tapeArm()
 	{
 		//if(!(Motors.motorTapeArm.getEncPosition() <= TAPE_ARM_LOWER_LIMIT) && !(Motors.motorTapeArm.getEncPosition() >= TAPE_ARM_UPPER_LIMIT)) TODO Enable after limits are calibrated.
-			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
-				Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
-			else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-				Motors.motorTapeArm.set(-Motors.TAPE_ARM_POWER);
-			else
-				Motors.motorTapeArm.set(Motors.NO_POWER);
-			
-			
+		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
+			Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
+		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
+			Motors.motorTapeArm.set(-Motors.TAPE_ARM_POWER);
+		else
+			Motors.motorTapeArm.set(Motors.NO_POWER);
+
+
 	}
 
 	/**
@@ -118,9 +118,15 @@ public class Operator {
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
 		{
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
+			{
 				Motors.motorOuterIntake.set(Motors.NO_POWER);
+				intake = false;
+			}
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.innerIntakeButton))
+			{
 				Motors.motorIntake.set(Motors.NO_POWER);
+				intake = false;
+			}
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
 				Motors.motorShooter.set(Motors.NO_POWER);
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
