@@ -17,13 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	final String lowbar = "Low", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
-	
+
 	String autoSelected;
 	SendableChooser chooser;
-	
+
 	public static String state;//TODO are we using this?
 	public static String subState;
-	
+
 	Double startTime = 0.0;
 
 	/**
@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
-		
+
 		initDashboard();
 	}
 
@@ -50,9 +50,9 @@ public class Robot extends IterativeRobot {
 	private void initDashboard()
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
-		SmartDashboard.putBoolean("Spun Up?", false);
+		//		SmartDashboard.putBoolean("Spun Up?", false);
 		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
+		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 		SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
 	}
 
@@ -77,45 +77,46 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic()
 	{
-		switch (autoSelected) {
-		case moat:
-			Auto.moat();
-			break;
-		case ramparts:
-			Auto.ramparts();
-			break;
-		case roughTerrain:
-			Auto.roughTerrain();
-			break;
-		case lowbar:
-		default:
-			Auto.lowBar();
-			break;
-		}
-		
+//		switch (autoSelected) {
+//		case moat:
+//			Auto.moat();
+//			break;
+//		case ramparts:
+//			Auto.ramparts();
+//			break;
+//		case roughTerrain:
+//			Auto.roughTerrain();
+//			break;
+//		case lowbar:
+//		default:
+//			Auto.lowBar();
+//			break;
+//		}
 	}
-	
+
+	//	}
+
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic()
 	{
-		drive();
+//		drive();
 		Operator.operate();
-		
+
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
-		
-		if(Motors.motorShooter.get() > .5)
-			if(startTime == 0.0)
-				startTime = Timer.getMatchTime();
-			else if(Timer.getMatchTime()-startTime <= Motors.SHOOTER_SPIN_TIME)
-				SmartDashboard.putBoolean("Spun Up?", false);
-			else
-				SmartDashboard.putBoolean("Spun Up?", true);
-		else
-			startTime = 0.0;
+		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
+
+		//		if(Motors.motorShooter.get() > .5)
+		//			if(startTime == 0.0)
+		//				startTime = Timer.getMatchTime();
+		//			else if(Timer.getMatchTime()-startTime <= Motors.SHOOTER_SPIN_TIME)
+		//				SmartDashboard.putBoolean("Spun Up?", false);
+		//			else
+		//				SmartDashboard.putBoolean("Spun Up?", true);
+		//		else
+		//			startTime = 0.0;
 	}
 
 	void drive()
@@ -128,36 +129,36 @@ public class Robot extends IterativeRobot {
 
 		Motors.motorDriveFrontRight.set(-right);
 		Motors.motorDriveBackRight.set(-right);
-		
+
 		SmartDashboard.putNumber("Left Joy Val", left);
 		SmartDashboard.putNumber("Right Joy Val", right);
-		
+
 		SmartDashboard.putNumber("Back Right Battery Voltage", Motors.motorDriveBackRight.getBusVoltage());
 		SmartDashboard.putNumber("Back Left Battery Voltage", Motors.motorDriveBackLeft.getBusVoltage());
 		SmartDashboard.putNumber("Front Right Battery Voltage", Motors.motorDriveFrontRight.getBusVoltage());
 		SmartDashboard.putNumber("Front Left Battery Voltage", Motors.motorDriveFrontLeft.getBusVoltage());
-		
+
 		SmartDashboard.putNumber("Back Right Output Voltage", Motors.motorDriveBackRight.getOutputVoltage());
 		SmartDashboard.putNumber("Back Left Output Voltage", Motors.motorDriveBackLeft.getOutputVoltage());
 		SmartDashboard.putNumber("Front Right Output Voltage", Motors.motorDriveFrontRight.getOutputVoltage());
 		SmartDashboard.putNumber("Front Left Output Voltage", Motors.motorDriveFrontLeft.getOutputVoltage());
-		
+
 		SmartDashboard.putNumber("Back Right Output Current", Motors.motorDriveBackRight.getOutputCurrent());
 		SmartDashboard.putNumber("Back Left Output Current", Motors.motorDriveBackLeft.getOutputCurrent());
 		SmartDashboard.putNumber("Front Right Output Current", Motors.motorDriveFrontRight.getOutputCurrent());
 		SmartDashboard.putNumber("Front Left Output Current", Motors.motorDriveFrontLeft.getOutputCurrent());
-		
+
 	}
-	
+
 	public void disabledPeriodic()
 	{
-		Auto.Movement.stopDriveMotors();
+		//				Auto.Movement.stopDriveMotors();
 		Motors.brake.setAngle(Motors.BRAKE_ANGLE);
 		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
-		Motors.motorIntake.set(0.0);
+		Motors.motorInnerIntake.set(0.0);
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
-		
+
 	}
 
 }

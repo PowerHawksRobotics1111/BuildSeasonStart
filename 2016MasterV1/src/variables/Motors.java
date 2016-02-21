@@ -10,42 +10,68 @@ public class Motors {
 	//motor variables for drive, arm, intake, outer intake, tape arm, and servo
 	public static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; 
 	public static CANTalon motorArm; 
-	public static CANTalon motorIntake, motorOuterIntake, motorShooter, motorTapeArm;
+	public static CANTalon motorInnerIntake, motorOuterIntake, motorShooter, motorTapeArm;
 	public static Servo brake;
+	public static Servo leftStop, rightStop;
 
 	//motor ports for drive, arm, intake, outer intake, tape arm, and servo
-	final static int MDFR_PORT = 47, MDFL_PORT = 52, MDBR_PORT = 55, MDBL_PORT = 60;  //TODO MDBL Port possibly wrong mapped.
-	final static int MA_PORT = 53; 
-	final static int MI_PORT = 44, MOI_PORT = 62, MS_PORT = 61, MTA_PORT = 45; 
-	final static int SERVO_CHANNEL = 0;
+	final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
+	final static int ARM = 53; 
+	final static int INNER_INTAKE = 44, OUTER_INTAKE = 62, SHOOTER = 61, TAPE_ARM = 45; 
+	final static int TAPE_BRAKE_SERVO = 0;
+	final static int BALL_STOP_LEFT = 1;
+	final static int BALL_STOP_RIGHT = 2;
 	
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25;
-	public static final double INTAKE_POWER = 1.0, OUTER_INTAKE_POWER = .625, ARM_POWER = .8, SHOOTER_POWER = 1.0, TAPE_ARM_POWER = .75;
+	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = .55, SHOOTER_POWER = .90, TAPE_ARM_POWER = .75, SHOOTER_REVERSE_POWER = -.5;//TODO sHOOTER REVERSE NOT CALIBRATED
 	
 	public static final double SHOOTER_SPIN_TIME = 0; //TODO find shooter spin up timea
-	public static final double BRAKE_ANGLE = 0; //TODO find accurate breaking angle
+	public static final double SHOOTER_INTAKE_TIME = 0.0;
+	
+	public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
+	private static final double ARM_VOLTAGE_RAMPRATE = 3;// Volts per second TODO Have to figure the utility of this.
+	
+	public static final double LEFTSTOP_UP = 0.0;//TODO VALUES!!!
+	public static final double RIGHTSTOP_UP = 0.0;
+	
+	public static final double LEFTSTOP_RETRACTED = 0.0;
+	public static final double RIGHTSTOP_RETRACTED = 0.0;
+	
+	public static final double NEW_ENC_RESOLUTION = 0.0; //TODO
+	
+	
+	public static double calcArmRot()
+	{
+		return .5 * (motorArm.getEncPosition() / NEW_ENC_RESOLUTION);
+	}
 	
 	/** Motor initialization*/
 	public static void motorInit()
 	{
-		motorDriveFrontRight = new CANTalon(MDFR_PORT);
-		motorDriveFrontLeft = new CANTalon(MDFL_PORT);
-		motorDriveBackRight = new CANTalon(MDBR_PORT);
-		motorDriveBackLeft = new CANTalon(MDBL_PORT);
+		motorDriveFrontRight = new CANTalon(FRONT_RIGHT_DRIVE);
+		motorDriveFrontLeft = new CANTalon(FRONT_LEFT_DRIVE);
+		motorDriveBackRight = new CANTalon(BACK_RIGHT_DRIVE);
+		motorDriveBackLeft = new CANTalon(BACK_LEFT_DRIVE);
 		
-		motorArm = new CANTalon(MA_PORT);
+		motorArm = new CANTalon(ARM);
+		//motorArm.setVoltageRampRate(ARM_VOLTAGE_RAMPRATE); TODO this stopped the arm entirely
 		
-		motorTapeArm = new CANTalon(MTA_PORT);
+		motorTapeArm = new CANTalon(TAPE_ARM);
+		motorTapeArm.setInverted(true);
 		
-		motorShooter = new CANTalon(MS_PORT);
+		motorShooter = new CANTalon(SHOOTER);
 		
-		motorIntake = new CANTalon(MI_PORT);
-		motorOuterIntake = new CANTalon(MOI_PORT);
+		motorInnerIntake = new CANTalon(INNER_INTAKE);
+		motorOuterIntake = new CANTalon(OUTER_INTAKE);
 		
 		motorOuterIntake.setInverted(true);
 		
-		brake = new Servo(SERVO_CHANNEL);
+		brake = new Servo(TAPE_BRAKE_SERVO);
+		
+		leftStop = new Servo(BALL_STOP_LEFT);
+		rightStop = new Servo(BALL_STOP_RIGHT);
+		
 	}
 } 

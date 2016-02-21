@@ -23,11 +23,11 @@ public class Joysticks {
 	public static class Buttons {
 
 		public static final int shootButton = X;
-		public static final int innerIntakeButton = Y;
-		public static final int outtakeButton = A;
-		public static final int intakeButton = B;
-		public static final int tapeArmExtend = LEFT_TRIGGER;
-		public static final int tapeArmRetract = LEFT_BUMPER;
+		public static final int outtakeButton = Y;
+		public static final int intakeButton = A;
+		public static final int reverseShooter = B;
+		public static final int tapeArmExtend = LEFT_BUMPER;
+		public static final int tapeArmRetract = LEFT_TRIGGER;
 		public static final int armUp = RIGHT_BUMPER;
 		public static final int armDown = RIGHT_TRIGGER;
 		public static final int overrideKillModifier = START;

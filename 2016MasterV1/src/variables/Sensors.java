@@ -1,25 +1,25 @@
 package variables;
 
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SerialPort;
+//import edu.wpi.first.wpilibj.SerialPort;
 
 public class Sensors {
 
 	//Limit switch ports
-	final static int LS_PORT = 1, LS2_PORT = 2;
+	final static int LS_PORT = 0, LS2_PORT = 1;
 
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
 
-	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
+//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 
 	public static class Encoders {
 
-		public static Encoder encoderDriveLeft = new Encoder(1, 2);
-		public static Encoder encoderDriveRight = new Encoder(3, 4);
+		public static Encoder encoderDriveLeft = new Encoder(2, 3);
+		public static Encoder encoderDriveRight = new Encoder(4, 5);
 		
 		/** Boolean to determine if encoders need to be reset */
 		public static boolean resetEncoders = true;
