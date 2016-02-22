@@ -2,6 +2,7 @@ package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
 import variables.Sensors;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	
+    CameraServer server;//TODO Temp
 
 	final String lowbar = "Low", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
@@ -32,6 +35,11 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit()
 	{
+		server = CameraServer.getInstance();
+        server.setQuality(100);
+        //the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
+        server.startAutomaticCapture("cam0");
+		
 		chooser = new SendableChooser();
 		chooser.addDefault("Low Bar Auto", lowbar);
 		chooser.addObject("Moat Auto", moat);
@@ -51,9 +59,11 @@ public class Robot extends IterativeRobot {
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		//		SmartDashboard.putBoolean("Spun Up?", false);
-		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
+		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
 		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 		SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
+		
+		SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
 	}
 
 	/**
@@ -77,35 +87,34 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic()
 	{
-//		switch (autoSelected) {
-//		case moat:
-//			Auto.moat();
-//			break;
-//		case ramparts:
-//			Auto.ramparts();
-//			break;
-//		case roughTerrain:
-//			Auto.roughTerrain();
-//			break;
-//		case lowbar:
-//		default:
-//			Auto.lowBar();
-//			break;
-//		}
+		switch (autoSelected) {
+		case moat:
+			Auto.moat();
+			break;
+		case ramparts:
+			Auto.ramparts();
+			break;
+		case roughTerrain:
+			Auto.roughTerrain();
+			break;
+		case lowbar:
+		default:
+			Auto.lowBar();
+			break;
+		}
 	}
-
-	//	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic()
 	{
-//		drive();
+		drive();
 		Operator.operate();
 
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
-		SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
+		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
+		SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
 		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 
 		//		if(Motors.motorShooter.get() > .5)
