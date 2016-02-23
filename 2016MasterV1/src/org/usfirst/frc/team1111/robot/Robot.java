@@ -2,6 +2,7 @@ package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
 import variables.Sensors;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -19,7 +20,7 @@ public class Robot extends IterativeRobot {
 	
     CameraServer server;//TODO Temp
 
-	final String lowbar = "Low", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	final String lowbarShoot = "LowShoot", lowbar = "lowbar", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
 	String autoSelected;
 	SendableChooser chooser;
@@ -41,7 +42,8 @@ public class Robot extends IterativeRobot {
         server.startAutomaticCapture("cam0");
 		
 		chooser = new SendableChooser();
-		chooser.addDefault("Low Bar Auto", lowbar);
+		chooser.addDefault("Low Bar", lowbar);
+		chooser.addObject("Lowbar Shoot", lowbarShoot);
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
@@ -80,6 +82,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit()
 	{
 		autoSelected = (String) chooser.getSelected();
+//		Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.Position);
 	}
 
 	/**
@@ -97,8 +100,11 @@ public class Robot extends IterativeRobot {
 		case roughTerrain:
 			Auto.roughTerrain();
 			break;
-		case lowbar:
+		case lowbarShoot:
+			Auto.lowBarShoot();
+			break;
 		default:
+			case lowbar:
 			Auto.lowBar();
 			break;
 		}

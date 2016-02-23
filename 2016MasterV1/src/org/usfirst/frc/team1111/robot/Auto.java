@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1111.robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import variables.Motors;
 import variables.Sensors;
 import variables.Sensors.Encoders;
@@ -15,8 +16,8 @@ public class Auto {
 		{
 			Motors.motorDriveBackLeft.set(power);
 			Motors.motorDriveBackRight.set(power);
-			Motors.motorDriveFrontLeft.set(power);
-			Motors.motorDriveFrontRight.set(power);
+			Motors.motorDriveFrontLeft.set(-1 * power);
+			Motors.motorDriveFrontRight.set(-1 * power);
 		}
 
 		public static void driveToDistance(double distance)
@@ -81,7 +82,23 @@ public class Auto {
 
 	static int progress = 0;
 	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
-	public static void lowBar()//Includes shooting
+	public static void lowBar()
+	{
+		if(Timer.getMatchTime() < 5.0)
+		{
+			if(Motors.motorArm.getEncPosition() > /*Temp ArmPos*/ -1795)
+				Motors.motorArm.set(Motors.ARM_POWER);
+			else if(Motors.motorArm.getEncPosition() < -1805)
+				Motors.motorArm.set(-Motors.ARM_POWER);
+			else
+				Motors.motorArm.set(Motors.NO_POWER);
+		}else
+			Motors.motorArm.set(Motors.NO_POWER);
+		//else
+			//Movement.stopDriveMotors();
+	}
+	
+	public static void lowBarShoot()//Includes shooting
 	{
 
 		if(progress == 0)
@@ -122,24 +139,45 @@ public class Auto {
 
 	public static void moat()
 	{
-		if(Timer.getMatchTime() <= 10.0)//TODO Better timings.
-			Movement.driveDriveMotors(Motors.FULL_POWER);
+		if(Timer.getMatchTime() <= 3.0)//TODO Better timings.
+		{
+			Motors.motorDriveBackLeft.set(-1);
+		Motors.motorDriveBackRight.set(1);
+		Motors.motorDriveFrontLeft.set(-1);
+		Motors.motorDriveFrontRight.set(1);
+	}
 		else 
 			Movement.stopDriveMotors();
 	}
 
 	public static void ramparts()//TODO Better timings.
 	{
-		if(Timer.getMatchTime() <= 10.0)
-			Movement.driveDriveMotors(Motors.FULL_POWER);
+		if(Timer.getMatchTime() <= 3.0){
+			Motors.motorDriveBackLeft.set(-1);
+		Motors.motorDriveBackRight.set(1);
+		Motors.motorDriveFrontLeft.set(-1);
+		Motors.motorDriveFrontRight.set(1);
+	}
 		else 
 			Movement.stopDriveMotors();
 	}
 
 	public static void roughTerrain()//TODO Better timings.
 	{
-		if(Timer.getMatchTime() <= 10.0)
-			Movement.driveDriveMotors(Motors.FULL_POWER);
+		if(Timer.getMatchTime() <= 2.25)
+		{
+			Motors.motorDriveBackLeft.set(-1);
+		Motors.motorDriveBackRight.set(1);
+		Motors.motorDriveFrontLeft.set(-1);
+		Motors.motorDriveFrontRight.set(1);
+		
+		SmartDashboard.putNumber("Back Right Output Voltage", Motors.motorDriveBackRight.getOutputVoltage());
+		SmartDashboard.putNumber("Back Left Output Voltage", Motors.motorDriveBackLeft.getOutputVoltage());
+		SmartDashboard.putNumber("Front Right Output Voltage", Motors.motorDriveFrontRight.getOutputVoltage());
+		SmartDashboard.putNumber("Front Left Output Voltage", Motors.motorDriveFrontLeft.getOutputVoltage());
+		SmartDashboard.putNumber("Time", Timer.getMatchTime());
+		
+	}
 		else 
 			Movement.stopDriveMotors();
 	}

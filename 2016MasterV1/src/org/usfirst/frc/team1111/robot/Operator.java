@@ -37,6 +37,7 @@ public class Operator {
 		functionStopOverride();
 		armControl();
 //		armStates();
+		hardStopToggle();
 
 		//		SmartDashboard.putString("Arm State:", armState);
 		//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
@@ -87,12 +88,7 @@ public class Operator {
 		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
 		{
 			shooting = true;
-		}else if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.reverseShooter))
-		{
-			shooting = false;
-			Motors.motorShooter.set(Motors.SHOOTER_REVERSE_POWER);
-		}else if(!shooting)
-			Motors.motorShooter.set(Motors.NO_POWER);
+		}
 		
 		if(shooting)
 			Motors.motorShooter.set(Motors.SHOOTER_POWER);
@@ -238,6 +234,21 @@ public class Operator {
 				armStates = false;
 				Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 				Motors.motorArm.set(Motors.NO_POWER);
+			}
+		}
+	}
+	
+	static void hardStopToggle()
+	{
+		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.reverseShooter))
+		{
+			if(Motors.hardBallStop.getAngle() == 0)
+			{
+				Motors.hardBallStop.setAngle(45);
+			}
+			else if(Motors.hardBallStop.getAngle() == 45)
+			{
+				Motors.hardBallStop.setAngle(0);
 			}
 		}
 	}

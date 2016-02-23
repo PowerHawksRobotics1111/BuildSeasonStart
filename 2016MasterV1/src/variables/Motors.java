@@ -12,20 +12,19 @@ public class Motors {
 	public static CANTalon motorArm; 
 	public static CANTalon motorInnerIntake, motorOuterIntake, motorShooter, motorTapeArm;
 	public static Servo brake;
-	public static Servo leftStop, rightStop;
+	public static Servo hardBallStop;
 
 	//motor ports for drive, arm, intake, outer intake, tape arm, and servo
 	final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
 	final static int ARM = 53; 
 	final static int INNER_INTAKE = 44, OUTER_INTAKE = 62, SHOOTER = 61, TAPE_ARM = 45; 
 	final static int TAPE_BRAKE_SERVO = 0;
-	final static int BALL_STOP_LEFT = 1;
-	final static int BALL_STOP_RIGHT = 2;
+	final static int BALL_STOP = 1;
 	
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25;
-	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .40, ARM_POWER = .55, SHOOTER_POWER = .9, TAPE_ARM_POWER = .75, SHOOTER_REVERSE_POWER = -.5, INNER_OUTAKE_POWER = -1.0;//TODO sHOOTER REVERSE NOT CALIBRATED
+	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .40, ARM_POWER = .55, SHOOTER_POWER = .95, TAPE_ARM_POWER = .75, SHOOTER_REVERSE_POWER = -.5, INNER_OUTAKE_POWER = -1.0;//TODO sHOOTER REVERSE NOT CALIBRATED
 	
 	public static final double SHOOTER_SPIN_TIME = 0; //TODO find shooter spin up timea
 	public static final double SHOOTER_INTAKE_TIME = 0.0;
@@ -39,7 +38,7 @@ public class Motors {
 	public static final double LEFTSTOP_RETRACTED = 0.0;
 	public static final double RIGHTSTOP_RETRACTED = 0.0;
 	
-	private static final int ARM_TICKS_PER_REV = 180;
+	private static final int ARM_TICKS_PER_REV = 18;
 	
 		
 	/** Motor initialization*/
@@ -67,8 +66,7 @@ public class Motors {
 		
 		brake = new Servo(TAPE_BRAKE_SERVO);
 		
-		leftStop = new Servo(BALL_STOP_LEFT);
-		rightStop = new Servo(BALL_STOP_RIGHT);
+		hardBallStop = new Servo(BALL_STOP);
 		
 	}
 } 
