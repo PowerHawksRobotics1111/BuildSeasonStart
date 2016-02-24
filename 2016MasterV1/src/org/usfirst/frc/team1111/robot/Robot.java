@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,7 +21,7 @@ public class Robot extends IterativeRobot {
 	
     CameraServer server;//TODO Temp
 
-	final String lowbarShoot = "LowShoot", lowbar = "lowbar", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
 	String autoSelected;
 	SendableChooser chooser;
@@ -43,12 +44,13 @@ public class Robot extends IterativeRobot {
 		
 		chooser = new SendableChooser();
 		chooser.addDefault("Low Bar", lowbar);
-		chooser.addObject("Lowbar Shoot", lowbarShoot);
+//		chooser.addObject("Lowbar Shoot", lowbarShoot);
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
+		chooser.addObject(rockwall, rockwall);
 		SmartDashboard.putData("Auto choices", chooser);
-
+		
 		Motors.motorInit();
 
 		initDashboard();
@@ -63,9 +65,9 @@ public class Robot extends IterativeRobot {
 		//		SmartDashboard.putBoolean("Spun Up?", false);
 		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
 		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
-		SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
+		//SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
 		
-		SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
+		//SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
 	}
 
 	/**
@@ -98,11 +100,12 @@ public class Robot extends IterativeRobot {
 			Auto.ramparts();
 			break;
 		case roughTerrain:
-			Auto.roughTerrain();
+		case rockwall:
+			Auto.roughTerrainRockwall();
 			break;
-		case lowbarShoot:
-			Auto.lowBarShoot();
-			break;
+//		case lowbarShoot:
+//			Auto.lowBarShoot();
+//			break;
 		default:
 			case lowbar:
 			Auto.lowBar();
@@ -117,10 +120,11 @@ public class Robot extends IterativeRobot {
 	{
 		drive();
 		Operator.operate();
+//		cameraControl();
 
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-		SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
+		//SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
 		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
 
 		//		if(Motors.motorShooter.get() > .5)
@@ -144,36 +148,30 @@ public class Robot extends IterativeRobot {
 
 		Motors.motorDriveFrontRight.set(-right);
 		Motors.motorDriveBackRight.set(-right);
-
-		SmartDashboard.putNumber("Left Joy Val", left);
-		SmartDashboard.putNumber("Right Joy Val", right);
-
-		SmartDashboard.putNumber("Back Right Battery Voltage", Motors.motorDriveBackRight.getBusVoltage());
-		SmartDashboard.putNumber("Back Left Battery Voltage", Motors.motorDriveBackLeft.getBusVoltage());
-		SmartDashboard.putNumber("Front Right Battery Voltage", Motors.motorDriveFrontRight.getBusVoltage());
-		SmartDashboard.putNumber("Front Left Battery Voltage", Motors.motorDriveFrontLeft.getBusVoltage());
-
-		SmartDashboard.putNumber("Back Right Output Voltage", Motors.motorDriveBackRight.getOutputVoltage());
-		SmartDashboard.putNumber("Back Left Output Voltage", Motors.motorDriveBackLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Front Right Output Voltage", Motors.motorDriveFrontRight.getOutputVoltage());
-		SmartDashboard.putNumber("Front Left Output Voltage", Motors.motorDriveFrontLeft.getOutputVoltage());
-
-		SmartDashboard.putNumber("Back Right Output Current", Motors.motorDriveBackRight.getOutputCurrent());
-		SmartDashboard.putNumber("Back Left Output Current", Motors.motorDriveBackLeft.getOutputCurrent());
-		SmartDashboard.putNumber("Front Right Output Current", Motors.motorDriveFrontRight.getOutputCurrent());
-		SmartDashboard.putNumber("Front Left Output Current", Motors.motorDriveFrontLeft.getOutputCurrent());
-
 	}
 
 	public void disabledPeriodic()
 	{
-		//				Auto.Movement.stopDriveMotors();
-		Motors.brake.setAngle(Motors.BRAKE_ANGLE);
-		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
+		Auto.Movement.stopDriveMotors();
+//		Motors.brake.setAngle(Motors.BRAKE_ANGLE);
+//		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
 		Motors.motorInnerIntake.set(0.0);
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
-
+		Operator.disable();
 	}
+	
+//	static void cameraControl()
+//	{
+//		if(Operator.shooting)
+//		{
+//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k160x120);
+//			Sensors.Cameras.shootCam.startCapture();
+//		}else
+//		{
+//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k640x480);
+//			Sensors.Cameras.shootCam.stopCapture();
+//		}
+//	}
 
 }

@@ -95,9 +95,9 @@ public class Auto {
 		}else
 			Motors.motorArm.set(Motors.NO_POWER);
 		//else
-			//Movement.stopDriveMotors();
+		//Movement.stopDriveMotors();
 	}
-	
+
 	public static void lowBarShoot()//Includes shooting
 	{
 
@@ -142,10 +142,10 @@ public class Auto {
 		if(Timer.getMatchTime() <= 3.0)//TODO Better timings.
 		{
 			Motors.motorDriveBackLeft.set(-1);
-		Motors.motorDriveBackRight.set(1);
-		Motors.motorDriveFrontLeft.set(-1);
-		Motors.motorDriveFrontRight.set(1);
-	}
+			Motors.motorDriveBackRight.set(1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+		}
 		else 
 			Movement.stopDriveMotors();
 	}
@@ -154,37 +154,32 @@ public class Auto {
 	{
 		if(Timer.getMatchTime() <= 3.0){
 			Motors.motorDriveBackLeft.set(-1);
-		Motors.motorDriveBackRight.set(1);
-		Motors.motorDriveFrontLeft.set(-1);
-		Motors.motorDriveFrontRight.set(1);
-	}
+			Motors.motorDriveBackRight.set(1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+		}
 		else 
 			Movement.stopDriveMotors();
 	}
 
-	public static void roughTerrain()//TODO Better timings.
+	public static void roughTerrainRockwall()
 	{
 		if(Timer.getMatchTime() <= 2.25)
 		{
 			Motors.motorDriveBackLeft.set(-1);
-		Motors.motorDriveBackRight.set(1);
-		Motors.motorDriveFrontLeft.set(-1);
-		Motors.motorDriveFrontRight.set(1);
-		
-		SmartDashboard.putNumber("Back Right Output Voltage", Motors.motorDriveBackRight.getOutputVoltage());
-		SmartDashboard.putNumber("Back Left Output Voltage", Motors.motorDriveBackLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Front Right Output Voltage", Motors.motorDriveFrontRight.getOutputVoltage());
-		SmartDashboard.putNumber("Front Left Output Voltage", Motors.motorDriveFrontLeft.getOutputVoltage());
-		SmartDashboard.putNumber("Time", Timer.getMatchTime());
-		
-	}
+			Motors.motorDriveBackRight.set(1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+
+			SmartDashboard.putNumber("Time", Timer.getMatchTime());
+		}
 		else 
 			Movement.stopDriveMotors();
 	}
 
 	static Double startTime = 0.0;
 
-	private static void shoot()//TODO bring the shooting setup in from Operator
+	private static void shoot()//TODO bring the shooting setup in from Operator???
 	{
 		//		if(startTime == 0.0)
 		//				startTime = Timer.getMatchTime();

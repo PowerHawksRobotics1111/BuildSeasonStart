@@ -1,17 +1,15 @@
 package org.usfirst.frc.team1111.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import variables.Joysticks;
 import variables.Motors;
 import variables.Sensors;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Operator {
 
-	static final int TAPE_ARM_LOWER_LIMIT = 0;
-	static final int TAPE_ARM_UPPER_LIMIT = 0;
-	private static final int NUM_ARM_STATES = 5;
+//	static final int TAPE_ARM_LOWER_LIMIT = 0;
+//	static final int TAPE_ARM_UPPER_LIMIT = 0;
+//	private static final int NUM_ARM_STATES = 5;
 	/*
 	 * The following are booleans to carry states through iterations of the
 	 * code.
@@ -22,8 +20,8 @@ public class Operator {
 	 * String armState translate state to the dashboard
 	 */
 	static boolean intake = false;
-	static int armPos = 0;
-	static String armState = "";
+//	static int armPos = 0;
+//	static String armState = "";
 
 
 	/**
@@ -31,16 +29,20 @@ public class Operator {
 	 */
 	public static void operate()
 	{
-		intakeOutake();
-		shoot();
-		tapeArm(); //TODO this is disabled cause it breaks if it goes in to far and the encoder isnt connected
+		if (!Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
+		{
+			intakeOutake();
+			shoot();
+			tapeArm();
+			armControl();
+			//		armStates();
+			//		hardStopToggle();
+		}
+		
 		functionStopOverride();
-		armControl();
-//		armStates();
-		hardStopToggle();
 
 		//		SmartDashboard.putString("Arm State:", armState);
-		//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); //TODO Units.
+		//		SmartDashboard.putNumber("Shooter rate:", Motors.motorShooter.getEncVelocity()); // Units?
 	}
 
 
@@ -74,8 +76,7 @@ public class Operator {
 		}
 	}
 
-	static boolean shooting = false;
-	static boolean spunUp = false;
+	public static boolean shooting = false;
 	static double intakeToShooterStartTime = 0.0;
 	private static final double SHOOTER_INTAKE_TIME = 1.0;//Seconds
 	static boolean shootingIntake = false;
@@ -83,20 +84,19 @@ public class Operator {
 	/**
 	 * Method, runs or stops the shoot motor.
 	 */
-	static void shoot()//TODO Button to spin up, then intake again to shoot.
+	static void shoot()
 	{
 		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
-		{
 			shooting = true;
-		}
 		
 		if(shooting)
 			Motors.motorShooter.set(Motors.SHOOTER_POWER);
 		else
-			shootingIntake = false;
+			Motors.motorShooter.set(Motors.NO_POWER);
 		
-		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
+		if(shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
 				shootingIntake = true;
+		
 		if(shooting && shootingIntake)
 		{
 			if(intakeToShooterStartTime == 0.0)
@@ -121,7 +121,7 @@ public class Operator {
 	 */
 	static void tapeArm()
 	{
-		//if(!(Motors.motorTapeArm.getEncPosition() <= TAPE_ARM_LOWER_LIMIT) && !(Motors.motorTapeArm.getEncPosition() >= TAPE_ARM_UPPER_LIMIT)) TODO Enable after limits are calibrated.
+		//if(!(Motors.motorTapeArm.getEncPosition() <= TAPE_ARM_LOWER_LIMIT) && !(Motors.motorTapeArm.getEncPosition() >= TAPE_ARM_UPPER_LIMIT)) 
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
 			Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
 		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
@@ -132,7 +132,7 @@ public class Operator {
 
 	}
 
-	static boolean armStates = false;
+//	static boolean armStates = false;
 
 	/**
 	 * Intake arm control
@@ -141,70 +141,70 @@ public class Operator {
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp))
 		{
-			armStates = false;
-			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//			armStates = false;
+//			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 			Motors.motorArm.set(-Motors.ARM_POWER);
 		}
 		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
 		{
-			armStates = false;
-			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//			armStates = false;
+//			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 			Motors.motorArm.set(Motors.ARM_POWER);
 		}
-		else if(!armStates)
+		else //if(!armStates)
 			Motors.motorArm.set(Motors.NO_POWER);
 	}
 
-	final static class ArmStates//Done from zero at the top to 90 at horizantal hopefully...
-	{
-		final static int UP = 0, SCALING = 45, DRAWBRIDGE = 45, INTAKE = 90, LOWBAR = 95;//TODO Angles for scale and drawbridge
-	}
+//	final static class ArmStates//Done from zero at the top to 90 at horizantal hopefully...
+//	{
+//		final static int UP = 0, SCALING = 45, DRAWBRIDGE = 45, INTAKE = 90, LOWBAR = 95;//TODO Angles for scale and drawbridge (If we get this working)
+//	}
 	
-	static int armStateNumber;
-
-	static void armStates()
-	{
-		if(Joysticks.joyOp.getPOV() == Joysticks.D_PAD_UP)
-		{
-			armStateNumber++;
-			armStates = true;
-		}else if(Joysticks.joyOp.getPOV() == Joysticks.D_PAD_DOWN)
-		{
-			armStateNumber++;
-			armStates = true;
-		}
-		
-		String armPosForDash = "Not Position Based";
-		
-		if(armStates)
-		{
-			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.Position);
-			int state = armStateNumber % NUM_ARM_STATES;
-			if(state == 0)
-			{
-				Motors.motorArm.set(ArmStates.UP);
-				armPosForDash = "Up";
-			}else if(state == 1)
-			{
-				Motors.motorArm.set(ArmStates.SCALING);
-				armPosForDash = "Scaling";
-			}else if(state == 2)
-			{
-				Motors.motorArm.set(ArmStates.DRAWBRIDGE);
-				armPosForDash = "DrawBidge";
-			}else if(state == 3)
-			{
-				Motors.motorArm.set(ArmStates.INTAKE);
-				armPosForDash = "Intake";
-			}else if(state == 4)
-			{
-				Motors.motorArm.set(ArmStates.LOWBAR);
-				armPosForDash = "Low Bar";
-			}
-		}
-		
-		SmartDashboard.putString("Arm State: ", armPosForDash);
-	}
+//	static int armStateNumber;
+//
+//	static void armStates()
+//	{
+//		if(Joysticks.joyOp.getPOV() == Joysticks.D_PAD_UP)
+//		{
+//			armStateNumber++;
+//			armStates = true;
+//		}else if(Joysticks.joyOp.getPOV() == Joysticks.D_PAD_DOWN)
+//		{
+//			armStateNumber++;
+//			armStates = true;
+//		}
+//		
+//		String armPosForDash = "Not Position Based";
+//		
+//		if(armStates)
+//		{
+//			Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.Position);
+//			int state = armStateNumber % NUM_ARM_STATES;
+//			if(state == 0)
+//			{
+//				Motors.motorArm.set(ArmStates.UP);
+//				armPosForDash = "Up";
+//			}else if(state == 1)
+//			{
+//				Motors.motorArm.set(ArmStates.SCALING);
+//				armPosForDash = "Scaling";
+//			}else if(state == 2)
+//			{
+//				Motors.motorArm.set(ArmStates.DRAWBRIDGE);
+//				armPosForDash = "DrawBidge";
+//			}else if(state == 3)
+//			{
+//				Motors.motorArm.set(ArmStates.INTAKE);
+//				armPosForDash = "Intake";
+//			}else if(state == 4)
+//			{
+//				Motors.motorArm.set(ArmStates.LOWBAR);
+//				armPosForDash = "Low Bar";
+//			}
+//		}
+//		
+//		SmartDashboard.putString("Arm State: ", armPosForDash);
+//	}
 
 	/**
 	 * Function override implementation
@@ -224,33 +224,41 @@ public class Operator {
 				intakeToShooterStartTime = 0.0;
 				Motors.motorShooter.set(Motors.NO_POWER);
 				shooting = false;
-				//Motors.leftStop.set(Motors.LEFTSTOP_UP);
-				//Motors.rightStop.set(Motors.RIGHTSTOP_UP); TODO These currently arent on the robot
 			}
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
 				Motors.motorTapeArm.set(Motors.NO_POWER);
 			if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
 			{
-				armStates = false;
-				Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//				armStates = false;
+//				Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 				Motors.motorArm.set(Motors.NO_POWER);
 			}
 		}
 	}
-	
-	static void hardStopToggle()
+
+
+
+	public static void disable()
 	{
-		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.reverseShooter))
-		{
-			if(Motors.hardBallStop.getAngle() == 0)
-			{
-				Motors.hardBallStop.setAngle(45);
-			}
-			else if(Motors.hardBallStop.getAngle() == 45)
-			{
-				Motors.hardBallStop.setAngle(0);
-			}
-		}
+		shooting = false;
+		intake = false;
+		shootingIntake = false;
+		Operator.intakeToShooterStartTime = 0.0;		
 	}
+	
+//	static void hardStopToggle()
+//	{
+//		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.reverseShooter))
+//		{
+//			if(Motors.hardBallStop.getAngle() == 0)
+//			{
+//				Motors.hardBallStop.setAngle(45);
+//			}
+//			else if(Motors.hardBallStop.getAngle() == 45)
+//			{
+//				Motors.hardBallStop.setAngle(0);
+//			}
+//		}
+//	}
 
 }
