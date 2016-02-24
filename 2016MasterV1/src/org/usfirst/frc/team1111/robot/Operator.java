@@ -92,7 +92,10 @@ public class Operator {
 		if(shooting)
 			Motors.motorShooter.set(Motors.SHOOTER_POWER);
 		else
+		{
 			Motors.motorShooter.set(Motors.NO_POWER);
+			shootingIntake = false;
+		}
 		
 		if(shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
 				shootingIntake = true;
