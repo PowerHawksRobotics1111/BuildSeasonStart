@@ -3,23 +3,29 @@ package org.usfirst.frc.team1111.robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import variables.Motors;
-import variables.Sensors;
-import variables.Sensors.Encoders;
+//import variables.Sensors;
+//import variables.Sensors.Encoders;
 
 public class Auto {
 
 	static class Movement {
 
-		public static final double TEMP_DEFAULT_AUTO_SPEED = Motors.HALF_POWER;
-
 		public static void driveDriveMotors(double power)
 		{
-			Motors.motorDriveBackLeft.set(power);
+			Motors.motorDriveBackLeft.set(-1 * power);
 			Motors.motorDriveBackRight.set(power);
 			Motors.motorDriveFrontLeft.set(-1 * power);
-			Motors.motorDriveFrontRight.set(-1 * power);
+			Motors.motorDriveFrontRight.set(power);
 		}
 
+		public static void stopDriveMotors()
+		{
+			Motors.motorDriveBackLeft.set(Motors.NO_POWER);
+			Motors.motorDriveBackRight.set(Motors.NO_POWER);
+			Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
+			Motors.motorDriveFrontRight.set(Motors.NO_POWER);
+		}
+		/**
 		public static void driveToDistance(double distance)
 		{
 			if (Sensors.Encoders.resetEncoders)
@@ -44,19 +50,11 @@ public class Auto {
 				stopDriveMotors();
 		}
 
-		public static void stopDriveMotors()
-		{
-			Motors.motorDriveBackLeft.set(Motors.NO_POWER);
-			Motors.motorDriveBackRight.set(Motors.NO_POWER);
-			Motors.motorDriveFrontLeft.set(Motors.NO_POWER);
-			Motors.motorDriveFrontRight.set(Motors.NO_POWER);
-		}
-
 		public static void turnInPlace(String direction, double speed)
 		{
 			if (direction.equals("left"))
 			{
-				Robot.subState = "Turning Left...";
+				//Robot.subState = "Turning Left...";
 
 				Motors.motorDriveFrontLeft.set(speed);
 				Motors.motorDriveBackLeft.set(speed);
@@ -64,7 +62,7 @@ public class Auto {
 				Motors.motorDriveBackRight.set(-speed);
 			} else if (direction.equals("right"))
 			{
-				Robot.subState = "Turning Right...";
+				//Robot.subState = "Turning Right...";
 
 				Motors.motorDriveFrontRight.set(speed);
 				Motors.motorDriveBackRight.set(speed);
@@ -72,21 +70,20 @@ public class Auto {
 				Motors.motorDriveBackLeft.set(-speed);
 			}
 		}
+		 */
 
 	}
-
+	/**
 	private static final double ANGLE_TO_GOAL = 0;
 	private static final double ANGLE_TO_SHOOTING_SPOT = 0;
 	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
 	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
 
-	static int progress = 0;
-	//TODO Shoot subversions, what can we go over, what will mess with encoders, what is the same? And can we do anything else?
 	public static void lowBar()
 	{
 		if(Timer.getMatchTime() < 5.0)
 		{
-			if(Motors.motorArm.getEncPosition() > /*Temp ArmPos*/ -1795)
+			if(Motors.motorArm.getEncPosition() > -1795)//Temp arm pos
 				Motors.motorArm.set(Motors.ARM_POWER);
 			else if(Motors.motorArm.getEncPosition() < -1805)
 				Motors.motorArm.set(-Motors.ARM_POWER);
@@ -98,6 +95,7 @@ public class Auto {
 		//Movement.stopDriveMotors();
 	}
 
+	static int progress = 0;
 	public static void lowBarShoot()//Includes shooting
 	{
 
@@ -136,6 +134,7 @@ public class Auto {
 		else if(progress == 7)
 			shoot();
 	}
+	 */
 
 	public static void moat()
 	{
@@ -150,7 +149,7 @@ public class Auto {
 			Movement.stopDriveMotors();
 	}
 
-	public static void ramparts()//TODO Better timings.
+	public static void ramparts()//TODO Better timings. Auto counts down from 15 when we run it at school, so it ran at the end of auto.
 	{
 		if(Timer.getMatchTime() <= 3.0){
 			Motors.motorDriveBackLeft.set(-1);
@@ -176,19 +175,20 @@ public class Auto {
 		else 
 			Movement.stopDriveMotors();
 	}
-
+	/**
 	static Double startTime = 0.0;
 
-	private static void shoot()//TODO bring the shooting setup in from Operator???
+	private static void shoot()//ODO bring the shooting setup in from Operator???
 	{
-		//		if(startTime == 0.0)
-		//				startTime = Timer.getMatchTime();
-		//		if(Timer.getMatchTime() - startTime < 3.5)//TODO better spinup time
-		//			Motors.motorShooter.set(Motors.SHOOTER_POWER);
-		//		else
-		//		{
-		//			Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
-		//			progress++;
+				if(startTime == 0.0)
+						startTime = Timer.getMatchTime();
+				if(Timer.getMatchTime() - startTime < 3.5)//TODO better spinup time
+					Motors.motorShooter.set(Motors.SHOOTER_POWER);
+				else
+				{
+					Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
+					progress++;
 		//		}
 	}
+	 */
 }

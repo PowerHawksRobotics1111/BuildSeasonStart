@@ -1,12 +1,12 @@
 package variables;
 
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.vision.AxisCamera;
-import edu.wpi.first.wpilibj.vision.USBCamera;
+//import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.SerialPort;
+//import edu.wpi.first.wpilibj.vision.AxisCamera;
+//import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class Sensors {
 
@@ -16,28 +16,28 @@ public class Sensors {
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
 
-	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
-	
-//	public static class Cameras {
-//		final static String axisCameraAdress = "";
-//		
-//		public static final USBCamera shootCam = new USBCamera("cam0");
-//		public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
-//	}
+	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 
+	//	public static class Cameras {
+	//		final static String axisCameraAdress = "";
+	//		
+	//		public static final USBCamera shootCam = new USBCamera("cam0");
+	//		public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
+	//	}
+	/**
 	public static class Encoders {
 
 		public static Encoder encoderDriveLeft = new Encoder(2, 3);
 		public static Encoder encoderDriveRight = new Encoder(4, 5);
-		
-		/** Boolean to determine if encoders need to be reset */
+
+		/** Boolean to determine if encoders need to be reset /
 		public static boolean resetEncoders = true;
 
 		static double distanceTraveledPerTick;
 		static int DRIVE_WHEEL_DIAMETER = 6;
 		static final int TICKS_PER_ENCODER_REVOLUTION = 48;
-		
-		/**	encoder revolutions per wheel revolution */
+
+		/**	encoder revolutions per wheel revolution /
 		static final double GEARING_RATIO = 2.84;
 
 		public static void resetEncoders()
@@ -54,14 +54,15 @@ public class Sensors {
 		}
 
 		/**
-		 * Method that calculates the distance the wheel travels per encoder
-		 * tick using the circumference, gear ratio, and ticks per revolution
-		 * 
-		 * @return the distance the wheel travels per encoder tick in inches
-		 */
+	 * Method that calculates the distance the wheel travels per encoder
+	 * tick using the circumference, gear ratio, and ticks per revolution
+	 * 
+	 * @return the distance the wheel travels per encoder tick in inches
+		 /
 		static double calcDistTraveledPerTick()
 		{
 			return (Math.PI * (double) DRIVE_WHEEL_DIAMETER) / ((double) TICKS_PER_ENCODER_REVOLUTION * GEARING_RATIO);
 		}
 	}
+	 */
 }

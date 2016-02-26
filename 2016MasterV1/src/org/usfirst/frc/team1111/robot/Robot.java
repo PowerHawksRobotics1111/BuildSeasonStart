@@ -2,13 +2,10 @@ package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
 import variables.Sensors;
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,16 +15,13 @@ import edu.wpi.first.wpilibj.vision.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	
-    CameraServer server;//TODO Temp
+
+	CameraServer server;//TODO Temp
 
 	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
 	String autoSelected;
 	SendableChooser chooser;
-
-	public static String state;//TODO are we using this?
-	public static String subState;
 
 	Double startTime = 0.0;
 
@@ -38,19 +32,19 @@ public class Robot extends IterativeRobot {
 	public void robotInit()
 	{
 		server = CameraServer.getInstance();
-        server.setQuality(100);
-        //the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
-        server.startAutomaticCapture("cam0");
-		
+		server.setQuality(100);
+		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
+		server.startAutomaticCapture("cam0");
+
 		chooser = new SendableChooser();
 		chooser.addDefault("Low Bar", lowbar);
-//		chooser.addObject("Lowbar Shoot", lowbarShoot);
+		//		chooser.addObject("Lowbar Shoot", lowbarShoot);
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
 		chooser.addObject(rockwall, rockwall);
 		SmartDashboard.putData("Auto choices", chooser);
-		
+
 		Motors.motorInit();
 
 		initDashboard();
@@ -62,12 +56,6 @@ public class Robot extends IterativeRobot {
 	private void initDashboard()
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
-		//		SmartDashboard.putBoolean("Spun Up?", false);
-		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
-		//SmartDashboard.putNumber("Tape Arm Distance", Motors.motorTapeArm.getEncPosition());//TODO UNIT COnversion for this...
-		
-		//SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
 	}
 
 	/**
@@ -84,7 +72,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit()
 	{
 		autoSelected = (String) chooser.getSelected();
-//		Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.Position);
 	}
 
 	/**
@@ -94,6 +81,7 @@ public class Robot extends IterativeRobot {
 	{
 		switch (autoSelected) {
 		case moat:
+		default:
 			Auto.moat();
 			break;
 		case ramparts:
@@ -103,13 +91,13 @@ public class Robot extends IterativeRobot {
 		case rockwall:
 			Auto.roughTerrainRockwall();
 			break;
-//		case lowbarShoot:
-//			Auto.lowBarShoot();
-//			break;
-		default:
-			case lowbar:
-			Auto.lowBar();
-			break;
+			//case lowbarShoot:
+			//		Auto.lowBarShoot();
+			//		break;
+			//	default:
+			//		case lowbar:
+			//		Auto.lowBar();
+			//		break;
 		}
 	}
 
@@ -120,22 +108,9 @@ public class Robot extends IterativeRobot {
 	{
 		drive();
 		Operator.operate();
-//		cameraControl();
+		//		cameraControl();
 
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
-		//SmartDashboard.putString("Arm Position", "We need to make this state machine thing");
-		//SmartDashboard.putNumber("Arm ENC", Motors.motorArm.getEncPosition());
-		//		SmartDashboard.putNumber("Drive Speed (inches/second)", (Sensors.Encoders.encoderDriveLeft.getRate() + Sensors.Encoders.encoderDriveRight.getRate())/2.0);
-
-		//		if(Motors.motorShooter.get() > .5)
-		//			if(startTime == 0.0)
-		//				startTime = Timer.getMatchTime();
-		//			else if(Timer.getMatchTime()-startTime <= Motors.SHOOTER_SPIN_TIME)
-		//				SmartDashboard.putBoolean("Spun Up?", false);
-		//			else
-		//				SmartDashboard.putBoolean("Spun Up?", true);
-		//		else
-		//			startTime = 0.0;
 	}
 
 	void drive()
@@ -152,26 +127,24 @@ public class Robot extends IterativeRobot {
 
 	public void disabledPeriodic()
 	{
-		Auto.Movement.stopDriveMotors();
-//		Motors.brake.setAngle(Motors.BRAKE_ANGLE);
-//		Motors.motorArm.set(0.0);//TODO We need to test that this holds.
+		//		Motors.brake.setAngle(Motors.BRAKE_ANGLE); TODO implement?!?!?
 		Motors.motorInnerIntake.set(0.0);
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
 		Operator.disable();
 	}
-	
-//	static void cameraControl()
-//	{
-//		if(Operator.shooting)
-//		{
-//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k160x120);
-//			Sensors.Cameras.shootCam.startCapture();
-//		}else
-//		{
-//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k640x480);
-//			Sensors.Cameras.shootCam.stopCapture();
-//		}
-//	}
+
+	//	static void cameraControl()
+	//	{
+	//		if(Operator.shooting)
+	//		{
+	//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k160x120);
+	//			Sensors.Cameras.shootCam.startCapture();
+	//		}else
+	//		{
+	//			Sensors.Cameras.driveCam.writeResolution(edu.wpi.first.wpilibj.vision.AxisCamera.Resolution.k640x480);
+	//			Sensors.Cameras.shootCam.stopCapture();
+	//		}
+	//	}
 
 }
