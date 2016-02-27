@@ -4,6 +4,7 @@ import variables.Motors;
 import variables.Sensors;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,6 +25,8 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 
 	Double startTime = 0.0;
+	
+	public static Timer timer = new Timer();
 
 	/**
 	 * This function is run when the robot is first started up and should be

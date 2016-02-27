@@ -136,44 +136,80 @@ public class Auto {
 	}
 	 */
 
+	static boolean timerStarted = false;
+	static boolean autoDone = false;
+
 	public static void moat()
 	{
-		if(Timer.getMatchTime() <= 3.0)//TODO Better timings.
+		if(!autoDone)
 		{
-			Motors.motorDriveBackLeft.set(-1);
-			Motors.motorDriveBackRight.set(1);
-			Motors.motorDriveFrontLeft.set(-1);
-			Motors.motorDriveFrontRight.set(1);
+			if(!timerStarted)
+				Robot.timer.start();
+			
+			if(Robot.timer.get() <= 3.0)//TODO Better timings.
+			{
+				Motors.motorDriveBackLeft.set(-1);
+				Motors.motorDriveBackRight.set(1);
+				Motors.motorDriveFrontLeft.set(-1);
+				Motors.motorDriveFrontRight.set(1);
+			}
+			else 
+			{
+				Robot.timer.stop();
+				timerStarted = false;
+				autoDone = true;
+				Movement.stopDriveMotors();
+			}
 		}
-		else 
-			Movement.stopDriveMotors();
 	}
 
 	public static void ramparts()//TODO Better timings. Auto counts down from 15 when we run it at school, so it ran at the end of auto.
 	{
-		if(Timer.getMatchTime() <= 3.0){
-			Motors.motorDriveBackLeft.set(-1);
-			Motors.motorDriveBackRight.set(1);
-			Motors.motorDriveFrontLeft.set(-1);
-			Motors.motorDriveFrontRight.set(1);
+		if(!autoDone)
+		{
+			if(!timerStarted)
+				Robot.timer.start();
+			
+			if(Robot.timer.get() <= 3.0){
+				Motors.motorDriveBackLeft.set(-1);
+				Motors.motorDriveBackRight.set(1);
+				Motors.motorDriveFrontLeft.set(-1);
+				Motors.motorDriveFrontRight.set(1);
+			}
+			else 
+			{
+				Robot.timer.stop();
+				timerStarted = false;
+				autoDone = true;
+				Movement.stopDriveMotors();
+			}
 		}
-		else 
-			Movement.stopDriveMotors();
 	}
 
 	public static void roughTerrainRockwall()
 	{
-		if(Timer.getMatchTime() <= 2.25)
+		if(!autoDone)
 		{
-			Motors.motorDriveBackLeft.set(-1);
-			Motors.motorDriveBackRight.set(1);
-			Motors.motorDriveFrontLeft.set(-1);
-			Motors.motorDriveFrontRight.set(1);
+			if(!timerStarted)
+				Robot.timer.start();
+			
+			if(Robot.timer.get() <= 2.25)
+			{
+				Motors.motorDriveBackLeft.set(-1);
+				Motors.motorDriveBackRight.set(1);
+				Motors.motorDriveFrontLeft.set(-1);
+				Motors.motorDriveFrontRight.set(1);
 
-			SmartDashboard.putNumber("Time", Timer.getMatchTime());
+				SmartDashboard.putNumber("Time", Timer.getMatchTime());
+			}
+			else 
+			{
+				Robot.timer.stop();
+				timerStarted = false;
+				autoDone = true;
+				Movement.stopDriveMotors();
+			}
 		}
-		else 
-			Movement.stopDriveMotors();
 	}
 	/**
 	static Double startTime = 0.0;
