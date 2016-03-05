@@ -5,8 +5,8 @@ package variables;
 import edu.wpi.first.wpilibj.DigitalInput;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.SerialPort;
-//import edu.wpi.first.wpilibj.vision.AxisCamera;
-//import edu.wpi.first.wpilibj.vision.USBCamera;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class Sensors {
 
@@ -18,12 +18,12 @@ public class Sensors {
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 
-	//	public static class Cameras {
-	//		final static String axisCameraAdress = "";
-	//		
-	//		public static final USBCamera shootCam = new USBCamera("cam0");
-	//		public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
-	//	}
+		public static class Cameras {
+			final static String axisCameraAdress = "";
+			
+//			public static final USBCamera shootCam = new USBCamera("cam0");
+			public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
+		}
 	/**
 	public static class Encoders {
 

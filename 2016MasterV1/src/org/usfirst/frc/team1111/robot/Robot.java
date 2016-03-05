@@ -38,14 +38,15 @@ public class Robot extends IterativeRobot {
 		server.setQuality(100);
 		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
 		server.startAutomaticCapture("cam0");
+//		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
-		chooser.addDefault("Low Bar", lowbar);
+		//chooser.addDefault("Low Bar", lowbar);
 		//		chooser.addObject("Lowbar Shoot", lowbarShoot);
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
-		chooser.addObject(rockwall, rockwall);
+		chooser.addDefault(rockwall, rockwall);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
@@ -84,7 +85,6 @@ public class Robot extends IterativeRobot {
 	{
 		switch (autoSelected) {
 		case moat:
-		default:
 			Auto.moat();
 			break;
 		case ramparts:
@@ -92,6 +92,7 @@ public class Robot extends IterativeRobot {
 			break;
 		case roughTerrain:
 		case rockwall:
+		default:
 			Auto.roughTerrainRockwall();
 			break;
 			//case lowbarShoot:
@@ -102,6 +103,8 @@ public class Robot extends IterativeRobot {
 			//		Auto.lowBar();
 			//		break;
 		}
+		
+		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 	}
 
 	/**
@@ -135,6 +138,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
 		Operator.disable();
+		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 	}
 
 	//	static void cameraControl()

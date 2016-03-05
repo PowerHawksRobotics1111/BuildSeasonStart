@@ -20,7 +20,7 @@ public class Joysticks {
 		public static final int shootButton = X;
 		public static final int outtakeButton = Y;
 		public static final int intakeButton = A;
-		public static final int emptyButton = B;
+		public static final int hardStop = B;
 		public static final int tapeArmExtend = LEFT_BUMPER;
 		public static final int tapeArmRetract = LEFT_TRIGGER;
 		public static final int armUp = RIGHT_BUMPER;

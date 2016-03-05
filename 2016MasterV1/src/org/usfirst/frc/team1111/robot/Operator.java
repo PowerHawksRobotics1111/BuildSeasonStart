@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1111.robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import variables.Joysticks;
 import variables.Motors;
 import variables.Sensors;
@@ -32,6 +33,7 @@ public class Operator {
 			shoot();
 			tapeArm();
 			armControl();
+			hardStopToggle();
 			//		armStates();
 		}
 
@@ -51,6 +53,7 @@ public class Operator {
 			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER);
 			Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
 			intake = true;
+			Motors.hardBallStop.setAngle(45.0);
 		}else if ( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
 		{
 			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
@@ -58,6 +61,7 @@ public class Operator {
 			intake = false;
 		}else if(intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
 		{
+			Timer.delay(.07);
 			Motors.motorOuterIntake.set(Motors.NO_POWER);
 			Motors.motorInnerIntake.set(Motors.NO_POWER);
 			intake = false;
@@ -81,7 +85,10 @@ public class Operator {
 			shooting = true;
 
 		if(shooting)
+		{
 			Motors.motorShooter.set(Motors.SHOOTER_POWER);
+			Motors.hardBallStop.setAngle(0.0);
+		}
 		else
 		{
 			Motors.motorShooter.set(Motors.NO_POWER);
@@ -224,19 +231,25 @@ public class Operator {
 		shootingIntake = false;
 	}
 
-	//	static void hardStopToggle()
-	//	{
-	//		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.reverseShooter))
-	//		{
-	//			if(Motors.hardBallStop.getAngle() == 0)
-	//			{
-	//				Motors.hardBallStop.setAngle(45);
-	//			}
-	//			else if(Motors.hardBallStop.getAngle() == 45)
-	//			{
-	//				Motors.hardBallStop.setAngle(0);
-	//			}
-	//		}
-	//	}
+	static boolean hardStop = false;
+	
+		static void hardStopToggle()
+		{
+			if( !hardStop && Joysticks.joyOp.getRawButton(Joysticks.Buttons.hardStop))
+			{
+				hardStop = true;
+				if(Motors.hardBallStop.getAngle() == 0)
+				{
+					Motors.hardBallStop.setAngle(45);
+				}
+				else if(Motors.hardBallStop.getAngle() == 45)
+				{
+					Motors.hardBallStop.setAngle(0);
+				}
+			}
+			
+			if(hardStop && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.hardStop))
+				hardStop = false;
+		}
 
 }
