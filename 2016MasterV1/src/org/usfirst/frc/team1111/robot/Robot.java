@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
+		chooser.addObject("Nothing", "nothing");
 		chooser.addDefault(rockwall, rockwall);
 		SmartDashboard.putData("Auto choices", chooser);
 
@@ -84,6 +85,9 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic()
 	{
 		switch (autoSelected) {
+		case "nothing":
+			Auto.nothing();
+			break;
 		case moat:
 			Auto.moat();
 			break;

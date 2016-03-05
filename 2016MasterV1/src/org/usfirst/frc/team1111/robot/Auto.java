@@ -138,6 +138,11 @@ public class Auto {
 
 	static boolean timerStarted = false;
 	static boolean autoDone = false;
+	
+	public static void nothing()
+	{
+		
+	}
 
 	public static void moat()
 	{
