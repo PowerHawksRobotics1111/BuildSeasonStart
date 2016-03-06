@@ -48,28 +48,31 @@ public class Operator {
 	 */
 	static void intakeOutake()
 	{
-		if( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
+		if(!Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
 		{
-			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER);
-			Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
-			intake = true;
-			Motors.hardBallStop.setAngle(45.0);
-		}else if ( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
-		{
-			Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
-			Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
-			intake = false;
-		}else if(intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
-		{
-			Timer.delay(.07);
-			Motors.motorOuterIntake.set(Motors.NO_POWER);
-			Motors.motorInnerIntake.set(Motors.NO_POWER);
-			intake = false;
-		}else if(!intake)
-		{
-			Motors.motorOuterIntake.set(Motors.NO_POWER);
-			if(!shooting)
+			if( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
+			{
+				Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER);
+				Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
+				intake = true;
+				Motors.hardBallStop.setAngle(45.0);
+			}else if ( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
+			{
+				Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
+				Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
+				intake = false;
+			}else if(intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
+			{
+				Timer.delay(.07);
+				Motors.motorOuterIntake.set(Motors.NO_POWER);
 				Motors.motorInnerIntake.set(Motors.NO_POWER);
+				intake = false;
+			}else if(!intake)
+			{
+				Motors.motorOuterIntake.set(Motors.NO_POWER);
+				if(!shooting)
+					Motors.motorInnerIntake.set(Motors.NO_POWER);
+			}
 		}
 	}
 
@@ -81,7 +84,7 @@ public class Operator {
 	 */
 	static void shoot()
 	{
-		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
+		if(!Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) && Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
 			shooting = true;
 
 		if(shooting)
