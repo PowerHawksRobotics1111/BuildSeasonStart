@@ -130,9 +130,9 @@ public class Operator {
 	static void armControl()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp))
-			Motors.motorArm.set(-Motors.ARM_POWER);
-		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
 			Motors.motorArm.set(Motors.ARM_POWER);
+		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
+			Motors.motorArm.set(Motors.ARM_DOWN_POWER);
 		else
 			Motors.motorArm.set(Motors.NO_POWER);
 	}

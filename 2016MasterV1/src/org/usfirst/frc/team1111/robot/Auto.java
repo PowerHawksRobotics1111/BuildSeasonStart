@@ -143,6 +143,64 @@ public class Auto {
 	{
 		
 	}
+	
+	public static void reach()
+	{
+		if(Timer.getMatchTime() >= 15.0 - 4.0)
+		{
+			Motors.motorDriveBackLeft.set(-1.0 * .25);
+			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveFrontLeft.set(-1.0 * .25);
+			Motors.motorDriveFrontRight.set(.925 *.25);
+		}
+		else 
+			Movement.stopDriveMotors();
+	}
+	
+	public static void reachThenDropArm()
+	{
+		if(Timer.getMatchTime() >= 15.0 - 4.0)
+		{
+			Motors.motorDriveBackLeft.set(-1.0 * .25);
+			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveFrontLeft.set(-1.0 * .25);
+			Motors.motorDriveFrontRight.set(.925 *.25);
+		}else if(Timer.getMatchTime() >= 15.0 - 6.0)
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.enableBrakeMode(false);
+			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
+		}
+		else 
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.set(Motors.NO_POWER);
+		}
+	}
+	
+	/**
+	public static void dropArmThenReach()
+	{
+		if(Timer.getMatchTime() >= 15.0 - 2.0)
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.enableBrakeMode(false);
+			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
+		}else if(Timer.getMatchTime() >= 15.0 - 2.0)
+		{
+			Motors.motorDriveBackLeft.set(-1.0 * .25);
+			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveFrontLeft.set(-1.0 * .25);
+			Motors.motorDriveFrontRight.set(.925 *.25);
+
+			Motors.motorArm.set(Motors.NO_POWER);
+		}
+		else 
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.set(Motors.NO_POWER);
+		}
+	}*/
 
 	public static void moat()
 	{
@@ -204,8 +262,6 @@ public class Auto {
 				Motors.motorDriveBackRight.set(.925);
 				Motors.motorDriveFrontLeft.set(-1);
 				Motors.motorDriveFrontRight.set(.925);
-
-				SmartDashboard.putNumber("Time", Timer.getMatchTime());
 			}
 			else 
 			{

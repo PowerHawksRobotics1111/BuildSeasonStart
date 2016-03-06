@@ -48,6 +48,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
 		chooser.addObject("Nothing", "nothing");
 		chooser.addDefault(rockwall, rockwall);
+		chooser.addObject("reach", "reach");
+		chooser.addObject("reachThenDropArm", "reachThenDropArm");
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
@@ -85,6 +87,12 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic()
 	{
 		switch (autoSelected) {
+		case "reachThenDropArm":
+			Auto.reachThenDropArm();
+			break;
+		case "reach":
+			Auto.reach();
+			break;
 		case "nothing":
 			Auto.nothing();
 			break;
@@ -116,6 +124,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic()
 	{
+		if(!Motors.motorArm.getBrakeEnableDuringNeutral())
+			Motors.motorArm.enableBrakeMode(true);
 		drive();
 		Operator.operate();
 		//		cameraControl();
@@ -141,6 +151,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorInnerIntake.set(0.0);
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
+		Motors.motorArm.set(0.0);
 		Operator.disable();
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 	}
