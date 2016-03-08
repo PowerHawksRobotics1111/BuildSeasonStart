@@ -29,5 +29,6 @@ public class Joysticks {
 		public static final int overrideKillModifier2 = BACK;
 		
 		public static final int driverIntakeButton = RIGHT_BUMPER;
+		public static final int driverFlashlightButton = LEFT_BUMPER;
 	}
 }

@@ -41,15 +41,15 @@ public class Robot extends IterativeRobot {
 //		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
-		//chooser.addDefault("Low Bar", lowbar);
+		chooser.addObject("Low Bar", lowbar);
 		//		chooser.addObject("Lowbar Shoot", lowbarShoot);
 		chooser.addObject("Moat Auto", moat);
 		chooser.addObject("Ramparts Auto", ramparts);
 		chooser.addObject("Rough Terrain Auto", roughTerrain);
 		chooser.addObject("Nothing", "nothing");
-		chooser.addDefault(rockwall, rockwall);
-		chooser.addObject("reach", "reach");
-		chooser.addObject("reachThenDropArm", "reachThenDropArm");
+		chooser.addObject(rockwall, rockwall);
+		chooser.addDefault("Reach", "reach");
+		chooser.addObject("Reach Drop Arm", "reachThenDropArm");
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
@@ -63,8 +63,8 @@ public class Robot extends IterativeRobot {
 	public void updateDashboard()
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
-		SmartDashboard.putBoolean("Intake Running", Operator.intake);
-		SmartDashboard.putBoolean("Shooting", Operator.shooting);
+		SmartDashboard.putBoolean("Intake Running", Operate.intake);
+		SmartDashboard.putBoolean("Shooting", Operate.shooting);
 	}
 
 	/**
@@ -92,11 +92,11 @@ public class Robot extends IterativeRobot {
 		case "reachThenDropArm":
 			Auto.reachThenDropArm();
 			break;
+		default:
 		case "reach":
 			Auto.reach();
 			break;
 		case "nothing":
-			Auto.nothing();
 			break;
 		case moat:
 			Auto.moat();
@@ -106,16 +106,11 @@ public class Robot extends IterativeRobot {
 			break;
 		case roughTerrain:
 		case rockwall:
-		default:
 			Auto.roughTerrainRockwall();
 			break;
-			//case lowbarShoot:
-			//		Auto.lowBarShoot();
-			//		break;
-			//	default:
-			//		case lowbar:
-			//		Auto.lowBar();
-			//		break;
+		case lowbar:
+			Auto.lowBar();
+			break;
 		}
 		
 		updateDashboard();
@@ -129,7 +124,7 @@ public class Robot extends IterativeRobot {
 		if(!Motors.motorArm.getBrakeEnableDuringNeutral())
 			Motors.motorArm.enableBrakeMode(true);
 		drive();
-		Operator.operate();
+		Operate.operate();
 		//		cameraControl();
 
 		updateDashboard();
@@ -154,7 +149,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorOuterIntake.set(0.0);
 		Motors.motorShooter.set(0.0);
 		Motors.motorArm.set(0.0);
-		Operator.disable();
+		Operate.disable();
 		updateDashboard();
 	}
 

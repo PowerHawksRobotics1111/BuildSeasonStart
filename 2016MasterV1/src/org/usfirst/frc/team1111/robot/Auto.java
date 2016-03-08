@@ -79,22 +79,6 @@ public class Auto {
 	private static final double DISTANCE_ACROSS_LOW_BAR = 0;
 	private static final double DISTANCE_TO_SHOOTING_SPOT = 0;
 
-	public static void lowBar()
-	{
-		if(Timer.getMatchTime() < 5.0)
-		{
-			if(Motors.motorArm.getEncPosition() > -1795)//Temp arm pos
-				Motors.motorArm.set(Motors.ARM_POWER);
-			else if(Motors.motorArm.getEncPosition() < -1805)
-				Motors.motorArm.set(-Motors.ARM_POWER);
-			else
-				Motors.motorArm.set(Motors.NO_POWER);
-		}else
-			Motors.motorArm.set(Motors.NO_POWER);
-		//else
-		//Movement.stopDriveMotors();
-	}
-
 	static int progress = 0;
 	public static void lowBarShoot()//Includes shooting
 	{
@@ -139,9 +123,26 @@ public class Auto {
 	static boolean timerStarted = false;
 	static boolean autoDone = false;
 	
-	public static void nothing()
+	public static void lowBar()
 	{
-		
+		if(Timer.getMatchTime() >= 15.0 - 2.0)
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
+		}else if(Timer.getMatchTime() >= 15.0 - 7.0)
+		{
+			Motors.motorDriveBackLeft.set(-1.0 * .25);
+			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveFrontLeft.set(-1.0 * .25);
+			Motors.motorDriveFrontRight.set(.925 *.25);
+
+			Motors.motorArm.set(Motors.NO_POWER);
+		}
+		else 
+		{
+			Movement.stopDriveMotors();
+			Motors.motorArm.set(Motors.NO_POWER);
+		}
 	}
 	
 	public static void reach()

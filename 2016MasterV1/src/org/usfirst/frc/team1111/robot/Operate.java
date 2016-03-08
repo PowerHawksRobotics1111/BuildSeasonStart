@@ -1,11 +1,12 @@
 package org.usfirst.frc.team1111.robot;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import variables.Joysticks;
 import variables.Motors;
 import variables.Sensors;
 
-public class Operator {
+public class Operate {
 
 	/*
 	 * The following are booleans to carry states through iterations of the
@@ -234,7 +235,7 @@ public class Operator {
 		shootingIntake = false;
 	}
 
-	static boolean hardStop = false;
+	public static boolean hardStop = false;
 	
 		static void hardStopToggle()
 		{
@@ -242,17 +243,30 @@ public class Operator {
 			{
 				hardStop = true;
 				if(Motors.hardBallStop.getAngle() == 0)
-				{
 					Motors.hardBallStop.setAngle(45);
-				}
 				else if(Motors.hardBallStop.getAngle() == 45)
-				{
 					Motors.hardBallStop.setAngle(0);
-				}
 			}
 			
 			if(hardStop && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.hardStop))
 				hardStop = false;
+		}
+		
+		public static boolean flashlight = false;
+		
+		static void flashlightToggle()
+		{
+			if( !flashlight && Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+			{
+				flashlight = true;
+				if(Motors.flashlightControlSpike.get().equals(Relay.Value.kOn))
+					Motors.flashlightControlSpike.set(Relay.Value.kOff);
+				else
+					Motors.flashlightControlSpike.set(Relay.Value.kOn);
+			}
+			
+			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+				flashlight = false;
 		}
 
 }

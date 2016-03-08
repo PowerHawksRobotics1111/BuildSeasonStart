@@ -1,6 +1,7 @@
 package variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 
 public class Motors {
@@ -10,7 +11,8 @@ public class Motors {
 	public static CANTalon motorArm; 
 	public static CANTalon motorInnerIntake, motorOuterIntake, motorShooter, motorTapeArm;
 	public static Servo brake;
-		public static Servo hardBallStop;
+	public static Servo hardBallStop;
+	public static Relay flashlightControlSpike;
 
 	//motor ports for drive, arm, intake, outer intake, tape arm, and servo
 	final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
@@ -66,6 +68,8 @@ public class Motors {
 		brake = new Servo(TAPE_BRAKE_SERVO);
 
 		hardBallStop = new Servo(BALL_STOP);
+		
+		flashlightControlSpike = new Relay(0);
 
 	}
 } 
