@@ -54,15 +54,17 @@ public class Robot extends IterativeRobot {
 
 		Motors.motorInit();
 
-		initDashboard();
+		updateDashboard();
 	}
 
 	/**
 	 * Yes. This is for initializing the Dashboard. Put stuff in here.
 	 */
-	private void initDashboard()
+	public void updateDashboard()
 	{
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		SmartDashboard.putBoolean("Intake Running", Operator.intake);
+		SmartDashboard.putBoolean("Shooting", Operator.shooting);
 	}
 
 	/**
@@ -116,7 +118,7 @@ public class Robot extends IterativeRobot {
 			//		break;
 		}
 		
-		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		updateDashboard();
 	}
 
 	/**
@@ -130,7 +132,7 @@ public class Robot extends IterativeRobot {
 		Operator.operate();
 		//		cameraControl();
 
-		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		updateDashboard();
 	}
 
 	void drive()
@@ -153,7 +155,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorShooter.set(0.0);
 		Motors.motorArm.set(0.0);
 		Operator.disable();
-		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
+		updateDashboard();
 	}
 
 	//	static void cameraControl()

@@ -27,5 +27,7 @@ public class Joysticks {
 		public static final int armDown = RIGHT_TRIGGER;
 		public static final int overrideKillModifier = START;
 		public static final int overrideKillModifier2 = BACK;
+		
+		public static final int driverIntakeButton = RIGHT_BUMPER;
 	}
 }

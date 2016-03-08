@@ -98,7 +98,7 @@ public class Operator {
 			shootingIntake = false;
 		}
 
-		if(shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
+		if(shooting && (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverIntakeButton)))
 			shootingIntake = true;
 
 		if(shooting && shootingIntake)
