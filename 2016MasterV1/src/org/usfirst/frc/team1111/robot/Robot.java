@@ -65,6 +65,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Ball In", Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get());
 		SmartDashboard.putBoolean("Intake Running", Operate.intake);
 		SmartDashboard.putBoolean("Shooting", Operate.shooting);
+		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() == 45.0);
 	}
 
 	/**
