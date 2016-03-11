@@ -137,10 +137,10 @@ public class Robot extends IterativeRobot {
 		double left = variables.Joysticks.joyDrive.getRawAxis(1);
 
 		Motors.motorDriveFrontLeft.set(left);
-		Motors.motorDriveBackLeft.set(left);
+		Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * left);
 
 		Motors.motorDriveFrontRight.set(-right);
-		Motors.motorDriveBackRight.set(-right);
+		Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -right);
 	}
 
 	public void disabledPeriodic()

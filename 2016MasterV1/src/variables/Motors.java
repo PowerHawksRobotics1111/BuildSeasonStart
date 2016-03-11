@@ -36,6 +36,8 @@ public class Motors {
 
 	public static final double LEFTSTOP_RETRACTED = 0.0;
 	public static final double RIGHTSTOP_RETRACTED = 0.0;
+	
+	public static final double BACK_WHEEL_DRIVE_RATIO = 1.0;//7.66/8.0;TODO this is to adjust for the pneumatic wheels if we need to!!!
 
 	//private static final int ARM_TICKS_PER_REV = 18;
 

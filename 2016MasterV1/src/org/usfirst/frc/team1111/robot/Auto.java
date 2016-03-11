@@ -131,8 +131,8 @@ public class Auto {
 			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
 		}else if(Timer.getMatchTime() >= 15.0 - 7.0)
 		{
-			Motors.motorDriveBackLeft.set(-1.0 * .25);
-			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
 			Motors.motorDriveFrontLeft.set(-1.0 * .25);
 			Motors.motorDriveFrontRight.set(.925 *.25);
 
@@ -149,8 +149,8 @@ public class Auto {
 	{
 		if(Timer.getMatchTime() >= 15.0 - 4.0)
 		{
-			Motors.motorDriveBackLeft.set(-1.0 * .25);
-			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
 			Motors.motorDriveFrontLeft.set(-1.0 * .25);
 			Motors.motorDriveFrontRight.set(.925 *.25);
 		}
@@ -162,8 +162,8 @@ public class Auto {
 	{
 		if(Timer.getMatchTime() >= 15.0 - 4.0)
 		{
-			Motors.motorDriveBackLeft.set(-1.0 * .25);
-			Motors.motorDriveBackRight.set(.925 *.25);
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
 			Motors.motorDriveFrontLeft.set(-1.0 * .25);
 			Motors.motorDriveFrontRight.set(.925 *.25);
 		}else if(Timer.getMatchTime() >= 15.0 - 6.0)
@@ -212,8 +212,8 @@ public class Auto {
 			
 			if(Timer.getMatchTime() >= 15.0 -2.5)//TODO Better timings.
 			{
-				Motors.motorDriveBackLeft.set(-1);
-				Motors.motorDriveBackRight.set(.925);
+				Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+				Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925);
 				Motors.motorDriveFrontLeft.set(-1);
 				Motors.motorDriveFrontRight.set(.925);
 			}
@@ -235,8 +235,8 @@ public class Auto {
 //				Robot.timer.start();
 			
 			if(Timer.getMatchTime() >= 15.0 - 3.25){
-				Motors.motorDriveBackLeft.set(-1);
-				Motors.motorDriveBackRight.set(.925);
+				Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+				Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925);
 				Motors.motorDriveFrontLeft.set(-1);
 				Motors.motorDriveFrontRight.set(.925);
 			}
@@ -259,8 +259,8 @@ public class Auto {
 			
 			if(Timer.getMatchTime() >= 15.0 - 2.5)
 			{
-				Motors.motorDriveBackLeft.set(-1);
-				Motors.motorDriveBackRight.set(.925);
+				Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+				Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925);
 				Motors.motorDriveFrontLeft.set(-1);
 				Motors.motorDriveFrontRight.set(.925);
 			}

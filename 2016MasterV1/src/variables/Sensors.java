@@ -3,6 +3,7 @@ package variables;
 //import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.vision.AxisCamera;
@@ -15,6 +16,16 @@ public class Sensors {
 
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
+	
+	public static final Ultrasonic leftUltra = new Ultrasonic(0,1), rightUltra = new Ultrasonic(2,3);
+	
+	public static void initUltras()
+	{
+		leftUltra.setEnabled(true);
+		rightUltra.setEnabled(true);
+		
+		leftUltra.setAutomaticMode(true);
+	}
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 

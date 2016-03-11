@@ -37,6 +37,10 @@ public class Operate {
 			hardStopToggle();
 			//		armStates();
 		}
+		
+		
+		orient();
+		flashlightToggle();
 
 		functionStopOverride();
 	}
@@ -267,6 +271,28 @@ public class Operate {
 			
 			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
 				flashlight = false;
+		}
+		
+		static void orient()
+		{
+			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoOrientButton))
+			{
+				 if(Sensors.leftUltra.getRangeInches() > Sensors.rightUltra.getRangeInches() +  2)
+				 {
+					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 * .6);
+					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 * .6);
+					 Motors.motorDriveFrontLeft.set(1.0 * .6);
+					 Motors.motorDriveFrontRight.set(.925 * .6);
+				 }else if(Sensors.leftUltra.getRangeInches() + 2 < Sensors.rightUltra.getRangeInches())
+				 {
+					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .6);
+					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.925 * .6);
+					 Motors.motorDriveFrontLeft.set(-1.0 * .6);
+					 Motors.motorDriveFrontRight.set(-.925 * .6);
+				 }
+				 else
+					 Auto.Movement.stopDriveMotors();
+			}
 		}
 
 }
