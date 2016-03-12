@@ -17,7 +17,7 @@ public class Sensors {
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
 	
-	public static final Ultrasonic leftUltra = new Ultrasonic(0,1), rightUltra = new Ultrasonic(2,3);
+	public static final Ultrasonic leftUltra = new Ultrasonic(2,3), rightUltra = new Ultrasonic(4,5);
 	
 	public static void initUltras()
 	{
