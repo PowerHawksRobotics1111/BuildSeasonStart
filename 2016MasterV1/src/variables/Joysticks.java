@@ -31,5 +31,6 @@ public class Joysticks {
 		public static final int driverIntakeButton = RIGHT_BUMPER;
 		public static final int driverFlashlightButton = LEFT_BUMPER;
 		public static final int drivarAutoOrientButton = 0;
+		public static final int drivarAutoDistanceAndOrientButton = 0;
 	}
 }

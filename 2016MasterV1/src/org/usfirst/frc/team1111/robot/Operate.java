@@ -39,7 +39,8 @@ public class Operate {
 		}
 		
 		
-		orient();
+		orientByUltra();
+		distanceByUltra();
 		flashlightToggle();
 
 		functionStopOverride();
@@ -273,7 +274,7 @@ public class Operate {
 				flashlight = false;
 		}
 		
-		static void orient()
+		static void orientByUltra()
 		{
 			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoOrientButton))
 			{
@@ -294,5 +295,33 @@ public class Operate {
 					 Auto.Movement.stopDriveMotors();
 			}
 		}
+		
+		/**
+		 * Inches
+		 */
+		static final double ultraShootDistance = 0.0;
+		
+		static void distanceByUltra()
+		{
+			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoDistanceAndOrientButton))
+				if(Sensors.leftUltra.getRangeInches() <= Sensors.rightUltra.getRangeInches() + 2 && Sensors.leftUltra.getRangeInches() >= Sensors.rightUltra.getRangeInches() - 2)
+					if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 >= ultraShootDistance + 2.0)
+					{
+						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+						Motors.motorDriveFrontLeft.set(-1.0 * .25);
+						Motors.motorDriveFrontRight.set(.925 *.25);
+					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
+					{
+						Motors.motorDriveBackLeft.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+						Motors.motorDriveFrontLeft.set(-1.0 * -1.0 * .25);
+						Motors.motorDriveFrontRight.set(-1.0 * .925 *.25);
+					}else
+						Auto.Movement.stopDriveMotors();
+				else
+					orientByUltra();
+		}
+		
 
 }
