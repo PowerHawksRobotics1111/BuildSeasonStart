@@ -30,7 +30,7 @@ public class Motors {
 	//public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
 	
 	public static final double BACK_WHEEL_DRIVE_RATIO = 1.0;//7.66/8.0;TODO this is to adjust for the pneumatic wheels if we need to!!!
-	public static final double SHOOTER_TOP_VOLTAGE = 1.0;//TODO Set to the optimal voltage and adjust to voltage control mode.
+	public static final double SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE = 1.0;//TODO Set to the optimal voltage and adjust to voltage control mode.
 
 	//private static final int ARM_TICKS_PER_REV = 18;
 

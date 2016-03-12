@@ -94,7 +94,7 @@ public class Operate {
 
 		if(shooting)
 		{
-			Motors.motorShooter.set(Motors.SHOOTER_POWER);
+			Motors.motorShooter.set(Motors.SHOOTER_POWER * Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
 			Motors.hardBallStop.setAngle(0.0);
 		}
 		else
@@ -109,7 +109,7 @@ public class Operate {
 		if(shooting && shootingIntake)
 		{
 			Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
-			Motors.motorShooter.set(Motors.SHOOTER_POWER);
+			Motors.motorShooter.set(Motors.SHOOTER_POWER * Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
 		}
 	}
 
