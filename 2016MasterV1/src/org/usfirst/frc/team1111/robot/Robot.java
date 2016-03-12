@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Outer Intake Running", Motors.motorOuterIntake.get() >= 0.2 || Motors.motorOuterIntake.get() <= -0.2);
 		SmartDashboard.putBoolean("Shooting", Operate.shooting);
 		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() >= 47.0 && Motors.hardBallStop.getAngle() <= 43.0);
+		SmartDashboard.putNumber("Arm revolutions", Sensors.getArmRev());
 	}
 
 	/**

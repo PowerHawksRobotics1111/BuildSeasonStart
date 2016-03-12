@@ -34,7 +34,7 @@ public class Sensors {
 	}
 			
 	public static final Encoder armEncoder = new Encoder(6,7);
-	public static final double ARM_REVOLUTIONS_PER_ENCODER_TICK = 12.0/26.0/48.0;//Arm rev/enc rev * enc rev/enc ticks per rev
+	public static final double ARM_REVOLUTIONS_PER_ENCODER_TICK = 12.0/26.0/1800.0;//Arm rev/enc rev * enc rev/enc ticks per rev
 	
 	public static void armEncoderInit()
 	{
@@ -43,7 +43,7 @@ public class Sensors {
 	
 	public static double getArmRev()
 	{
-		armEncoder.
+		return armEncoder.getDistance() * ARM_REVOLUTIONS_PER_ENCODER_TICK;
 	}
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
