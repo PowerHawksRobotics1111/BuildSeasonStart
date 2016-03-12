@@ -3,6 +3,7 @@ package variables;
 //import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.SerialPort;
@@ -32,15 +33,27 @@ public class Sensors {
 		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2;
 	}
 			
+	public static final Encoder armEncoder = new Encoder(6,7);
+	public static final double ARM_REVOLUTIONS_PER_ENCODER_TICK = 12.0/26.0/48.0;//Arm rev/enc rev * enc rev/enc ticks per rev
+	
+	public static void armEncoderInit()
+	{
+		armEncoder.reset();
+	}
+	
+	public static double getArmRev()
+	{
+		armEncoder.
+	}
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 
-		public static class Cameras {
-			final static String axisCameraAdress = "";
-			
-//			public static final USBCamera shootCam = new USBCamera("cam0");
-			public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
-		}
+//		public static class Cameras {
+//			final static String axisCameraAdress = "";
+//			
+////			public static final USBCamera shootCam = new USBCamera("cam0");
+//			public static final AxisCamera driveCam = new AxisCamera(axisCameraAdress);
+//		}
 	/**
 	public static class Encoders {
 

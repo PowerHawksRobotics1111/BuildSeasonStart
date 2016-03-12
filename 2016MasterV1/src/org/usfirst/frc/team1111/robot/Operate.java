@@ -261,7 +261,7 @@ public class Operate {
 		
 		static void flashlightToggle()
 		{
-			if( !flashlight && Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+			if( !flashlight && Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
 			{
 				flashlight = true;
 				if(Motors.flashlightControlSpike.get().equals(Relay.Value.kOn))
