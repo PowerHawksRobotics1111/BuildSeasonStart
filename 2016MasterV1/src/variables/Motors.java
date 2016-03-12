@@ -1,6 +1,7 @@
 package variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 
@@ -25,19 +26,11 @@ public class Motors {
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25;
 	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = -.55, SHOOTER_POWER = .85, TAPE_ARM_POWER = .75, INNER_OUTAKE_POWER = -1.0, ARM_DOWN_POWER = .50;
-	//SHooter is 95%.
-	public static final double SHOOTER_SPIN_TIME = 0; //TODO find shooter spin up timea
-	public static final double SHOOTER_INTAKE_TIME = 0.0;
 
-	public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
-
-	public static final double LEFTSTOP_UP = 0.0;//TODO VALUES!!!
-	public static final double RIGHTSTOP_UP = 0.0;
-
-	public static final double LEFTSTOP_RETRACTED = 0.0;
-	public static final double RIGHTSTOP_RETRACTED = 0.0;
+	//public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
 	
 	public static final double BACK_WHEEL_DRIVE_RATIO = 1.0;//7.66/8.0;TODO this is to adjust for the pneumatic wheels if we need to!!!
+	public static final double SHOOTER_TOP_VOLTAGE = 1.0;//TODO Set to the optimal voltage and adjust to voltage control mode.
 
 	//private static final int ARM_TICKS_PER_REV = 18;
 
@@ -59,7 +52,7 @@ public class Motors {
 		motorTapeArm = new CANTalon(TAPE_ARM);
 		motorTapeArm.setInverted(false);
 
-		motorShooter = new CANTalon(SHOOTER);
+		motorShooter = new CANTalon(SHOOTER);//TODO VOltage control mode
 
 		motorInnerIntake = new CANTalon(INNER_INTAKE);
 		motorOuterIntake = new CANTalon(OUTER_INTAKE);
