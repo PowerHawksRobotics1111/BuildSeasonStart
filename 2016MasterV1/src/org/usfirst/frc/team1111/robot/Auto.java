@@ -291,21 +291,24 @@ public class Auto {
 		else if(Sensors.getUltraAverage() <= Dimensions.SPY_BOX_SHOOT_DIST)
 		{
 			Movement.stopDriveMotors();
-			
-			Motors.motorArm.enableBrakeMode(false);
-			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
-			
-			Motors.motorShooter.set(Motors.SHOOTER_POWER *Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
-			spyBoxShootStart = Timer.getMatchTime();
-			
-			if(Timer.getMatchTime() <= (spyBoxShootStart - 3))
+			if(Timer.getMatchTime() >= spyBoxShootStart - 2.0)
 			{
-				Motors.hardBallStop.setAngle(0.0);
-				
-				Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
+				Motors.motorArm.enableBrakeMode(false);
+				Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
+			}else
+			{
+				Motors.motorArm.set(Motors.NO_POWER);
+				Motors.motorArm.enableBrakeMode(true);
 			}
 			
-			if(Timer.getMatchTime() <= spyBoxShootStart- 5)
+			Motors.motorShooter.set(Motors.SHOOTER_POWER * Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
+			spyBoxShootStart = Timer.getMatchTime();
+			Motors.hardBallStop.setAngle(0.0);
+			
+			if(Timer.getMatchTime() <= (spyBoxShootStart - 3.0))
+				Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
+			
+			if(Timer.getMatchTime() >= spyBoxShootStart- 5.0)
 			{
 				Motors.motorShooter.set(0.0);
 				Motors.motorInnerIntake.set(0.0);
