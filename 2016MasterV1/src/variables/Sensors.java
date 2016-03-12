@@ -30,7 +30,7 @@ public class Sensors {
 	
 	public static double getUltraAverage()
 	{
-		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2;
+		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2.0;
 	}
 			
 	public static final Encoder armEncoder = new Encoder(6,7);

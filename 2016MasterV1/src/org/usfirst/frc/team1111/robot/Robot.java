@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorInit();
 		
 		Sensors.initUltras();
-		Sensors.armEncoderInit();
+//		Sensors.armEncoderInit();
 
 		updateDashboard();
 	}
@@ -72,8 +72,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Inner Intake Running", Motors.motorInnerIntake.get() >= 0.2 || Motors.motorInnerIntake.get() <= -0.2);
 		SmartDashboard.putBoolean("Outer Intake Running", Motors.motorOuterIntake.get() >= 0.2 || Motors.motorOuterIntake.get() <= -0.2);
 		SmartDashboard.putBoolean("Shooting", Operate.shooting);
-		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() >= 47.0 && Motors.hardBallStop.getAngle() <= 43.0);
-		SmartDashboard.putNumber("Arm revolutions", Sensors.getArmRev());
+		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() == 45.0);
+//		SmartDashboard.putNumber("Arm revolutions", Sensors.getArmRev());
+		
+		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
+		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
 	}
 
 	/**

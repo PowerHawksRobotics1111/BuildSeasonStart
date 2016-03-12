@@ -25,12 +25,12 @@ public class Motors {
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25;
-	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = -.55, SHOOTER_POWER = .85, TAPE_ARM_POWER = .75, INNER_OUTAKE_POWER = -1.0, ARM_DOWN_POWER = .50;
+	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = -.55, SHOOTER_POWER = .86, TAPE_ARM_POWER = .75, INNER_OUTAKE_POWER = -1.0, ARM_DOWN_POWER = .50;
 
 	//public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
 	
 	public static final double BACK_WHEEL_DRIVE_RATIO = 1.0;//7.66/8.0;TODO this is to adjust for the pneumatic wheels if we need to!!!
-	public static final double SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE = 1.0;//TODO Set to the optimal voltage and adjust to voltage control mode.
+	public static final double SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE = 12.6;//TODO Set to the optimal voltage and adjust to voltage control mode.
 
 	//private static final int ARM_TICKS_PER_REV = 18;
 
@@ -53,6 +53,7 @@ public class Motors {
 		motorTapeArm.setInverted(false);
 
 		motorShooter = new CANTalon(SHOOTER);//TODO VOltage control mode
+		motorShooter.changeControlMode(TalonControlMode.Voltage);
 
 		motorInnerIntake = new CANTalon(INNER_INTAKE);
 		motorOuterIntake = new CANTalon(OUTER_INTAKE);
