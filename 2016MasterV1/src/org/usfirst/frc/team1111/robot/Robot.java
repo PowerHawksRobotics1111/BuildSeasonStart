@@ -58,6 +58,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorInit();
 		
 		Sensors.initUltras();
+		Sensors.armEncoderInit();
 
 		updateDashboard();
 	}
