@@ -41,18 +41,21 @@ public class Robot extends IterativeRobot {
 //		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
-		chooser.addObject("Low Bar", lowbar);
+		
 		//		chooser.addObject("Lowbar Shoot", lowbarShoot);
-		chooser.addObject("Moat Auto", moat);
-		chooser.addObject("Ramparts Auto", ramparts);
-		chooser.addObject("Rough Terrain Auto", roughTerrain);
-		chooser.addObject("Nothing", "nothing");
-		chooser.addObject(rockwall, rockwall);
+		chooser.addObject("Moat", moat);
 		chooser.addDefault("Reach", "reach");
-		chooser.addObject("Reach Drop Arm", "reachThenDropArm");
+		chooser.addObject("Nothing", "nothing");
+		chooser.addObject("Low Bar", lowbar);
+		chooser.addObject(rockwall, rockwall);
+		chooser.addObject("Ramparts", ramparts);
+		chooser.addObject("Reach Drop", "reachThenDropArm");
+		chooser.addObject("Rough Terrain", roughTerrain);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
+		
+		Sensors.initUltras();
 
 		updateDashboard();
 	}
