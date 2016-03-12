@@ -2,7 +2,9 @@ package org.usfirst.frc.team1111.robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import variables.Dimensions;
 import variables.Motors;
+import variables.Sensors;
 //import variables.Sensors;
 //import variables.Sensors.Encoders;
 
@@ -273,6 +275,23 @@ public class Auto {
 			}
 		}
 //	}
+	
+	public static void spyBoxShoot()
+	{
+		if(Sensors.getUltraAverage() > Dimensions.SPY_BOX_SHOOT_DIST)
+		{
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1 *.25);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.925 * .25);
+			Motors.motorDriveFrontLeft.set(1 * .25);
+			Motors.motorDriveFrontRight.set(-.925 *.25);
+		}
+		else if(Sensors.getUltraAverage() <= Dimensions.SPY_BOX_SHOOT_DIST)
+		{
+			Movement.stopDriveMotors();
+			
+			
+		}
+	}
 	/**
 	static Double startTime = 0.0;
 

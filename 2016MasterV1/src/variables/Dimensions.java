@@ -13,4 +13,6 @@ public class Dimensions {
 			DIST_DEFAULT = 44;
 	// TODO verify numbers, change as necessary. Get arm lift for portcullis and
 	// arm lower for default
+	
+	public static final double SPY_BOX_SHOOT_DIST = 0.0;
 }

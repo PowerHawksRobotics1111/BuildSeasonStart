@@ -26,6 +26,12 @@ public class Sensors {
 		
 		leftUltra.setAutomaticMode(true);
 	}
+	
+	public static double getUltraAverage()
+	{
+		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2;
+	}
+			
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 
