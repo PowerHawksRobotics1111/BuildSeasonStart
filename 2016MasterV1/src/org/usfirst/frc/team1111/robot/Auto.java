@@ -275,7 +275,7 @@ public class Auto {
 			}
 		}
 //	}
-	static double spyBoxShootStart;
+	static double spyBoxShootStart = 0;
 	
 	public static void spyBoxShoot()
 	{
@@ -290,6 +290,11 @@ public class Auto {
 		}
 		else if(Sensors.getUltraAverage() <= Dimensions.SPY_BOX_SHOOT_DIST)
 		{
+			if(spyBoxShootStart == 0.0)
+			{
+				spyBoxShootStart = Timer.getMatchTime();
+			}
+			
 			Movement.stopDriveMotors();
 			if(Timer.getMatchTime() >= spyBoxShootStart - 2.0)
 			{
@@ -302,7 +307,7 @@ public class Auto {
 			}
 			
 			Motors.motorShooter.set(Motors.SHOOTER_POWER * Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
-			spyBoxShootStart = Timer.getMatchTime();
+			
 			Motors.hardBallStop.setAngle(0.0);
 			
 			if(Timer.getMatchTime() <= (spyBoxShootStart - 3.0))
