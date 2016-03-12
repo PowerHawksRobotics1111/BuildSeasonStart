@@ -307,16 +307,16 @@ public class Operate {
 				if(Sensors.leftUltra.getRangeInches() <= Sensors.rightUltra.getRangeInches() + 2 && Sensors.leftUltra.getRangeInches() >= Sensors.rightUltra.getRangeInches() - 2)
 					if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 >= ultraShootDistance + 2.0)
 					{
-						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
-						Motors.motorDriveFrontLeft.set(-1.0 * .25);
-						Motors.motorDriveFrontRight.set(.925 *.25);
-					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
-					{
 						Motors.motorDriveBackLeft.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
 						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
 						Motors.motorDriveFrontLeft.set(-1.0 * -1.0 * .25);
 						Motors.motorDriveFrontRight.set(-1.0 * .925 *.25);
+					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
+					{
+						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+						Motors.motorDriveFrontLeft.set(-1.0 * .25);
+						Motors.motorDriveFrontRight.set(.925 *.25);
 					}else
 						Auto.Movement.stopDriveMotors();
 				else
