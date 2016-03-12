@@ -50,7 +50,9 @@ public class Robot extends IterativeRobot {
 		chooser.addObject(rockwall, rockwall);
 		chooser.addObject("Ramparts", ramparts);
 		chooser.addObject("Reach Drop", "reachThenDropArm");
+		chooser.addObject("Spy Box Shoot", "spyBoxShoot");
 		chooser.addObject("Rough Terrain", roughTerrain);
+
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
@@ -115,6 +117,9 @@ public class Robot extends IterativeRobot {
 			break;
 		case lowbar:
 			Auto.lowBar();
+			break;
+		case "spyBoxShoot":
+			Auto.spyBoxShoot();
 			break;
 		}
 		
