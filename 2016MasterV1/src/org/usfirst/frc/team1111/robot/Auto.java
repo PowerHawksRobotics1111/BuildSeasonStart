@@ -275,9 +275,12 @@ public class Auto {
 			}
 		}
 //	}
+	static double spyBoxShootStart;
 	
 	public static void spyBoxShoot()
 	{
+		Motors.hardBallStop.setAngle(45.0);
+		
 		if(Sensors.getUltraAverage() > Dimensions.SPY_BOX_SHOOT_DIST)
 		{
 			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1 *.25);
@@ -289,7 +292,31 @@ public class Auto {
 		{
 			Movement.stopDriveMotors();
 			
+			Motors.motorArm.enableBrakeMode(false);
+			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
 			
+			Motors.motorShooter.set(Motors.SHOOTER_POWER *Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
+			spyBoxShootStart = Timer.getMatchTime();
+			
+			if(Timer.getMatchTime() <= (spyBoxShootStart - 3))
+			{
+				Motors.hardBallStop.setAngle(0.0);
+				
+				Motors.motorInnerIntake.set(Motors.INNER_INTAKE_POWER);
+			}
+			
+			if(Timer.getMatchTime() <= spyBoxShootStart- 5)
+			{
+				Motors.motorShooter.set(0.0);
+				Motors.motorInnerIntake.set(0.0);
+			}
+			
+		}
+		else
+		{
+			Movement.stopDriveMotors();
+			Motors.motorShooter.set(0.0);
+			Motors.motorInnerIntake.set(0.0);
 		}
 	}
 	/**
