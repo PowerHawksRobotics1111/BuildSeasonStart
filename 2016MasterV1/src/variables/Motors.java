@@ -11,9 +11,12 @@ public class Motors {
 	public static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; 
 	public static CANTalon motorArm; 
 	public static CANTalon motorInnerIntake, motorOuterIntake, motorShooter, motorTapeArm;
+	
 	public static Servo brake;
 	public static Servo hardBallStop;
+	
 	public static Relay flashlightControlSpike;
+	public static Relay lightingControlSpike;
 
 	//motor ports for drive, arm, intake, outer intake, tape arm, and servo
 	final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
@@ -66,6 +69,8 @@ public class Motors {
 		hardBallStop = new Servo(BALL_STOP);
 		
 		flashlightControlSpike = new Relay(0);
+		
+		lightingControlSpike = new Relay(1);
 
 	}
 } 

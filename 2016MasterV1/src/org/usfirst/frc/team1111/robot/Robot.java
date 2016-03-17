@@ -4,6 +4,7 @@ import variables.Motors;
 import variables.Sensors;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -56,6 +57,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
+		Motors.lightingControlSpike.set(Relay.Value.kOn);
 		
 		Sensors.initUltras();
 //		Sensors.armEncoderInit();
