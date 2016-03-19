@@ -21,12 +21,15 @@ public class Joysticks {
 		public static final int outtakeButton = Y;
 		public static final int intakeButton = A;
 		public static final int hardStop = B;
-		public static final int tapeArmExtend = LEFT_BUMPER;
-		public static final int tapeArmRetract = LEFT_TRIGGER;
+//		public static final int tapeArmExtend = LEFT_BUMPER;
+//		public static final int tapeArmRetract = LEFT_TRIGGER;
 		public static final int armUp = RIGHT_BUMPER;
 		public static final int armDown = RIGHT_TRIGGER;
 		public static final int overrideKillModifier = START;
 		public static final int overrideKillModifier2 = BACK;
+		public static final int overrideKillModifier3 = LEFT_BUMPER;
+		public static final int overrideKillModifier4 = LEFT_TRIGGER;
+		
 		
 		public static final int driverIntakeButton = RIGHT_BUMPER;
 		public static final int driverFlashlightButton = LEFT_BUMPER;

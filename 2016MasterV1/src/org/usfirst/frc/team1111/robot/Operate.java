@@ -32,15 +32,15 @@ public class Operate {
 		{
 			intakeOutake();
 			shoot();
-			tapeArm();
+//			tapeArm();
 			armControl();
 			hardStopToggle();
 			//		armStates();
 		}
 		
 		
-		orientByUltra();
-		distanceByUltra();
+//		orientByUltra();
+//		distanceByUltra();
 		flashlightToggle();
 
 		functionStopOverride();
@@ -54,7 +54,7 @@ public class Operate {
 	 */
 	static void intakeOutake()
 	{
-		if(!Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
+		if(!(Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4)))
 		{
 			if( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton))
 			{
@@ -93,7 +93,7 @@ public class Operate {
 	 */
 	static void shoot()
 	{
-		if(!Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) && Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton))
+		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton) && !(Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4)))
 			shooting = true;
 
 		if(shooting)
@@ -120,19 +120,19 @@ public class Operate {
 	/**
 	 * Method, controls the tape arm extension motor.
 	 */
-	static void tapeArm()
-	{
-		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
-			//armStates = false;
-			//Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-			Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
-		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-			//armStates = false;
-			//Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-			Motors.motorTapeArm.set(-Motors.TAPE_ARM_POWER);
-		else
-			Motors.motorTapeArm.set(Motors.NO_POWER);
-	}
+//	static void tapeArm()
+//	{
+//		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend))
+//			//armStates = false;
+//			//Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//			Motors.motorTapeArm.set(Motors.TAPE_ARM_POWER);
+//		else if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
+//			//armStates = false;
+//			//Motors.motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+//			Motors.motorTapeArm.set(-Motors.TAPE_ARM_POWER);
+//		else
+//			Motors.motorTapeArm.set(Motors.NO_POWER);
+//	}
 
 	//	static boolean armStates = false;
 
@@ -206,7 +206,7 @@ public class Operate {
 	 */
 	static void functionStopOverride()
 	{
-		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2))
+		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4))
 		{
 			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.intakeButton) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
 			{
@@ -221,8 +221,8 @@ public class Operate {
 				shooting = false;
 				shootingIntake = false;
 			}
-			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
-				Motors.motorTapeArm.set(Motors.NO_POWER);
+//			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
+//				Motors.motorTapeArm.set(Motors.NO_POWER);
 			if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
 			{
 				//armStates = false;
@@ -261,20 +261,23 @@ public class Operate {
 		}
 		
 		public static boolean flashlight = false;
+		public static boolean flashlightOn = false;
 		
 		static void flashlightToggle()
 		{
 			if( !flashlight && Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
 			{
 				flashlight = true;
-				if(Motors.flashlightControlSpike.get().equals(Relay.Value.kOn))
-					Motors.flashlightControlSpike.set(Relay.Value.kOff);
-				else
-					Motors.flashlightControlSpike.set(Relay.Value.kOn);
+				flashlightOn = !flashlightOn;
 			}
 			
 			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
 				flashlight = false;
+			
+			if(flashlightOn)
+				Motors.flashlightControlSpike.set(Relay.Value.kOn);
+			else
+				Motors.flashlightControlSpike.set(Relay.Value.kOff);
 		}
 		
 		static void orientByUltra()
