@@ -57,9 +57,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 
 		Motors.motorInit();
-		Motors.lightingControlSpike.set(Relay.Value.kOn);
-		
-		Sensors.initUltras();
+//		Motors.lightingControlSpike.set(Relay.Value.kOn);
+//		
+//		Sensors.initUltras();
 //		Sensors.armEncoderInit();
 
 		updateDashboard();
@@ -77,8 +77,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() == 45.0);
 //		SmartDashboard.putNumber("Arm revolutions", Sensors.getArmRev());
 		
-		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
-		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
+		SmartDashboard.putNumber("Left Front Amperage", Motors.motorDriveFrontLeft.getOutputCurrent());
+		SmartDashboard.putNumber("Left Back Amperage", Motors.motorDriveBackLeft.getOutputCurrent());
+		
+//		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
+//		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
 	}
 
 	/**
@@ -125,12 +128,12 @@ public class Robot extends IterativeRobot {
 		case lowbar:
 			Auto.lowBar();
 			break;
-		case "spyBoxShoot":
-			Auto.spyBoxShoot();
-			break;
+//		case "spyBoxShoot":
+//			Auto.spyBoxShoot();
+//			break;
 		}
 		
-		Motors.lightingControlSpike.set(Relay.Value.kOn);
+//		Motors.lightingControlSpike.set(Relay.Value.kOn);
 		
 		updateDashboard();
 	}
@@ -145,7 +148,7 @@ public class Robot extends IterativeRobot {
 		drive();
 		Operate.operate();
 
-		Motors.lightingControlSpike.set(Relay.Value.kOn);
+//		Motors.lightingControlSpike.set(Relay.Value.kOn);
 
 		//		cameraControl();
 

@@ -18,33 +18,33 @@ public class Sensors {
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);
 	
-	public static final Ultrasonic leftUltra = new Ultrasonic(2,3), rightUltra = new Ultrasonic(4,5);
-	
-	public static void initUltras()
-	{
-		leftUltra.setEnabled(true);
-		rightUltra.setEnabled(true);
-		
-		leftUltra.setAutomaticMode(true);
-	}
-	
-	public static double getUltraAverage()
-	{
-		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2.0;
-	}
+//	public static final Ultrasonic leftUltra = new Ultrasonic(2,3), rightUltra = new Ultrasonic(4,5);
+//	
+//	public static void initUltras()
+//	{
+//		leftUltra.setEnabled(true);
+//		rightUltra.setEnabled(true);
+//		
+//		leftUltra.setAutomaticMode(true);
+//	}
+//	
+//	public static double getUltraAverage()
+//	{
+//		return (leftUltra.getRangeInches() + rightUltra.getRangeInches())/2.0;
+//	}
 			
-	public static final Encoder armEncoder = new Encoder(6,7);
-	public static final double ARM_REVOLUTIONS_PER_ENCODER_TICK = 12.0/26.0/1800.0;//Arm rev/enc rev * enc rev/enc ticks per rev
-	
-	public static void armEncoderInit()
-	{
-		armEncoder.reset();
-	}
-	
-	public static double getArmRev()
-	{
-		return armEncoder.getDistance() * ARM_REVOLUTIONS_PER_ENCODER_TICK;
-	}
+//	public static final Encoder armEncoder = new Encoder(6,7);
+//	public static final double ARM_REVOLUTIONS_PER_ENCODER_TICK = 12.0/26.0/1800.0;//Arm rev/enc rev * enc rev/enc ticks per rev
+//	
+//	public static void armEncoderInit()
+//	{
+//		armEncoder.reset();
+//	}
+//	
+//	public static double getArmRev()
+//	{
+//		return armEncoder.getDistance() * ARM_REVOLUTIONS_PER_ENCODER_TICK;
+//	}
 
 	//	public static AHRS navX = new AHRS(SerialPort.Port.kMXP);
 

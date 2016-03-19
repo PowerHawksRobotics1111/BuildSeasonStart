@@ -41,7 +41,7 @@ public class Operate {
 		
 //		orientByUltra();
 //		distanceByUltra();
-		flashlightToggle();
+//		flashlightToggle();
 
 		functionStopOverride();
 	}
@@ -260,74 +260,74 @@ public class Operate {
 				hardStop = false;
 		}
 		
-		public static boolean flashlight = false;
-		public static boolean flashlightOn = false;
-		
-		static void flashlightToggle()
-		{
-			if( !flashlight && Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
-			{
-				flashlight = true;
-				flashlightOn = !flashlightOn;
-			}
-			
-			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
-				flashlight = false;
-			
-			if(flashlightOn)
-				Motors.flashlightControlSpike.set(Relay.Value.kOn);
-			else
-				Motors.flashlightControlSpike.set(Relay.Value.kOff);
-		}
-		
-		static void orientByUltra()
-		{
-			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoOrientButton))
-			{
-				 if(Sensors.leftUltra.getRangeInches() > Sensors.rightUltra.getRangeInches() +  2)
-				 {
-					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 * .6);
-					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 * .6);
-					 Motors.motorDriveFrontLeft.set(1.0 * .6);
-					 Motors.motorDriveFrontRight.set(.925 * .6);
-				 }else if(Sensors.leftUltra.getRangeInches() + 2 < Sensors.rightUltra.getRangeInches())
-				 {
-					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .6);
-					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.925 * .6);
-					 Motors.motorDriveFrontLeft.set(-1.0 * .6);
-					 Motors.motorDriveFrontRight.set(-.925 * .6);
-				 }
-				 else
-					 Auto.Movement.stopDriveMotors();
-			}
-		}
-		
-		/**
-		 * Inches
-		 */
-		static final double ultraShootDistance = 0.0;
-		
-		static void distanceByUltra()
-		{
-			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoDistanceAndOrientButton))
-				if(Sensors.leftUltra.getRangeInches() <= Sensors.rightUltra.getRangeInches() + 2 && Sensors.leftUltra.getRangeInches() >= Sensors.rightUltra.getRangeInches() - 2)
-					if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 >= ultraShootDistance + 2.0)
-					{
-						Motors.motorDriveBackLeft.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
-						Motors.motorDriveFrontLeft.set(-1.0 * -1.0 * .25);
-						Motors.motorDriveFrontRight.set(-1.0 * .925 *.25);
-					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
-					{
-						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
-						Motors.motorDriveFrontLeft.set(-1.0 * .25);
-						Motors.motorDriveFrontRight.set(.925 *.25);
-					}else
-						Auto.Movement.stopDriveMotors();
-				else
-					orientByUltra();
-		}
+//		public static boolean flashlight = false;
+//		public static boolean flashlightOn = false;
+//		
+//		static void flashlightToggle()
+//		{
+//			if( !flashlight && Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+//			{
+//				flashlight = true;
+//				flashlightOn = !flashlightOn;
+//			}
+//			
+//			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+//				flashlight = false;
+//			
+//			if(flashlightOn)
+//				Motors.flashlightControlSpike.set(Relay.Value.kOn);
+//			else
+//				Motors.flashlightControlSpike.set(Relay.Value.kOff);
+//		}
+//		
+//		static void orientByUltra()
+//		{
+//			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoOrientButton))
+//			{
+//				 if(Sensors.leftUltra.getRangeInches() > Sensors.rightUltra.getRangeInches() +  2)
+//				 {
+//					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 * .6);
+//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 * .6);
+//					 Motors.motorDriveFrontLeft.set(1.0 * .6);
+//					 Motors.motorDriveFrontRight.set(.925 * .6);
+//				 }else if(Sensors.leftUltra.getRangeInches() + 2 < Sensors.rightUltra.getRangeInches())
+//				 {
+//					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .6);
+//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.925 * .6);
+//					 Motors.motorDriveFrontLeft.set(-1.0 * .6);
+//					 Motors.motorDriveFrontRight.set(-.925 * .6);
+//				 }
+//				 else
+//					 Auto.Movement.stopDriveMotors();
+//			}
+//		}
+//		
+//		/**
+//		 * Inches
+//		 */
+//		static final double ultraShootDistance = 0.0;
+//		
+//		static void distanceByUltra()
+//		{
+//			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.drivarAutoDistanceAndOrientButton))
+//				if(Sensors.leftUltra.getRangeInches() <= Sensors.rightUltra.getRangeInches() + 2 && Sensors.leftUltra.getRangeInches() >= Sensors.rightUltra.getRangeInches() - 2)
+//					if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 >= ultraShootDistance + 2.0)
+//					{
+//						Motors.motorDriveBackLeft.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+//						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+//						Motors.motorDriveFrontLeft.set(-1.0 * -1.0 * .25);
+//						Motors.motorDriveFrontRight.set(-1.0 * .925 *.25);
+//					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
+//					{
+//						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+//						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+//						Motors.motorDriveFrontLeft.set(-1.0 * .25);
+//						Motors.motorDriveFrontRight.set(.925 *.25);
+//					}else
+//						Auto.Movement.stopDriveMotors();
+//				else
+//					orientByUltra();
+//		}
 		
 
 }
