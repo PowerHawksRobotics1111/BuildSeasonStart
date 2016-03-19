@@ -67,6 +67,9 @@ public class Operate {
 				Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
 				Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
 				intake = false;
+			}else if(shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
+			{
+				Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
 			}else if(intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
 			{
 				Timer.delay(.07);

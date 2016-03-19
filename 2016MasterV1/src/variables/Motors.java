@@ -28,7 +28,7 @@ public class Motors {
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
 	public final static double REVERSE_FULL_POWER = -1.0, REVERSE_THREE_QUARTERS_POWER = -.75, REVERSE_HALF_POWER = -.5, REVERSE_QUARTER_POWER = -.25;
-	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = -.55, SHOOTER_POWER = .86, TAPE_ARM_POWER = .75, INNER_OUTAKE_POWER = -1.0, ARM_DOWN_POWER = .50;
+	public static final double INNER_INTAKE_POWER = .75, OUTER_INTAKE_POWER = .50, ARM_POWER = -.55, SHOOTER_POWER = .76, TAPE_ARM_POWER = .75, INNER_OUTAKE_POWER = -1.0, ARM_DOWN_POWER = .50;
 
 	//public static final double BRAKE_ANGLE = 120; //TODO find accurate breaking angle
 	

@@ -130,6 +130,8 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 		
+		Motors.lightingControlSpike.set(Relay.Value.kOn);
+		
 		updateDashboard();
 	}
 
@@ -142,6 +144,9 @@ public class Robot extends IterativeRobot {
 			Motors.motorArm.enableBrakeMode(true);
 		drive();
 		Operate.operate();
+
+		Motors.lightingControlSpike.set(Relay.Value.kOn);
+
 		//		cameraControl();
 
 		updateDashboard();
