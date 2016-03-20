@@ -220,6 +220,8 @@ public class Operate {
 				Motors.motorInnerIntake.set(Motors.NO_POWER);
 				shooting = false;
 				shootingIntake = false;
+				Motors.hardBallStop.setAngle(45);
+
 			}
 //			if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmExtend) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.tapeArmRetract))
 //				Motors.motorTapeArm.set(Motors.NO_POWER);

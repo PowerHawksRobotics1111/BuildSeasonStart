@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	CameraServer server;//TODO Temp
+//	CameraServer server;//TODO Temp
 
 	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
@@ -35,10 +35,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit()
 	{
-		server = CameraServer.getInstance();
-		server.setQuality(100);
-		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
-		server.startAutomaticCapture("cam0");
+//		server = CameraServer.getInstance();
+//		server.setQuality(100);
+//		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
+//		server.startAutomaticCapture("cam0");
 //		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
