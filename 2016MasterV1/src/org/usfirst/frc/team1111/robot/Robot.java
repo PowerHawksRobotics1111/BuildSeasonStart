@@ -79,6 +79,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Left Front Amperage", Motors.motorDriveFrontLeft.getOutputCurrent());
 		SmartDashboard.putNumber("Left Back Amperage", Motors.motorDriveBackLeft.getOutputCurrent());
+		SmartDashboard.putNumber("Right Front Amperage", Motors.motorDriveFrontRight.getOutputCurrent());
+		SmartDashboard.putNumber("Right Back Amperage", Motors.motorDriveBackRight.getOutputCurrent());
 		
 //		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
 //		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());

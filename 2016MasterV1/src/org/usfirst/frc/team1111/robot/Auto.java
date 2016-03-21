@@ -233,7 +233,7 @@ public class Auto {
 
 	public static void roughTerrainRockwall()
 	{
-			if(Timer.getMatchTime() >= 15.0 - 2.0)
+			if(Timer.getMatchTime() >= 15.0 - 1.75)
 			{
 				Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
 				Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1);
