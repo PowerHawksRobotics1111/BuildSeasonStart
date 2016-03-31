@@ -1,48 +1,66 @@
 package auto;
 
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import auto.util.Movement;
-import auto.variables.Distances;
 import variables.Motors;
 import variables.Sensors;
-import auto.variables.Timings;
+import auto.util.Movement;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Umbrella class for all defense classes that allow FRC 1111's robot, Griffin, to cross over defenses in autonomous mode
- * @author Braidan Duffy, FRC Team 1111 programmer
- *
+ * Umbrella class for all defense classes that allow FRC 1111's robot, Griffon, to cross over defenses in autonomous mode
  */
 public class Autonomous {
+	
+	/**
+	 * Distances must be in inches.
+	 * TODO must calibrate all
+	 */
+	public class Distances {
+		public static final double distFromDefense = 1;
+		public static final double distFromEdge = 1;
+		public static final double distFromTowerEdge = 1;
+		public static final double distFromCastle = 1;
+		public static final double distFromTowerCenter = 1;
+	}
+	
+	/**
+	 * TODO Must be calibrated if equal to 1 and not 1.0
+	 */
+	public class Timings {
+		public static final double timeAcrossLowBar = 1, timeAcrossCheval = 1, timeAcrossMoat = 1.75, timeAcrossPortcullis = 1, timeAcrossRamparts = 1.75, 
+				timeAcrossRockWall = 1.75, timeAcrossRoughTerrain = 1.75;
+		public static final double timeToShootPosFromCenterLine = 1, timeToShootPosFromEdge = 1;
+		public static final double timeToCenterLineFromPos3 = 1, timeToCenterLineFromPos5 = 1;
+		public static final double shooterRevUpTime = 1; 
+		public static final double timeToLowerArm = 2;
+		public static final double timeToDefense = 4; 
+		public static final double timeToRaiseArm = 1; 
+		public static final double timeToPortcullis = 1;
+		public static final double timeToEjectBall = 1;
+		public static final double timeToDropPos = 1;
+	}
+	
+	
+
 	/** The position the robot is in when Autonomous starts */
 	protected int pos;
 
 	//Identifiers
 	/** The name of the defense that the robot is going to cross */
 	String defenseType;
-	/** Castle standard identifier */
 	public String castle = "castle";
-	/** Edge firing position standard identifier */
 	public String towerEdge = "edge firing position";
-	/** Center firing position standard identifier */
 	public String towerCenter = "center firing position";
-	/** Edge of the field standard identifier */
-	public String edge = "edge";
-	/** Centerline of the field standard identifier */
+	public String edge = "edge of field";
+	/** Centerline of the field*/
 	public String centerline = "centerline";
-	/** Portcullis standard identifier */
 	public String portcullis = "portcullis";
-	/** Drop position of the ball identifier */
 	public String dropPos = "drop position";
-	/** Low bar standard identifier */
-	public String neutralZone = "defense";
+	public String neutralZone = "neutral zone";
 	
-	//PID arm control variables
-	/** The angle the arm is down in PID control TODO needs to be calibrated */
+	//PID arm control variables TODO calibrate
 	protected double armDownPos = 1;
-	/** The angle the arm is up in PID control TODO needs to be calibrated */
 	protected double armUpPos = 1;
-	/** The current PID position of the arm */
 	double currentArmPos = 0;
 	
 	//Pathing indicators
@@ -54,50 +72,34 @@ public class Autonomous {
 	protected boolean goStraight = false;
 		
 	//General indicators
-	/** if PID control on the arm is enabled */
-	protected boolean pidEnabled;
-	/** If the arm is lowered */
-	protected boolean armIsLowered = false;
-	/** If the arm is raised */
-	protected boolean armIsRaised = false;
-	/** If robot is at the defense */
+	protected boolean isPidEnabled;
+	protected boolean isArmLowered = false;
+	protected boolean isArmRaised = false;
 	protected boolean isAtDefense = false;
-	/** If the robot has crossed the defense */
-	protected boolean crossedDefense = false;
-	/** If the robot is in the center firing position */
+	protected boolean hasCrossedDefense = false;
 	protected boolean isAtCenterFiringPos = false;
-	/** If the robot has started the shooting process */
 	protected boolean shooting = false;
-	/** If the ball has been dropped in the enemy courtyard */
-	protected boolean ballDropped = false;
-	/** If the robot is in dropping position */
+	protected boolean isBallDropped = false;
 	protected boolean isInDropPos = false;
-	/** If the robot has started moving */
-	protected boolean isMoving = false;
-	/** If the robot is in the neutral zone */
-	protected boolean isInNZone = false;
+	protected boolean hasStartedMoving = false;
+	protected boolean isInNeutralZone = false;
 
 	//Edge indicators
-	/** If the robot is at the edge of the field */
-	protected boolean isAtEdge = false;
-	/** If the robot is at the enemy castle */
-	protected boolean isAtCastle = false;
+	protected boolean isAtEdgeOfField = false;
+	protected boolean isAtEnemyCastle = false;
 	/** If the robot is in the edge firing position */
-	protected boolean isAtEdgeFiringPos = false;
+	protected boolean isInEdgeFiringPos = false;
 
 	//Centerline indicators
-	/** If the robot is at the centerline of the field */
-	protected boolean isAtCenterline = false; 
+	protected boolean isAtCenterline = false; //The centreline is the tape holding the 2 carpets together.
 	
-	/** The time it will take the robot to cross the defense */
-	private double timeAcrossDef;
+	private double timeToGetAcrossDefense;
 	
 	
 	//*****START CONSTRUCTORS*****
 	
 	
 	/**
-	 * Constructor for Autonomous class that handles crossing crossable defenses and getting into firing position and potentionally shooting
 	 * @param p the position of the defense that will be crossed by the robot
 	 * @param d the type of defense that the robot will cross
 	 */
@@ -106,31 +108,28 @@ public class Autonomous {
 	}
 	
 	/**
-	 * Constructor for Autonomous class that handles crossing crossable defenses and getting into firing position and potentionally shooting
 	 * @param p the position of the defense that will be crossed by the robot
 	 * @param d the type of defense that the robot will cross
 	 * @param e if PID control on the arm is enabled
 	 */
 	public Autonomous(int p, String d, boolean e) {
-		pos = p; defenseType = d; pidEnabled = e;
+		pos = p; defenseType = d; isPidEnabled = e;
 	}
 	
 	/**
-	 * Constructor for Autonomous class that handles crossing crossable defenses and getting into firing position and potentionally shooting
 	 * @param d the type of defense that the robot will cross
 	 * @param e if PID control on the arm is enabled
 	 */
 	public Autonomous(String d, boolean e) {
-		defenseType = d; pidEnabled = e;
+		defenseType = d; isPidEnabled = e;
 	}
 	
 	/**
-	 * Constructor for Autonomous class that handles crossing crossable defenses and getting into firing position and potentionally shooting
 	 * @param p the position the robot is starting in
 	 * @param e if PID control on the arm is enabled
 	 */
 	public Autonomous(int p, boolean e) {
-		pos = p; pidEnabled = e;
+		pos = p; isPidEnabled = e;
 	}
 	
 	
@@ -145,7 +144,7 @@ public class Autonomous {
 	 * Method that shoots the ball at the high goal
 	 */
 	public void shoot() {
-		moveToFiringPosition(timeAcrossDef);
+		moveToFiringPosition(timeToGetAcrossDefense);
 		fire();
 	}
 	
@@ -155,10 +154,10 @@ public class Autonomous {
 	 */
 	public void moveToFiringPosition(double time) {
 		determinePathing();
-		timeAcrossDef = time;
+		timeToGetAcrossDefense = time;
 		
 		//Crossing defense
-		if (!crossedDefense) { //Tests if the robot hasn't crossed the defense yet
+		if (!hasCrossedDefense) { //Tests if the robot hasn't crossed the defense yet
 			crossDefense(time);
 		}
 		
@@ -169,24 +168,24 @@ public class Autonomous {
 	 * Method that moves the robot into firing position the normal way (no special commands to be executed)
 	 */
 	public void moveToFiringPosition() {
-		if (!isMoving) {
+		if (!hasStartedMoving) {
 			determinePathing();
 		}
 		
 		//NOTE: Only activates if robot is in position 2
 		if (goToEdge) { //Tests if robot needs to go to the edge of the field
 			//Moving to the edge of the field
-			if (!isAtEdge) { //Tests if the robot has not been to the edge of the field
+			if (!isAtEdgeOfField) { //Tests if the robot has not been to the edge of the field
 				moveTo(edge);
 			}
 			
 			//Moving to the castle
-			else if (isAtEdge && !isAtCastle) { //Tests if the robot has been to the edge of the field, but hasn't been to the castle
+			else if (isAtEdgeOfField && !isAtEnemyCastle) { //Tests if the robot has been to the edge of the field, but hasn't been to the castle
 				moveTo(castle);
 			}
 			
 			//Moving to the edge firing position
-			else if (isAtCastle && !isAtEdgeFiringPos) { //Tests if the robot has been to the castle but isn't in firing position
+			else if (isAtEnemyCastle && !isInEdgeFiringPos) { //Tests if the robot has been to the castle but isn't in firing position
 				moveTo(towerEdge);
 			}
 		}
@@ -215,25 +214,25 @@ public class Autonomous {
 	 */
 	public void crossDefense(double time) {
 		//Lowering arm
-		if (!armIsLowered) { //Tests if the arm has been lowered yet
+		if (!isArmLowered) { //Tests if the arm has been lowered yet
 			lowerArm();
 		}
 		
 		//Getting to the defense
-		else if (armIsLowered && !isAtDefense) { //Tests if the arm has been lowered and the robot hasn't been to the defense
+		else if (isArmLowered && !isAtDefense) { //Tests if the arm has been lowered and the robot hasn't been to the defense
 			reach();
 		}
 				
 		//Crossing the defense
-		else if (isAtDefense && !crossedDefense) { //Tests if the robot has been to the defense but hasn't crossed it yet
-			crossedDefense = moveFor(time, false);
+		else if (isAtDefense && !hasCrossedDefense) { //Tests if the robot has been to the defense but hasn't crossed it yet
+			hasCrossedDefense = moveFor(time, false);
 		}
 	}
 	
 	/**
 	 * Method that fires a ball into the high goal
 	 */
-	public void fire() {
+	public void fire() { //TODO there needs to be a shutdown at some point for this.
 		shooting = true;
 		Motors.motorShooter.set(Motors.SHOOTER_POWER * Motors.SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE);
 		Timer.delay(Timings.shooterRevUpTime);
@@ -244,9 +243,8 @@ public class Autonomous {
 	 * Method that just reaches the defense, does not cross it.
 	 */
 	public void reach() {
-		if (!isAtDefense) {
+		if (!isAtDefense) 
 			isAtDefense = moveFor(Timings.timeToDefense, false);
-		}
 	}
 	
 	/**
@@ -254,35 +252,35 @@ public class Autonomous {
 	 */
 	public void crossDefenseDropBall() {
 		//Crossing defense
-		if (!crossedDefense) { //Tests if the defense has been crossed
+		if (!hasCrossedDefense) { //Tests if the defense has been crossed
 			crossDefense(Timings.timeAcrossLowBar);
 		}
 		
 		//Raising arm	
-		else if (crossedDefense && !armIsRaised) { //Tests if the robot has crossed the defense and arm isn't raised
+		else if (hasCrossedDefense && !isArmRaised) { //Tests if the robot has crossed the defense and arm isn't raised
 			raiseArm();
 		}
 		
 		//Moving to drop position
-		else if (armIsRaised && !isInDropPos) {
+		else if (isArmRaised && !isInDropPos) {
 			isInDropPos = moveFor(Timings.timeToDropPos, true);
 		}
 		
 		//Dropping ball
-		else if (armIsRaised && !ballDropped) { //Tests if the arm is raised but ball isn't dropped yet
+		else if (isArmRaised && !isBallDropped) { //Tests if the arm is raised but ball isn't dropped yet
 			if (Timer.getMatchTime() >= 15 - Timings.timeToEjectBall) { //Tests if time passed is less than that it takes to eject the ball form the robot
 				Motors.motorInnerIntake.set(-Motors.INNER_INTAKE_AUTO_POWER);
 			}
 			
 			else {
-				ballDropped = true;
+				isBallDropped = true;
 				isAtDefense = false;
 				Motors.motorInnerIntake.set(Motors.NO_POWER);
 			}
 		}
 		
 		//Moving back to the defense
-		else if (ballDropped && !isInNZone) {
+		else if (isBallDropped && !isInNeutralZone) {
 			moveTo(neutralZone);
 		}
 	}
@@ -299,7 +297,7 @@ public class Autonomous {
 	 * @param obj the object the robot is to move to
 	 * @note method automatically handles turning to the object
 	 */
-	public void moveTo(String obj) {
+	public void moveTo(String obj) { //TODO timing issue fix!!!!!!!!!!!!!!!!!!!!!!!!
 		double dir = checkDirections(obj); //Direction back of robot needs to be oriented
 		double dist = checkDistances(obj); //Distance from the object the robot needs to be
 		boolean isInPos = false; //If the robot is in position
@@ -425,17 +423,14 @@ public class Autonomous {
 	 * @note this method handles stopping the drive motors
 	 */
 	public boolean moveFor(double time, boolean reverse) {		
-		if (Timer.getMatchTime() >= 15 - time) { //Tests if the time passed is less than the time it takes to cross the defense and if the robot is turned around
-			if (reverse) {
+		if (Timer.getMatchTime() >= 15 - time) 
+		{ //Tests if the time passed is less than the time it takes to cross the defense and if the robot is turned around
+			if (reverse) 
 				Movement.driveBackwards(Motors.AUTO_DEFAULT_DRIVE_SPEED);
-			}
-			
-			else {
+			else 
 				Movement.driveForwards(Motors.AUTO_DEFAULT_DRIVE_SPEED);
-			}
-		}
-		
-		else {
+		}else 
+		{
 			Movement.stopDriveMotors();
 			return true;
 		}
@@ -449,13 +444,10 @@ public class Autonomous {
 	 * @return if the robot is at or under the given distance from an object
 	 */
 	protected boolean isCloseTo(double dist) {
-		if (Sensors.getUltraAverage() <= dist) { //Tests if close to given distance
+		if (Sensors.getUltraAverage() <= dist)  //Tests if close to given distance
 			return true;
-		}
-		
-		else {
+		else 
 			return false;
-		}
 	}
 	
 	
@@ -492,7 +484,7 @@ public class Autonomous {
 	 * Method that tests if the arm needs to be lowered with PID or timing
 	 */
 	public void lowerArm() {
-		if (pidEnabled) { //Tests if at the edge of the defense and PID control is enabled for the arm
+		if (isPidEnabled) { //Tests if at the edge of the defense and PID control is enabled for the arm
 			moveArmPID(armDownPos);
 			checkArmPos(armDownPos);
 		}
@@ -524,11 +516,11 @@ public class Autonomous {
 	protected void checkArmPos(double armPos) {
 		if (currentArmPos >= armPos - Motors.i && currentArmPos <= armPos + Motors.pidChangeRate) { //Tests if the arm is lowered to the correct position
 			if (armPos == armDownPos) { //Tests if the arm is supposed to be lowered
-				armIsLowered = true;
+				isArmLowered = true;
 			}
 			
 			else if (armPos == armUpPos) { //Tests if the arm is supposed to be raised
-				armIsRaised = true;
+				isArmRaised = true;
 			}
 		}
 	}
@@ -550,7 +542,7 @@ public class Autonomous {
 	 * Method that raises the arm of the robot with timing or PID control
 	 */
 	protected void raiseArm() {
-		if (pidEnabled) { //Tests if PID control on the arm is enabled
+		if (isPidEnabled) { //Tests if PID control on the arm is enabled
 			moveArmPID(armUpPos);
 			checkArmPos(armUpPos);
 		}
@@ -568,18 +560,18 @@ public class Autonomous {
 	
 	
 		/**
-		 * Method that updates the dashboard with status signals of the robot's progress
+		 * Method that updates the dashboard with status signals of the robot's progress TODO Only for testing
 		 */
 		public void updateDashboard() {
-			SmartDashboard.putBoolean("PID Enabled:", pidEnabled);
-			SmartDashboard.putBoolean("Arm Lowered:", armIsLowered);
+			SmartDashboard.putBoolean("PID Enabled:", isPidEnabled);
+			SmartDashboard.putBoolean("Arm Lowered:", isArmLowered);
 			SmartDashboard.putBoolean("At Defense:", isAtDefense);
-			SmartDashboard.putBoolean("Crossed Defense:", crossedDefense);
+			SmartDashboard.putBoolean("Crossed Defense:", hasCrossedDefense);
 			
 			if (goToEdge) { //Tests if the edge status need to be displayed
-				SmartDashboard.putBoolean("At Edge:", isAtEdge);
-				SmartDashboard.putBoolean("At Enemy Castle:", isAtCastle);
-				SmartDashboard.putBoolean("At Edge Firing Position:", isAtEdgeFiringPos);
+				SmartDashboard.putBoolean("At Edge:", isAtEdgeOfField);
+				SmartDashboard.putBoolean("At Enemy Castle:", isAtEnemyCastle);
+				SmartDashboard.putBoolean("At Edge Firing Position:", isInEdgeFiringPos);
 			}
 			
 			else if (goToCenterline || goStraight) { //Tests if the center or straight statuses need to be displayed 
@@ -590,13 +582,13 @@ public class Autonomous {
 			
 			SmartDashboard.putBoolean("Shooting:", shooting);
 			
-			if (pidEnabled) { //Tests if PID statuses need to be displayed
+			if (isPidEnabled) { //Tests if PID statuses need to be displayed
 				SmartDashboard.putNumber("Current Arm Position:", currentArmPos);
 				SmartDashboard.putNumber("Set Arm Position:", armDownPos);
 			}
 			
 			if (defenseType.equalsIgnoreCase("portcullis")) { //Tests if portcullis status need to be displayed
-				SmartDashboard.putBoolean("Arm Is Raised:", armIsRaised);
+				SmartDashboard.putBoolean("Arm Is Raised:", isArmRaised);
 			}
 		}
 		
@@ -607,7 +599,7 @@ public class Autonomous {
 		 */
 		public void updateStatus(String obj, boolean status) {
 			if (obj.equals(castle)) { //Tests if the castle status needs to be updated
-				isAtCastle = status;
+				isAtEnemyCastle = status;
 			}
 			
 			else if (obj.equals(centerline)) { //Tests if the centerline status needs to be updated
@@ -615,7 +607,7 @@ public class Autonomous {
 			}
 			
 			else if (obj.equals(edge)) { //Tests if the edge status needs to be updated
-				isAtEdge = status;
+				isAtEdgeOfField = status;
 			}
 			
 			else if (obj.equals(towerCenter)) { //Tests if the center firing position status needs to be updated
@@ -623,15 +615,13 @@ public class Autonomous {
 			}
 			
 			else if (obj.equals(towerEdge)) { //Tests if the edge firing position status needs to be updated
-				isAtEdgeFiringPos = status;
+				isInEdgeFiringPos = status;
 			}
 			
 			else if (obj.equals(neutralZone)) {
 				isAtDefense = status;
 			}
 		}
-		
-		
 		//*****END DISPLAY/STATUS UPDATE METHODS*****
 		
 		
@@ -642,22 +632,16 @@ public class Autonomous {
 		 * Method that determines the path the robot will take based on its position
 		 */
 		void determinePathing() {
-			if (pos == 2) { //Tests if the robot is in position 2
+			if (pos == 2) //Tests if the robot is in position 2
 				goToEdge = true;
-			}
-			
-			else if (pos == 3) { //Tests if the robot is in position 3
+			else if (pos == 3) //Tests if the robot is in position 3
 				goToCenterline = true;
-			}
-			
+
 			else if (pos == 4) { //Tests if the robot is in position 4
 				goStraight = true;
 				isAtCenterline = true;
-			}
-			
-			else if (pos == 5) { //Tests if the robot is in position 5
+			}else if (pos == 5)  //Tests if the robot is in position 5
 				goToCenterline = true;
-			}
 		}
 		
 		

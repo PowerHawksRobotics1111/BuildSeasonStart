@@ -102,7 +102,7 @@ public class Robot extends IterativeRobot {
 		
 		chooser.addObject(spyBoxShoot, spyBoxShoot);
 		chooser.addObject(spyBoxPos, spyBoxPos);
-		chooser.addObject(reach, reach);
+		chooser.addDefault(reach, reach);
 		
 		SmartDashboard.putData("Autonomous choices", chooser);
 
@@ -163,8 +163,8 @@ public class Robot extends IterativeRobot {
 			case lowBarPos:
 				a.moveToFiringPosition();
 				break;
-			
-			//Category A tests
+
+				//Category A tests
 			case portcullisShoot:
 				p.shoot();
 				break;
@@ -229,6 +229,7 @@ public class Robot extends IterativeRobot {
 			
 			//Reach tests
 			default:
+			case reach:
 				a.reach();
 				break;
 		}

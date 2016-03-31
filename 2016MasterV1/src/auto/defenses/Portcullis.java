@@ -1,7 +1,7 @@
 package auto.defenses;
 
 import auto.Autonomous;
-import auto.variables.Timings;
+import auto.Autonomous.Timings;
 
 /**
  * Class that is designed to cross the FRC Stronghold Portcullis defense in Autonomous mode using FRC 1111's robot, Griffin
@@ -25,7 +25,7 @@ public class Portcullis extends Autonomous {
 	 */
 	public void moveToFiringPosition() {
 		//Crossing the portcullis
-		if (!crossedDefense) { //Tests if the robot has crossed the defense yet
+		if (!hasCrossedDefense) { //Tests if the robot has crossed the defense yet
 			crossDefense();
 		}
 		
@@ -40,23 +40,23 @@ public class Portcullis extends Autonomous {
 	 */
 	void crossDefense() {
 		//Lowering arm
-		if (!armIsLowered) { //Tests if the arm hasn't been lowered yet
+		if (!isArmLowered) { //Tests if the arm hasn't been lowered yet
 			lowerArm();
 		}
 		
 		//Moving to the portcullis
-		else if (armIsLowered && !isAtDefense) { //Tests if the arm is lowered and the robot hasn't been to the defense yet
+		else if (isArmLowered && !isAtDefense) { //Tests if the arm is lowered and the robot hasn't been to the defense yet
 			isAtDefense = moveFor(Timings.timeToPortcullis, false);
 		}
 		
 		//Raising arm
-		else if (isAtDefense && !armIsRaised) { //Tests if the arm hasn't been raised
+		else if (isAtDefense && !isArmRaised) { //Tests if the arm hasn't been raised
 			raiseArm();
 		}
 		
 		//Moving across portcullis
-		else if (armIsRaised && !crossedDefense) { //Tests if the arm has been raised
-			crossedDefense = moveFor(Timings.timeAcrossPortcullis, false);
+		else if (isArmRaised && !hasCrossedDefense) { //Tests if the arm has been raised
+			hasCrossedDefense = moveFor(Timings.timeAcrossPortcullis, false);
 		}
 	}
 }
