@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1111.robot;
 
-import edu.wpi.first.wpilibj.Relay;
+import auto.util.Movement;
 import edu.wpi.first.wpilibj.Timer;
 import variables.Joysticks;
 import variables.Motors;
@@ -238,7 +238,7 @@ public class Operate {
 
 	public static void disable()
 	{
-		Auto.Movement.stopDriveMotors();
+		Movement.stopDriveMotors();
 
 		shooting = false;
 		intake = false;
@@ -289,15 +289,15 @@ public class Operate {
 //				 if(Sensors.leftUltra.getRangeInches() > Sensors.rightUltra.getRangeInches() +  2)
 //				 {
 //					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 * .6);
-//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 * .6);
+//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1 * .6);
 //					 Motors.motorDriveFrontLeft.set(1.0 * .6);
-//					 Motors.motorDriveFrontRight.set(.925 * .6);
+//					 Motors.motorDriveFrontRight.set(1 * .6);
 //				 }else if(Sensors.leftUltra.getRangeInches() + 2 < Sensors.rightUltra.getRangeInches())
 //				 {
 //					 Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .6);
-//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.925 * .6);
+//					 Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1 * .6);
 //					 Motors.motorDriveFrontLeft.set(-1.0 * .6);
-//					 Motors.motorDriveFrontRight.set(-.925 * .6);
+//					 Motors.motorDriveFrontRight.set(-1.0 * .6);
 //				 }
 //				 else
 //					 Auto.Movement.stopDriveMotors();
@@ -316,15 +316,15 @@ public class Operate {
 //					if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 >= ultraShootDistance + 2.0)
 //					{
 //						Motors.motorDriveBackLeft.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-//						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+//						Motors.motorDriveBackRight.set(-1.0 * Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 *.25);
 //						Motors.motorDriveFrontLeft.set(-1.0 * -1.0 * .25);
-//						Motors.motorDriveFrontRight.set(-1.0 * .925 *.25);
+//						Motors.motorDriveFrontRight.set(-1.0 * 1.0 *.25);
 //					}else if((Sensors.leftUltra.getRangeInches() + Sensors.leftUltra.getRangeInches())/2.0 <= ultraShootDistance + 2.0)
 //					{
 //						Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-//						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .925 *.25);
+//						Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1.0 *.25);
 //						Motors.motorDriveFrontLeft.set(-1.0 * .25);
-//						Motors.motorDriveFrontRight.set(.925 *.25);
+//						Motors.motorDriveFrontRight.set(1.0 *.25);
 //					}else
 //						Auto.Movement.stopDriveMotors();
 //				else

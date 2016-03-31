@@ -2,6 +2,9 @@ package org.usfirst.frc.team1111.robot;
 
 import variables.Motors;
 import variables.Sensors;
+import auto.Autonomous;
+import auto.defenses.ChevalDeFrise;
+import auto.defenses.Portcullis;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
@@ -20,14 +23,47 @@ public class Robot extends IterativeRobot {
 
 //	CameraServer server;//TODO Temp
 
-	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	final String lowBarShoot = "Low Bar | Shoot";
+	final String lowBarPos = "Low Bar | Position";
+	
+	//Category A Defenses
+	final String portcullisShoot = "Portcullis | Shoot";
+	final String portcullisPos = "Portcullis | Position";
+	final String chevalShoot = "Cheval de Frise | Shoot";
+	final String chevalPos = "Cheval de Frise | Pos";
+	
+	//Category B Defenses
+	final String moatShoot = "Moat | Shoot";
+	final String moatPos = "Moat | Position";
+	final String rampartsShoot = "Ramparts | Shoot";
+	final String rampartsPos = "Ramparts | Position";
+	
+	//Category D defenses
+	final String roughTerrainShoot = "Rough Terrain | Shoot";
+	final String roughTerrainPos = "Rough Terrain | Pos";
+	final String rockWallShoot = "Rock Wall | Shoot";
+	final String rockWallPos = "Rock Wall | Position";
+	
+	final String spyBoxShoot = "Spy Box | Shoot";
+	final String spyBoxPos = "Spy Box | Position";
+	final String reach = "Reach";
+		
+	//Category A Defenses
+	Portcullis p;
+	ChevalDeFrise cdf;
+	
+	Autonomous a;
 
 	String autoSelected;
 	SendableChooser chooser;
 
 	Double startTime = 0.0;
 	
+	int pos;
+	
 	public static Timer timer = new Timer();
+	
+	boolean pidEnabled = false;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,35 +74,49 @@ public class Robot extends IterativeRobot {
 //		server = CameraServer.getInstance();
 //		server.setQuality(100);
 //		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
-//		server.startAutomaticCapture("cam0");
+//		server.startAutonomousmaticCapture("cam0");
 //		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
 		
-		//		chooser.addObject("Lowbar Shoot", lowbarShoot);
-		chooser.addObject("Moat", moat);
-		chooser.addDefault("Reach", "reach");
-		chooser.addObject("Nothing", "nothing");
-		chooser.addObject("Low Bar", lowbar);
-		chooser.addObject(rockwall, rockwall);
-		chooser.addObject("Ramparts", ramparts);
-		chooser.addObject("Reach Drop", "reachThenDropArm");
-		chooser.addObject("Spy Box Shoot", "spyBoxShoot");
-		chooser.addObject("Rough Terrain", roughTerrain);
-
-		SmartDashboard.putData("Auto choices", chooser);
+		chooser.addObject(lowBarShoot, lowBarShoot);
+		chooser.addObject(lowBarPos, lowBarPos);
+		
+		//Category A Choices
+		chooser.addObject(portcullisShoot, portcullisShoot);
+		chooser.addObject(portcullisPos, portcullisPos);
+		chooser.addObject(chevalShoot, chevalShoot);
+		chooser.addObject(chevalPos, chevalPos);
+		
+		//Category B Choices
+		chooser.addObject(moatShoot, moatShoot);
+		chooser.addObject(moatPos, moatPos);
+		chooser.addObject(rampartsShoot, rampartsShoot);
+		chooser.addObject(rampartsPos, rampartsPos);
+		
+		//Category D Choices
+		chooser.addObject(roughTerrainShoot, roughTerrainShoot);
+		chooser.addObject(roughTerrainPos, roughTerrainPos);
+		chooser.addObject(rockWallShoot, rockWallShoot);
+		chooser.addObject(rockWallPos, rockWallPos);
+		
+		chooser.addObject(spyBoxShoot, spyBoxShoot);
+		chooser.addObject(spyBoxPos, spyBoxPos);
+		chooser.addObject(reach, reach);
+		
+		SmartDashboard.putData("Autonomous choices", chooser);
 
 		Motors.motorInit();
 //		Motors.lightingControlSpike.set(Relay.Value.kOn);
 //		
-//		Sensors.initUltras();
+		Sensors.initUltras();
 //		Sensors.armEncoderInit();
 
-		updateDashboard();
+		updateDashboard();		
 	}
 
 	/**
-	 * Yes. This is for initializing the Dashboard. Put stuff in here.
+	 * Method that initializes/updates the dashboard
 	 */
 	public void updateDashboard()
 	{
@@ -82,24 +132,21 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Front Amperage", Motors.motorDriveFrontRight.getOutputCurrent());
 		SmartDashboard.putNumber("Right Back Amperage", Motors.motorDriveBackRight.getOutputCurrent());
 		
-//		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
-//		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
+		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
+		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
+		
+		SmartDashboard.putNumber("Starting Position", pos);
+		SmartDashboard.putBoolean("PID Control Enabled:", pidEnabled);
 	}
 
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
+	 * Method that initializes things required for autonomous mode
 	 */
 	public void autonomousInit()
 	{
 		autoSelected = (String) chooser.getSelected();
+		Motors.initArmPID();
+		createDefense();
 	}
 
 	/**
@@ -108,33 +155,84 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic()
 	{
 		switch (autoSelected) {
-		case "reachThenDropArm":
-			Auto.reachThenDropArm();
-			break;
-		default:
-		case "reach":
-			Auto.reach();
-			break;
-		case "nothing":
-			break;
-		case moat:
-			Auto.moat();
-			break;
-		case ramparts:
-			Auto.ramparts();
-			break;
-		case roughTerrain:
-		case rockwall:
-			Auto.roughTerrainRockwall();
-			break;
-		case lowbar:
-			Auto.lowBar();
-			break;
-//		case "spyBoxShoot":
-//			Auto.spyBoxShoot();
-//			break;
+			//Low Bar tests
+			case lowBarShoot:
+				a.shoot();
+				break;
+				
+			case lowBarPos:
+				a.moveToFiringPosition();
+				break;
+			
+			//Category A tests
+			case portcullisShoot:
+				p.shoot();
+				break;
+				
+			case portcullisPos:
+				p.moveToFiringPosition();
+				break;
+				
+			case chevalShoot:
+				cdf.shoot();
+				break;
+				
+			case chevalPos:
+				cdf.moveToFiringPosition();
+				break;
+				
+			//Category B tests
+			case moatShoot:
+				a.shoot();
+				break;
+				
+			case moatPos:
+				a.moveToFiringPosition();
+				break;
+				
+			case rampartsShoot:
+				a.shoot();
+				break;
+			
+			case rampartsPos:
+				a.moveToFiringPosition();
+				break;
+			
+			//Category D tests
+			case roughTerrainShoot:
+				a.shoot();
+				break;
+				
+			case roughTerrainPos:
+				a.moveToFiringPosition();
+				break;
+				
+			case rockWallShoot:
+				a.shoot();
+				break;
+				
+			case rockWallPos:
+				a.moveToFiringPosition();
+				break;
+				
+			//Spy box tests
+			case spyBoxShoot:
+				a.lowerArm();
+				a.moveTo(a.towerEdge);
+				a.shoot();
+				break;
+				
+			case spyBoxPos:
+				a.lowerArm();
+				a.moveTo(a.towerEdge);
+				break;
+			
+			//Reach tests
+			default:
+				a.reach();
+				break;
 		}
-		
+	
 //		Motors.lightingControlSpike.set(Relay.Value.kOn);
 		
 		updateDashboard();
@@ -178,6 +276,27 @@ public class Robot extends IterativeRobot {
 		Motors.motorArm.set(0.0);
 		Operate.disable();
 		updateDashboard();
+	}
+	
+	public void createDefense() {
+		pos = (int) SmartDashboard.getNumber("Starting Position");
+		pidEnabled = SmartDashboard.getBoolean("PID Control Enabled:");
+		
+		//Category A tests
+		switch (autoSelected) {
+		
+		case "portcullis":
+			p = new Portcullis(pos, pidEnabled);
+			break;
+		
+		case "cheval":
+			cdf = new ChevalDeFrise(pos, pidEnabled);
+			break;
+			
+		default:
+			a = new Autonomous(pos, pidEnabled);
+			break;
+		}
 	}
 
 	//	static void cameraControl()
