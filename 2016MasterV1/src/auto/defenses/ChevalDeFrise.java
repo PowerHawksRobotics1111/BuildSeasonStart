@@ -1,7 +1,7 @@
 package auto.defenses;
 
 import auto.Autonomous;
-import auto.Autonomous.Timings;
+import auto.variables.Timings;
 
 /**
  * Class that is designed to cross the FRC Stronghold Cheval De Frise defense in Autonomous mode using FRC 1111's robot, Griffin
@@ -25,7 +25,7 @@ public class ChevalDeFrise extends Autonomous{
 	 */
 	public void moveToFiringPosition() {		
 		//Crossing defense
-		if (!hasCrossedDefense) { //Tests if hasn't yet crossed the defense
+		if (!crossedDefense) { //Tests if hasn't yet crossed the defense
 			crossDefense();
 		}
 		
@@ -44,13 +44,13 @@ public class ChevalDeFrise extends Autonomous{
 		}
 		
 		//Lowering arm
-		if (isAtDefense && !isArmLowered) { //Tests if the robot has been to the defense and the arm has not been lowered
+		if (isAtDefense && !armIsLowered) { //Tests if the robot has been to the defense and the arm has not been lowered
 			lowerArm();
 		}
 		
 		//Moving across defense
-		if (isArmLowered && !hasCrossedDefense) { //Tests if the arm has been lowered and the defense has not been crossed yet
-			hasCrossedDefense = moveFor(Timings.timeAcrossCheval, false);
+		if (armIsLowered && !crossedDefense) { //Tests if the arm has been lowered and the defense has not been crossed yet
+			crossedDefense = moveFor(Timings.timeAcrossCheval, false);
 		}
 	}	
 }

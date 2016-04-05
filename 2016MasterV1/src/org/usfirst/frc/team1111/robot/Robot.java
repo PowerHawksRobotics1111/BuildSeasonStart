@@ -35,14 +35,18 @@ public class Robot extends IterativeRobot {
 	//Category B Defenses
 	final String moatShoot = "Moat | Shoot";
 	final String moatPos = "Moat | Position";
+	final String moatDefault = "Moat | Default";
 	final String rampartsShoot = "Ramparts | Shoot";
 	final String rampartsPos = "Ramparts | Position";
+	final String rampartsDefault = "Ramparts | Default";
 	
 	//Category D defenses
 	final String roughTerrainShoot = "Rough Terrain | Shoot";
 	final String roughTerrainPos = "Rough Terrain | Pos";
+	final String roughTerrainDefault = "Rough Terrain | Default";
 	final String rockWallShoot = "Rock Wall | Shoot";
 	final String rockWallPos = "Rock Wall | Position";
+	final String rockWallDefault = "Rock Wall | Default";
 	
 	final String spyBoxShoot = "Spy Box | Shoot";
 	final String spyBoxPos = "Spy Box | Position";
@@ -102,7 +106,7 @@ public class Robot extends IterativeRobot {
 		
 		chooser.addObject(spyBoxShoot, spyBoxShoot);
 		chooser.addObject(spyBoxPos, spyBoxPos);
-		chooser.addDefault(reach, reach);
+		chooser.addObject(reach, reach);
 		
 		SmartDashboard.putData("Autonomous choices", chooser);
 
@@ -163,8 +167,8 @@ public class Robot extends IterativeRobot {
 			case lowBarPos:
 				a.moveToFiringPosition();
 				break;
-
-				//Category A tests
+			
+			//Category A tests
 			case portcullisShoot:
 				p.shoot();
 				break;
@@ -190,6 +194,10 @@ public class Robot extends IterativeRobot {
 				a.moveToFiringPosition();
 				break;
 				
+			case moatDefault:
+				Autonomous.moat();
+				break;
+				
 			case rampartsShoot:
 				a.shoot();
 				break;
@@ -198,6 +206,10 @@ public class Robot extends IterativeRobot {
 				a.moveToFiringPosition();
 				break;
 			
+			case rampartsDefault:
+				Autonomous.ramparts();
+				break;
+				
 			//Category D tests
 			case roughTerrainShoot:
 				a.shoot();
@@ -207,12 +219,19 @@ public class Robot extends IterativeRobot {
 				a.moveToFiringPosition();
 				break;
 				
+			case roughTerrainDefault:
+				Autonomous.roughTerrainRockwall();
+				
 			case rockWallShoot:
 				a.shoot();
 				break;
 				
 			case rockWallPos:
 				a.moveToFiringPosition();
+				break;
+				
+			case rockWallDefault:
+				Autonomous.roughTerrainRockwall();
 				break;
 				
 			//Spy box tests
@@ -229,7 +248,6 @@ public class Robot extends IterativeRobot {
 			
 			//Reach tests
 			default:
-			case reach:
 				a.reach();
 				break;
 		}

@@ -84,6 +84,6 @@ public class Motors {
 	}
 	
 	public static void disableArmPID() {
-		motorArm.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		motorArm.disableControl();
 	}
 } 

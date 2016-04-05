@@ -1,10 +1,17 @@
 package variables;
 
 import com.kauailabs.navx.frc.AHRS;
+
+//import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.vision.AxisCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 public class Sensors {
 
