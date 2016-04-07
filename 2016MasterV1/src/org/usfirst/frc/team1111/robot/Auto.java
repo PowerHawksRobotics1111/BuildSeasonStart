@@ -260,7 +260,7 @@ public class Auto {
 			startTime = 1500.0;
 		}else if(startTime == 1500.0)
 		{
-			if(Sensors.navX.getYaw() > 2.5 && Sensors.navX.getYaw() < (360.0-2.5))
+			if(Sensors.navX.getYaw() > 182.5 && Sensors.navX.getYaw() < 177.5)
 			{
 				if(Sensors.navX.getYaw() <= 180.0)
 				{
@@ -282,12 +282,12 @@ public class Auto {
 			}
 		}else if(startTime == 1000.0)
 			startTime = Timer.getMatchTime();
-		else if(Timer.getMatchTime() >= startTime - 1.65)
+		else if(Timer.getMatchTime() >= startTime - 4.0)//4 sec on .25 to test align. 1.65 sec on 1.0 for run.
 		{
-			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
-			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1);
-			Motors.motorDriveFrontLeft.set(-1);
-			Motors.motorDriveFrontRight.set(1);
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.25);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
+			Motors.motorDriveFrontLeft.set(-.25);
+			Motors.motorDriveFrontRight.set(.25);
 		}else
 			Movement.stopDriveMotors();
 	}

@@ -64,7 +64,7 @@ public class Operate {
 				Motors.hardBallStop.setAngle(45.0);
 			}else if ( !shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
 			{
-				Motors.motorOuterIntake.set(Motors.OUTER_INTAKE_POWER * -1);
+				Motors.motorOuterIntake.set(Motors.OUTER_OUTAKE_POWER);
 				Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
 				intake = false;
 			}else if(shooting && Joysticks.joyOp.getRawButton(Joysticks.Buttons.outtakeButton))
@@ -264,7 +264,7 @@ public class Operate {
 				
 		static void flashlightToggle()
 		{
-			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton) || Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton2) || Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton3))
 				Motors.flashlight.set(Motors.flashlightVoltage);
 			else
 				Motors.flashlight.set(0.0);

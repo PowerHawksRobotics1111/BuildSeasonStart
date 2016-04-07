@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-//	CameraServer server;//TODO Temp
+	CameraServer server;
 
 	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
@@ -35,10 +35,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit()
 	{
-//		server = CameraServer.getInstance();
-//		server.setQuality(100);
-//		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
-//		server.startAutomaticCapture("cam0");
+		server = CameraServer.getInstance();
+		server.setQuality(50);//1080p camera. Capturing 540
+		//the camera name (ex "cam0") can be found through the roborio web interface TODO TEMP CAMERA CODE
+		server.startAutomaticCapture("cam2");
 //		Sensors.Cameras.shootCam.
 
 		chooser = new SendableChooser();
@@ -47,12 +47,13 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Moat", moat);
 		chooser.addDefault("Reach", "reach");
 		chooser.addObject("Nothing", "nothing");
-		chooser.addObject("Low Bar", lowbar);
+//		chooser.addObject("Low Bar", lowbar);
 		chooser.addObject(rockwall, rockwall);
 		chooser.addObject("Ramparts", ramparts);
 		chooser.addObject("Reach Drop", "reachThenDropArm");
-		chooser.addObject("Spy Box Shoot", "spyBoxShoot");
+//		chooser.addObject("Spy Box Shoot", "spyBoxShoot");
 		chooser.addObject("Rough Terrain", roughTerrain);
+		chooser.addObject("Cross Turn Around and Back TEST ONLY", "Cross Turn Around and Back");
 
 		SmartDashboard.putData("Auto choices", chooser);
 
@@ -82,8 +83,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Front Amperage", Motors.motorDriveFrontRight.getOutputCurrent());
 		SmartDashboard.putNumber("Right Back Amperage", Motors.motorDriveBackRight.getOutputCurrent());
 		
-//		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
-//		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
+		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
+		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
 	}
 
 	/**
@@ -129,6 +130,9 @@ public class Robot extends IterativeRobot {
 			break;
 		case lowbar:
 			Auto.lowBar();
+			break;
+		case "Cross Turn Around and Back":
+			Auto.crossTurnAround();
 			break;
 //		case "spyBoxShoot":
 //			Auto.spyBoxShoot();
