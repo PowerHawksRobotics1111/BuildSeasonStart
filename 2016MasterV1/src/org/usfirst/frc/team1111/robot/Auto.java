@@ -244,6 +244,54 @@ public class Auto {
 				Movement.stopDriveMotors();
 	}
 	
+	static double startTime = 0.0;
+	public static void crossTurnAround()
+	{
+		if(Timer.getMatchTime() >= 15.0 - 1.75)
+		{
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+		}
+		else if(startTime == 0.0)
+		{
+			Movement.stopDriveMotors();
+			startTime = 1500.0;
+		}else if(startTime == 1500.0)
+		{
+			if(Sensors.navX.getYaw() > 2.5 && Sensors.navX.getYaw() < (360.0-2.5))
+			{
+				if(Sensors.navX.getYaw() <= 180.0)
+				{
+					Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
+					Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
+					Motors.motorDriveFrontLeft.set(.25);
+					Motors.motorDriveFrontRight.set(.25);
+				}else if(Sensors.navX.getYaw() > 180.0)
+				{
+					Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25);
+					Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25);
+					Motors.motorDriveFrontLeft.set(-1.0 * .25);
+					Motors.motorDriveFrontRight.set(-1.0 * .25);
+				}
+			}else
+			{
+				Movement.stopDriveMotors();
+				startTime = 1000.0;
+			}
+		}else if(startTime == 1000.0)
+			startTime = Timer.getMatchTime();
+		else if(Timer.getMatchTime() >= startTime - 1.65)
+		{
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+		}else
+			Movement.stopDriveMotors();
+	}
+	
 	/**
 	static double spyBoxShootStart = 0;
 	

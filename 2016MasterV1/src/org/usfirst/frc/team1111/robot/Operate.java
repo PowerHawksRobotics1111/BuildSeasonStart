@@ -41,7 +41,7 @@ public class Operate {
 		
 //		orientByUltra();
 //		distanceByUltra();
-//		flashlightToggle();
+		flashlightToggle();
 
 		functionStopOverride();
 	}
@@ -261,26 +261,14 @@ public class Operate {
 			if(hardStop && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.hardStop))
 				hardStop = false;
 		}
-		
-//		public static boolean flashlight = false;
-//		public static boolean flashlightOn = false;
-//		
-//		static void flashlightToggle()
-//		{
-//			if( !flashlight && Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
-//			{
-//				flashlight = true;
-//				flashlightOn = !flashlightOn;
-//			}
-//			
-//			if(flashlight && !Joysticks.joyOp.getRawButton(Joysticks.Buttons.driverFlashlightButton))
-//				flashlight = false;
-//			
-//			if(flashlightOn)
-//				Motors.flashlightControlSpike.set(Relay.Value.kOn);
-//			else
-//				Motors.flashlightControlSpike.set(Relay.Value.kOff);
-//		}
+				
+		static void flashlightToggle()
+		{
+			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton))
+				Motors.flashlight.set(Motors.flashlightVoltage);
+			else
+				Motors.flashlight.set(0.0);
+		}
 //		
 //		static void orientByUltra()
 //		{

@@ -11,6 +11,7 @@ public class Motors {
 	public static CANTalon motorDriveFrontRight, motorDriveFrontLeft, motorDriveBackRight, motorDriveBackLeft; 
 	public static CANTalon motorArm; 
 	public static CANTalon motorInnerIntake, motorOuterIntake, motorShooter, motorTapeArm;
+	public static CANTalon flashlight;
 	
 //	public static Servo brake;
 	public static Servo hardBallStop;
@@ -34,7 +35,7 @@ public class Motors {
 	
 	public static final double BACK_WHEEL_DRIVE_RATIO = 7.66/8.0; //TODO this is to adjust for the pneumatic wheels if we need to!!!
 	public static final double SHOOTER_OPTIMAL_MAXIMUM_VOLTAGE = 12.6;//TODO Set to the optimal voltage and adjust to voltage control mode.
-
+	public static final double flashlightVoltage = 9.0;
 	//private static final int ARM_TICKS_PER_REV = 18;
 
 
@@ -71,6 +72,9 @@ public class Motors {
 //		flashlightControlSpike = new Relay(0);
 //		
 //		lightingControlSpike = new Relay(1);
+		
+		flashlight = new CANTalon(50);
+		flashlight.changeControlMode(TalonControlMode.Voltage);
 
 	}
 } 
