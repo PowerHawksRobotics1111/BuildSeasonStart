@@ -245,7 +245,32 @@ public class Auto {
 	}
 	
 	static double startTime = 0.0;
-	public static void crossTurnAround()
+	public static void rockwallKeepGoing()
+	{
+		if(Timer.getMatchTime() >= 15.0 - 1.75)
+		{
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * 1);
+			Motors.motorDriveFrontLeft.set(-1);
+			Motors.motorDriveFrontRight.set(1);
+		}
+		else if(startTime == 0.0)
+		{
+			Movement.stopDriveMotors();
+			startTime = 1000.0;
+		}else if(startTime == 1000.0)
+			startTime = Timer.getMatchTime();
+		else if(Timer.getMatchTime() >= startTime - 4.0)
+		{
+			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -.25);
+			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
+			Motors.motorDriveFrontLeft.set(-.25);
+			Motors.motorDriveFrontRight.set(.25);
+		}else
+			Movement.stopDriveMotors();
+	}
+	
+	public static void crossTurnAroundTEST()
 	{
 		if(Timer.getMatchTime() >= 15.0 - 1.75)
 		{

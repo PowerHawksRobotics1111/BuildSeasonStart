@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Reach Drop", "reachThenDropArm");
 //		chooser.addObject("Spy Box Shoot", "spyBoxShoot");
 		chooser.addObject("Rough Terrain", roughTerrain);
-		chooser.addObject("Cross Turn Around and Back TEST ONLY", "Cross Turn Around and Back");
+		chooser.addObject("Rockwall, Keep Going", "Rockwall, Keep Going");
 
 		SmartDashboard.putData("Auto choices", chooser);
 
@@ -131,8 +131,8 @@ public class Robot extends IterativeRobot {
 		case lowbar:
 			Auto.lowBar();
 			break;
-		case "Cross Turn Around and Back":
-			Auto.crossTurnAround();
+		case "Rockwall, Keep Going":
+			Auto.rockwallKeepGoing();
 			break;
 //		case "spyBoxShoot":
 //			Auto.spyBoxShoot();
