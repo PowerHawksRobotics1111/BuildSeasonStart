@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1111.robot;
 
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import variables.Joysticks;
@@ -72,7 +73,7 @@ public class Operate {
 				Motors.motorInnerIntake.set(Motors.INNER_OUTAKE_POWER);
 			}else if(intake && (Sensors.intakeLimitSwitch.get() || Sensors.intakeLimitSwitch2.get()))
 			{
-				Timer.delay(.07);
+				Timer.delay(.05);
 				Motors.motorOuterIntake.set(Motors.NO_POWER);
 				Motors.motorInnerIntake.set(Motors.NO_POWER);
 				intake = false;
@@ -147,6 +148,19 @@ public class Operate {
 			Motors.motorArm.set(Motors.ARM_DOWN_POWER);
 		else
 			Motors.motorArm.set(Motors.NO_POWER);
+//		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armDown))
+//			if(Motors.motorArm.getEncPosition() >= -1600)
+//				Motors.motorArm.set(Motors.ARM_DOWN_POWER * 0.5);
+//			else
+//				Motors.motorArm.set(0.0);
+//		else if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp))
+//			if(Motors.motorArm.getEncPosition() <= -300)
+//				Motors.motorArm.set(Motors.ARM_POWER *0.4);
+//			else
+//				Motors.motorArm.set(0.0);
+//		else
+//			Motors.motorArm.set(0.0);
+					
 	}
 	/**
 	final static class ArmStates//Done from zero at the top to 90 at horizantal hopefully...

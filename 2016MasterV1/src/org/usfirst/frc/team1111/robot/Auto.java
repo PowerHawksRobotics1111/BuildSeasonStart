@@ -127,18 +127,18 @@ public class Auto {
 	
 	public static void lowBar()
 	{
-		if(Timer.getMatchTime() >= 15.0 - 2.0)
+		if(Timer.getMatchTime() >= 15.0 - 3.5)
 		{
 			Movement.stopDriveMotors();
 			Motors.motorArm.set(Motors.ARM_DOWN_POWER * .5);
-		}else if(Timer.getMatchTime() >= 15.0 - 7.0)
-		{
-			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
-			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
-			Motors.motorDriveFrontLeft.set(-1.0 * .25);
-			Motors.motorDriveFrontRight.set(.25);
-
-			Motors.motorArm.set(Motors.NO_POWER);
+//		}else if(Timer.getMatchTime() >= 15.0 - 0.0)
+//		{
+//			Motors.motorDriveBackLeft.set(Motors.BACK_WHEEL_DRIVE_RATIO * -1.0 * .25); 
+//			Motors.motorDriveBackRight.set(Motors.BACK_WHEEL_DRIVE_RATIO * .25);
+//			Motors.motorDriveFrontLeft.set(-1.0 * .25);
+//			Motors.motorDriveFrontRight.set(.25);
+//
+//			Motors.motorArm.set(Motors.NO_POWER);
 		}
 		else 
 		{

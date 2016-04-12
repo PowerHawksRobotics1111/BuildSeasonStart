@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Moat", moat);
 		chooser.addDefault("Reach", "reach");
 		chooser.addObject("Nothing", "nothing");
-//		chooser.addObject("Low Bar", lowbar);
+		chooser.addObject("Low Bar", lowbar);
 		chooser.addObject(rockwall, rockwall);
 		chooser.addObject("Ramparts", ramparts);
 		chooser.addObject("Reach Drop", "reachThenDropArm");
@@ -55,12 +55,12 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Rough Terrain", roughTerrain);
 		chooser.addObject("Rockwall, Keep Going", "Rockwall, Keep Going");
 
-		SmartDashboard.putData("Auto choices", chooser);
+		SmartDashboard.putData("Auto Selection", chooser);
 
 		Motors.motorInit();
 //		Motors.lightingControlSpike.set(Relay.Value.kOn);
 //		
-//		Sensors.initUltras();
+		Sensors.initUltras();
 //		Sensors.armEncoderInit();
 
 		updateDashboard();
@@ -77,6 +77,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Shooting", Operate.shooting);
 		SmartDashboard.putBoolean("BallStop Down", Motors.hardBallStop.getAngle() == 45.0);
 //		SmartDashboard.putNumber("Arm revolutions", Sensors.getArmRev());
+		SmartDashboard.putNumber("Arm", Motors.motorArm.getEncPosition());
 		
 		SmartDashboard.putNumber("Left Front Amperage", Motors.motorDriveFrontLeft.getOutputCurrent());
 		SmartDashboard.putNumber("Left Back Amperage", Motors.motorDriveBackLeft.getOutputCurrent());
@@ -85,6 +86,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putNumber("Right Ultra", Sensors.rightUltra.getRangeInches());
 		SmartDashboard.putNumber("Left Ultra", Sensors.leftUltra.getRangeInches());
+		
+		SmartDashboard.putNumber("NavX Yaw", Sensors.navX.getYaw());
 	}
 
 	/**
@@ -142,6 +145,11 @@ public class Robot extends IterativeRobot {
 //		Motors.lightingControlSpike.set(Relay.Value.kOn);
 		
 		updateDashboard();
+	}
+	
+	public void teleopInit()
+	{
+		Motors.motorArm.enableBrakeMode(true);
 	}
 
 	/**
