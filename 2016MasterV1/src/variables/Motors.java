@@ -23,7 +23,7 @@ public class Motors {
 	private final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
 	private final static int ARM = 53; 
 	private final static int INNER_INTAKE = 44, OUTER_INTAKE = 62, SHOOTER = 61, TAPE_ARM = 45; 
-	private final static int TAPE_BRAKE_SERVO = 0;
+	//private final static int TAPE_BRAKE_SERVO = 0;
 	private final static int BALL_STOP = 1;
 
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
