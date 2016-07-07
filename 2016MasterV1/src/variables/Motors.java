@@ -2,7 +2,6 @@ package variables;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,11 +20,11 @@ public class Motors {
 //	public static Relay lightingControlSpike;
 
 	//motor ports for drive, arm, intake, outer intake, tape arm, and servo
-	final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
-	final static int ARM = 53; 
-	final static int INNER_INTAKE = 44, OUTER_INTAKE = 62, SHOOTER = 61, TAPE_ARM = 45; 
-	final static int TAPE_BRAKE_SERVO = 0;
-		final static int BALL_STOP = 1;
+	private final static int FRONT_RIGHT_DRIVE = 47, FRONT_LEFT_DRIVE = 52, BACK_RIGHT_DRIVE = 55, BACK_LEFT_DRIVE = 60;  //TODO MDBL Port possibly wrong mapped.
+	private final static int ARM = 53; 
+	private final static int INNER_INTAKE = 44, OUTER_INTAKE = 62, SHOOTER = 61, TAPE_ARM = 45; 
+	private final static int TAPE_BRAKE_SERVO = 0;
+	private final static int BALL_STOP = 1;
 
 	//Motor power variables for forward, reverse, intake, outer intake, arm, shooter, and tape arm
 	public final static double FULL_POWER = 1.0, THREE_QUARTERS_POWER = .75, HALF_POWER = .5, QUARTER_POWER = .25, NO_POWER = 0.0;
