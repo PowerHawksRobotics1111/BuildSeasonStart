@@ -16,7 +16,7 @@ public class Operate {
 	 * int armPos holds arm state.
 	 * String armState translate state to the dashboard
 	 */
-	static boolean intake = false;
+	public static boolean intake = false;
 	//	private static final int NUM_ARM_STATES = 5;
 	//	static int armPos = 0;
 	//	static String armState = "";
@@ -85,7 +85,7 @@ public class Operate {
 	}
 
 	public static boolean shooting = false;
-	static boolean shootingIntake = false;
+	public static boolean shootingIntake = false;
 
 	/**
 	 * Method, runs or stops the shoot motor.
@@ -216,7 +216,7 @@ public class Operate {
 	/**
 	 * Function override implementation
 	 */
-	static void functionStopOverride()
+	private static void functionStopOverride()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4))
 		{
