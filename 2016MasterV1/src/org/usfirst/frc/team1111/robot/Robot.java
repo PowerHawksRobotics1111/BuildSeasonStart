@@ -19,12 +19,12 @@ public class Robot extends IterativeRobot {
 
 	private CameraServer server;
 
-	private final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	private final String /*lowbarShoot = "LowShoot",*/ lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
 	private String autoSelected;
 	private SendableChooser chooser;
 
-	private Double startTime = 0.0;
+	//private Double startTime = 0.0;
 	
 	public static Timer timer = new Timer();
 
@@ -103,6 +103,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit()
 	{
 		autoSelected = (String) chooser.getSelected();
+		server.setQuality(50);
 	}
 
 	/**
@@ -149,6 +150,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit()
 	{
 		Motors.motorArm.enableBrakeMode(true);
+		server.setQuality(50);
 	}
 
 	/**
@@ -189,6 +191,7 @@ public class Robot extends IterativeRobot {
 		Motors.motorArm.set(0.0);
 		Operate.disable();
 		updateDashboard();
+		server.setQuality(30);
 	}
 
 	//	static void cameraControl()
