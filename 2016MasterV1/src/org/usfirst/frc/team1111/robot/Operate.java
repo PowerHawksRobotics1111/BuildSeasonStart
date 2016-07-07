@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1111.robot;
 
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import variables.Joysticks;
 import variables.Motors;
@@ -53,7 +51,7 @@ public class Operate {
 	 * Method, checks the intake and outtake command buttons and runs the
 	 * intake/outake motor, else stops the motor.
 	 */
-	static void intakeOutake()
+	private static void intakeOutake()
 	{
 		if(!(Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4)))
 		{
@@ -92,7 +90,7 @@ public class Operate {
 	/**
 	 * Method, runs or stops the shoot motor.
 	 */
-	static void shoot()
+	private static void shoot()
 	{
 		if(Joysticks.joyOp.getRawButton(Joysticks.Buttons.shootButton) && !(Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier2) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier3) || Joysticks.joyOp.getRawButton(Joysticks.Buttons.overrideKillModifier4)))
 			shooting = true;
@@ -140,7 +138,7 @@ public class Operate {
 	/**
 	 * Intake arm control
 	 */
-	static void armControl()
+	private static void armControl()
 	{
 		if (Joysticks.joyOp.getRawButton(Joysticks.Buttons.armUp))
 			Motors.motorArm.set(Motors.ARM_POWER);
@@ -261,7 +259,7 @@ public class Operate {
 
 	public static boolean hardStop = false;
 	
-		static void hardStopToggle()
+		private static void hardStopToggle()
 		{
 			if( !hardStop && Joysticks.joyOp.getRawButton(Joysticks.Buttons.hardStop))
 			{
@@ -276,7 +274,7 @@ public class Operate {
 				hardStop = false;
 		}
 				
-		static void flashlightToggle()
+		private static void flashlightToggle()
 		{
 			if(Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton) || Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton2) || Joysticks.joyDrive.getRawButton(Joysticks.Buttons.driverFlashlightButton3))
 				Motors.flashlight.set(Motors.flashlightVoltage);
