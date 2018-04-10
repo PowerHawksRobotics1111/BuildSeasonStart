@@ -1,11 +1,9 @@
 package org.usfirst.frc.team1111.robot;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import variables.Dimensions;
 import variables.Motors;
 import variables.Sensors;
-//import variables.Sensors;
 //import variables.Sensors.Encoders;
 
 public class Auto {
@@ -122,8 +120,8 @@ public class Auto {
 	}
 	 */
 
-	static boolean timerStarted = false;
-	static boolean autoDone = false;
+	private static boolean timerStarted = false;
+	private static boolean autoDone = false;
 	
 	public static void lowBar()
 	{
@@ -244,7 +242,7 @@ public class Auto {
 				Movement.stopDriveMotors();
 	}
 	
-	static double startTime = 0.0;
+	private static double startTime = 0.0;
 	public static void rockwallKeepGoing()
 	{
 		if(Timer.getMatchTime() >= 15.0 - 1.75)

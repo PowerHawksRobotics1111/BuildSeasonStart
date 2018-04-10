@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 public class Sensors {
 
 	//Limit switch ports
-	final static int LS_PORT = 0, LS2_PORT = 1;
+	private final static int LS_PORT = 0, LS2_PORT = 1;
 
 	public static final DigitalInput intakeLimitSwitch = new DigitalInput(LS_PORT);
 	public static final DigitalInput intakeLimitSwitch2 = new DigitalInput(LS2_PORT);

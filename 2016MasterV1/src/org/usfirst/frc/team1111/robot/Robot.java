@@ -4,7 +4,6 @@ import variables.Motors;
 import variables.Sensors;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,14 +17,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	CameraServer server;
+	private CameraServer server;
 
-	final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
+	private final String lowbarShoot = "LowShoot", lowbar = "lowbar", rockwall = "Rockwall", moat = "Moat", ramparts = "Ramp", roughTerrain = "Rough";
 
-	String autoSelected;
-	SendableChooser chooser;
+	private String autoSelected;
+	private SendableChooser chooser;
 
-	Double startTime = 0.0;
+	private Double startTime = 0.0;
 	
 	public static Timer timer = new Timer();
 
@@ -169,7 +168,7 @@ public class Robot extends IterativeRobot {
 		updateDashboard();
 	}
 
-	void drive()
+	private void drive()
 	{
 		double right = variables.Joysticks.joyDrive.getRawAxis(3);
 		double left = variables.Joysticks.joyDrive.getRawAxis(1);
